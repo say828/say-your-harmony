@@ -342,11 +342,8 @@ say-your-harmony/
 │   ├── planning/        # Phase 1 documents
 │   ├── design/          # Phase 2 documents
 │   ├── implementation/  # Phase 3 documents
-│   └── meta/            # Meta-analysis documents
-├── new/                 # Development philosophy
-│   ├── summary.md       # Phase 1 meta-analysis
-│   ├── session.md       # Full session transcript
-│   └── development-philosophy.md  # Core principles
+│   ├── meta/            # Meta-analysis documents
+│   └── CLAUDE.md        # 4-Phase development guide
 └── package.json
 ```
 
@@ -354,7 +351,7 @@ say-your-harmony/
 
 ## 🎓 Development Philosophy
 
-This project embodies a proven development methodology extracted from real-world successful implementations. See `new/development-philosophy.md` for the complete philosophy, including:
+This project embodies a proven development methodology extracted from real-world successful implementations. See `docs/CLAUDE.md` for the complete philosophy, including:
 
 - **6-Phase Workflow** → 4-Phase mapping
 - **Parallel Execution Strategies** (4.25x efficiency)
@@ -469,9 +466,7 @@ We stand on the shoulders of giants. Thank you, **oh-my-claude-sisyphus**, for s
 
 ## 📚 Further Reading
 
-- [Development Philosophy](new/development-philosophy.md) - Core principles and proven patterns
-- [Phase 1 Meta-Analysis](new/summary.md) - Real-world session analysis
-- [Phase 1 Full Session](new/session.md) - Complete transcript
+- [Development Philosophy](docs/CLAUDE.md) - Core principles and 4-phase workflow guide
 
 ---
 
