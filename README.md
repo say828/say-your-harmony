@@ -15,12 +15,12 @@
 
 [![9 Agents](https://img.shields.io/badge/🤖_Agents-9-blue?style=flat-square)](./src/agents)
 [![4 Skills](https://img.shields.io/badge/⚡_Skills-4-purple?style=flat-square)](./skills)
-[![7 Commands](https://img.shields.io/badge/📝_Commands-7-orange?style=flat-square)](./commands)
+[![8 Commands](https://img.shields.io/badge/📝_Commands-8-orange?style=flat-square)](./commands)
 [![4x Efficiency](https://img.shields.io/badge/⚡_Parallel_Speedup-4.25x-brightgreen?style=flat-square)](#)
 [![Meta-Analysis](https://img.shields.io/badge/🧠_Meta--Analysis-∞-ff69b4?style=flat-square)](./docs/meta)
 [![Session Success](https://img.shields.io/badge/✅_Session_Success-100%25-success?style=flat-square)](#)
 
-[Install](#-quick-install) • [Usage](#-usage) • [Architecture](#-the-8-agent-system) • [Philosophy](#-philosophy) • [Meta-Analysis](#-meta-analysis--continuous-improvement)
+[Install](#-quick-install) • [Usage](#-usage) • [Architecture](#-the-9-agent-system) • [Philosophy](#-philosophy) • [Meta-Analysis](#-meta-analysis--continuous-improvement)
 
 ---
 
@@ -163,7 +163,7 @@ claude  # Start Claude Code
 
 The configuration enables:
 - **9-Agent System**: planner, architect, builder, operator, explorer, documenter, meta-analyzer, meta-aggregator, harmony
-- **7 Slash Commands**: /harmony, /plan, /design, /build, /operate, /meta, /ultrathink
+- **8 Slash Commands**: /harmony, /plan, /design, /build, /operate, /meta, /ultrathink, /aggregate
 - **4 Skills**: ultrathink, parallel, meta, phase
 - **Keyword Detection**: Automatic activation for "harmony", "4-phase", "ultrathink"
 
@@ -285,6 +285,35 @@ docs/meta/session-2026-01-16-14-30.md
 ### Improvement Opportunities
 [Actionable recommendations]
 ```
+
+### Pattern Aggregation & Session Retention
+
+Use `/aggregate` to consolidate patterns across sessions:
+
+```bash
+/aggregate              # Incremental aggregation + cleanup
+```
+
+**Workflow**:
+```
+메타 분석 생성 → PATTERNS.md에 통합 → 세션 10개 초과 시 삭제
+```
+
+**Output Structure**:
+```
+docs/meta/
+├── session-2026-01-08-meta.md  ← 최신 10개만 유지
+├── ...
+├── session-2026-01-17-meta.md
+└── PATTERNS.md                 ← 마스터 패턴 라이브러리
+```
+
+| Rule | Description |
+|------|-------------|
+| **MAX 10** | 세션 파일 최대 10개 유지 |
+| **FIFO** | 가장 오래된 세션부터 삭제 |
+| **Incremental** | 중복 패턴은 빈도만 +1, 새 패턴만 추가 |
+| **PATTERNS.md** | 마스터 라이브러리 영구 보존 |
 
 ---
 
