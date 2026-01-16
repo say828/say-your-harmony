@@ -112,31 +112,6 @@ export {
 } from './rules-injector/index.js';
 
 export {
-  // Sisyphus Orchestrator
-  createSisyphusOrchestratorHook,
-  isAllowedPath,
-  isWriteEditTool,
-  getGitDiffStats,
-  formatFileChanges,
-  buildVerificationReminder,
-  buildOrchestratorReminder,
-  buildBoulderContinuation,
-  checkBoulderContinuation,
-  processOrchestratorPreTool,
-  processOrchestratorPostTool,
-  HOOK_NAME as HARMONY_ORCHESTRATOR_HOOK_NAME,
-  ALLOWED_PATH_PREFIX,
-  WRITE_EDIT_TOOLS,
-  DIRECT_WORK_REMINDER,
-  ORCHESTRATOR_DELEGATION_REQUIRED,
-  BOULDER_CONTINUATION_PROMPT,
-  VERIFICATION_REMINDER,
-  SINGLE_TASK_DIRECTIVE,
-  type ToolExecuteInput as OrchestratorToolInput,
-  type ToolExecuteOutput as OrchestratorToolOutput
-} from './sisyphus-orchestrator/index.js';
-
-export {
   // Auto Slash Command
   createAutoSlashCommandHook,
   processSlashCommand,

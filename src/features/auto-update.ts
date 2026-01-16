@@ -23,13 +23,13 @@ export const GITHUB_RAW_URL = `https://raw.githubusercontent.com/${REPO_OWNER}/$
 
 /** Installation paths */
 export const CLAUDE_CONFIG_DIR = join(homedir(), '.claude');
-export const VERSION_FILE = join(CLAUDE_CONFIG_DIR, '.sisyphus-version.json');
-export const CONFIG_FILE = join(CLAUDE_CONFIG_DIR, '.sisyphus-config.json');
+export const VERSION_FILE = join(CLAUDE_CONFIG_DIR, '.harmony-version.json');
+export const CONFIG_FILE = join(CLAUDE_CONFIG_DIR, '.harmony-config.json');
 
 /**
- * Sisyphus configuration (stored in .sisyphus-config.json)
+ * Harmony configuration (stored in .harmony-config.json)
  */
-export interface SisyphusConfig {
+export interface HarmonyConfig {
   /** Whether silent auto-updates are enabled (opt-in for security) */
   silentAutoUpdate: boolean;
   /** When the configuration was set */
@@ -39,9 +39,9 @@ export interface SisyphusConfig {
 }
 
 /**
- * Read the Sisyphus configuration
+ * Read the Harmony configuration
  */
-export function getSisyphusConfig(): SisyphusConfig {
+export function getHarmonyConfig(): HarmonyConfig {
   if (!existsSync(CONFIG_FILE)) {
     // No config file = disabled by default for security
     return { silentAutoUpdate: false };
@@ -49,7 +49,7 @@ export function getSisyphusConfig(): SisyphusConfig {
 
   try {
     const content = readFileSync(CONFIG_FILE, 'utf-8');
-    const config = JSON.parse(content) as SisyphusConfig;
+    const config = JSON.parse(content) as HarmonyConfig;
     return {
       silentAutoUpdate: config.silentAutoUpdate ?? false,
       configuredAt: config.configuredAt,
@@ -65,7 +65,7 @@ export function getSisyphusConfig(): SisyphusConfig {
  * Check if silent auto-updates are enabled
  */
 export function isSilentAutoUpdateEnabled(): boolean {
-  return getSisyphusConfig().silentAutoUpdate;
+  return getHarmonyConfig().silentAutoUpdate;
 }
 
 /**
@@ -295,7 +295,7 @@ export async function performUpdate(options?: {
 
     // Save to a temporary file
     const tempDir = tmpdir();
-    const tempScript = join(tempDir, `sisyphus-update-${Date.now()}.sh`);
+    const tempScript = join(tempDir, `harmony-update-${Date.now()}.sh`);
 
     writeFileSync(tempScript, scriptContent, { mode: 0o755 });
 
@@ -491,7 +491,7 @@ export interface SilentUpdateConfig {
 }
 
 /** State file for tracking silent update status */
-const SILENT_UPDATE_STATE_FILE = join(CLAUDE_CONFIG_DIR, '.sisyphus-silent-update.json');
+const SILENT_UPDATE_STATE_FILE = join(CLAUDE_CONFIG_DIR, '.harmony-silent-update.json');
 
 interface SilentUpdateState {
   lastAttempt?: string;
@@ -566,7 +566,7 @@ export async function silentAutoUpdate(config: SilentUpdateConfig = {}): Promise
   const {
     checkIntervalHours = 24,
     autoApply = true,
-    logFile = join(CLAUDE_CONFIG_DIR, '.sisyphus-update.log'),
+    logFile = join(CLAUDE_CONFIG_DIR, '.harmony-update.log'),
     maxRetries = 3
   } = config;
 

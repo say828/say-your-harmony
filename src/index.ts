@@ -186,7 +186,7 @@ export {
 /**
  * Options for creating a Harmony session
  */
-export interface SisyphusOptions {
+export interface HarmonyOptions {
   /** Custom configuration (merged with loaded config) */
   config?: Partial<PluginConfig>;
   /** Working directory (default: process.cwd()) */
@@ -204,7 +204,7 @@ export interface SisyphusOptions {
 /**
  * Result of creating a Harmony session
  */
-export interface SisyphusSession {
+export interface HarmonySession {
   /** The query options to pass to Claude Agent SDK */
   queryOptions: {
     options: {
@@ -230,7 +230,7 @@ export interface SisyphusSession {
 }
 
 /**
- * Create a Sisyphus orchestration session
+ * Create a Harmony orchestration session
  *
  * This prepares all the configuration and options needed
  * to run a query with the Claude Agent SDK.
@@ -251,7 +251,7 @@ export interface SisyphusSession {
  * }
  * ```
  */
-export function createHarmonySession(options?: SisyphusOptions): SisyphusSession {
+export function createHarmonySession(options?: HarmonyOptions): HarmonySession {
   // Load configuration
   const loadedConfig = options?.skipConfigLoad ? {} : loadConfig();
   const config: PluginConfig = {
@@ -356,7 +356,7 @@ export function createHarmonySession(options?: SisyphusOptions): SisyphusSession
 }
 
 /**
- * Quick helper to process a prompt with Sisyphus enhancements
+ * Quick helper to process a prompt with Harmony enhancements
  */
 export function enhancePrompt(prompt: string, config?: PluginConfig): string {
   const processor = createMagicKeywordProcessor(config?.magicKeywords);
@@ -364,7 +364,7 @@ export function enhancePrompt(prompt: string, config?: PluginConfig): string {
 }
 
 /**
- * Get the system prompt for Sisyphus (for direct use)
+ * Get the system prompt for Harmony (for direct use)
  */
 export function getHarmonySystemPrompt(options?: {
   includeContinuation?: boolean;

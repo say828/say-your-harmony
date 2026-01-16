@@ -4,7 +4,7 @@
  * Ported from oh-my-opencode's boulder-state.
  */
 
-/** Sisyphus state directory */
+/** Harmony state directory */
 export const BOULDER_DIR = '.harmony';
 
 /** Boulder state file name */

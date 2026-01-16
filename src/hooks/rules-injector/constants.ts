@@ -10,7 +10,7 @@ import { join } from 'path';
 import { homedir } from 'os';
 
 /** Storage directory for rules injector state */
-export const HARMONY_STORAGE_DIR = join(homedir(), '.sisyphus');
+export const HARMONY_STORAGE_DIR = join(homedir(), '.harmony');
 export const RULES_INJECTOR_STORAGE = join(HARMONY_STORAGE_DIR, 'rules-injector');
 
 /** Project marker files that indicate a project root */

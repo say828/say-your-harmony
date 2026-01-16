@@ -10,7 +10,7 @@ import { join } from 'path';
 import { homedir } from 'os';
 
 /** Storage directory for agent usage reminder state */
-export const HARMONY_STORAGE_DIR = join(homedir(), '.sisyphus');
+export const HARMONY_STORAGE_DIR = join(homedir(), '.harmony');
 export const AGENT_USAGE_REMINDER_STORAGE = join(
   HARMONY_STORAGE_DIR,
   'agent-usage-reminder',
@@ -34,7 +34,7 @@ export const TARGET_TOOLS = new Set([
 export const AGENT_TOOLS = new Set([
   'task',
   'call_omo_agent',
-  'sisyphus_task',
+  'harmony_task',
 ]);
 
 /** Reminder message shown to users */

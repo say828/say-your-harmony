@@ -41,7 +41,7 @@ const DEFAULT_MAX_VERIFICATION_ATTEMPTS = 3;
  * Get verification state file path
  */
 function getVerificationStatePath(directory: string): string {
-  return join(directory, '.sisyphus', 'ralph-verification.json');
+  return join(directory, '.harmony', 'ralph-verification.json');
 }
 
 /**
@@ -64,7 +64,7 @@ export function readVerificationState(directory: string): VerificationState | nu
  */
 export function writeVerificationState(directory: string, state: VerificationState): boolean {
   const statePath = getVerificationStatePath(directory);
-  const stateDir = join(directory, '.sisyphus');
+  const stateDir = join(directory, '.harmony');
 
   if (!existsSync(stateDir)) {
     try {

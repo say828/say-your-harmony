@@ -221,7 +221,7 @@ export function quickTierForAgent(agentType: string): ComplexityTier | null {
     'harmony-junior': 'MEDIUM',
     'frontend-engineer': 'MEDIUM',
     'multimodal-looker': 'MEDIUM',
-    // DEPRECATED: orchestrator-sisyphus merged into default mode (v2.0)
+    // DEPRECATED: orchestrator-harmony merged into default mode (v2.0)
     // Kept for backward compatibility if users still have it installed
     'orchestrator-harmony': 'MEDIUM',
   };
@@ -235,12 +235,12 @@ export function quickTierForAgent(agentType: string): ComplexityTier | null {
  * Only ORCHESTRATOR agents are fixed to Opus - they need to analyze
  * complexity and delegate. All other agents are adaptive.
  *
- * NOTE: orchestrator-sisyphus was deprecated in v2.0 (merged into default mode)
+ * NOTE: orchestrator-harmony was deprecated in v2.0 (merged into default mode)
  * but kept here for backward compatibility if users still have it installed.
  */
 export function isFixedTierAgent(agentType: string): boolean {
   // Only orchestrators are fixed - they need Opus to analyze and delegate
-  // DEPRECATED: orchestrator-sisyphus merged into default mode (v2.0)
+  // DEPRECATED: orchestrator-harmony merged into default mode (v2.0)
   const fixedAgents = ['orchestrator-harmony'];
   return fixedAgents.includes(agentType);
 }

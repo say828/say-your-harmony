@@ -29,7 +29,7 @@ import {
   getInstalledVersion
 } from '../features/auto-update.js';
 import {
-  install as installSisyphus,
+  install as installHarmony,
   isInstalled,
   getInstallInfo
 } from '../installer/index.js';
@@ -58,7 +58,7 @@ program
  */
 program
   .command('init')
-  .description('Initialize Sisyphus configuration in the current directory')
+  .description('Initialize Harmony configuration in the current directory')
   .option('-g, --global', 'Initialize global user configuration')
   .option('-f, --force', 'Overwrite existing configuration')
   .action(async (options) => {
@@ -85,11 +85,11 @@ program
     const configContent = `// Say-Your-Harmony Configuration
 // See: https://github.com/your-repo/say-your-harmony for documentation
 {
-  "$schema": "./sisyphus-schema.json",
+  "$schema": "./harmony-schema.json",
 
   // Agent model configurations
   "agents": {
-    "sisyphus": {
+    "harmony": {
       // Main orchestrator - uses the most capable model
       "model": "claude-opus-4-5-20251101"
     },
@@ -164,7 +164,7 @@ program
     console.log(chalk.green(`Created configuration: ${targetPath}`));
 
     // Also create the JSON schema for editor support
-    const schemaPath = join(targetDir, 'sisyphus-schema.json');
+    const schemaPath = join(targetDir, 'harmony-schema.json');
     writeFileSync(schemaPath, JSON.stringify(generateConfigSchema(), null, 2));
     console.log(chalk.green(`Created JSON schema: ${schemaPath}`));
 
@@ -441,7 +441,7 @@ program
  */
 program
   .command('install')
-  .description('Install Sisyphus agents and commands to Claude Code config (~/.claude/)')
+  .description('Install Harmony agents and commands to Claude Code config (~/.claude/)')
   .option('-f, --force', 'Overwrite existing files')
   .option('-q, --quiet', 'Suppress output except for errors')
   .option('--skip-claude-check', 'Skip checking if Claude Code is installed')
@@ -458,7 +458,7 @@ program
     if (isInstalled() && !options.force) {
       const info = getInstallInfo();
       if (!options.quiet) {
-        console.log(chalk.yellow('Sisyphus is already installed.'));
+        console.log(chalk.yellow('Harmony is already installed.'));
         if (info) {
           console.log(chalk.gray(`  Version: ${info.version}`));
           console.log(chalk.gray(`  Installed: ${info.installedAt}`));
@@ -469,7 +469,7 @@ program
     }
 
     // Run installation
-    const result = installSisyphus({
+    const result = installHarmony({
       force: options.force,
       verbose: !options.quiet,
       skipClaudeCheck: options.skipClaudeCheck
@@ -488,9 +488,9 @@ program
         console.log('  claude                        # Start Claude Code normally');
         console.log('');
         console.log(chalk.yellow('Slash Commands:'));
-        console.log('  /sisyphus <task>              # Activate Sisyphus orchestration mode');
-        console.log('  /sisyphus-default             # Configure for current project');
-        console.log('  /sisyphus-default-global      # Configure globally');
+        console.log('  /harmony <task>              # Activate Harmony orchestration mode');
+        console.log('  /harmony-default             # Configure for current project');
+        console.log('  /harmony-default-global      # Configure globally');
         console.log('  /ultrawork <task>             # Maximum performance mode');
         console.log('  /deepsearch <query>           # Thorough codebase search');
         console.log('  /analyze <target>             # Deep analysis mode');
@@ -507,29 +507,29 @@ program
         console.log('    multimodal-looker   - Visual analysis (Sonnet)');
         console.log('    momus               - Plan review (Opus)');
         console.log('    metis               - Pre-planning analysis (Opus)');
-        console.log('    orchestrator-sisyphus - Todo coordination (Opus)');
-        console.log('    sisyphus-junior     - Focused execution (Sonnet)');
+        console.log('    orchestrator-harmony - Todo coordination (Opus)');
+        console.log('    harmony-builder     - Focused execution (Sonnet)');
         console.log('    prometheus          - Strategic planning (Opus)');
         console.log('    qa-tester           - Interactive CLI testing (Sonnet)');
         console.log(chalk.gray('  Tiered Variants (for smart routing):'));
         console.log('    oracle-medium       - Simpler analysis (Sonnet)');
         console.log('    oracle-low          - Quick questions (Haiku)');
-        console.log('    sisyphus-junior-high - Complex tasks (Opus)');
-        console.log('    sisyphus-junior-low  - Trivial tasks (Haiku)');
+        console.log('    harmony-builder-high - Complex tasks (Opus)');
+        console.log('    harmony-builder-low  - Trivial tasks (Haiku)');
         console.log('    librarian-low       - Quick lookups (Haiku)');
         console.log('    explore-medium      - Thorough search (Sonnet)');
         console.log('    frontend-engineer-high - Design systems (Opus)');
         console.log('    frontend-engineer-low  - Simple styling (Haiku)');
         console.log('');
         console.log(chalk.yellow('After Updates:'));
-        console.log('  Run \'/sisyphus-default\' (project) or \'/sisyphus-default-global\' (global)');
+        console.log('  Run \'/harmony-default\' (project) or \'/harmony-default-global\' (global)');
         console.log('  to download the latest CLAUDE.md configuration.');
         console.log('  This ensures you get the newest features and agent behaviors.');
         console.log('');
         console.log(chalk.blue('Quick Start:'));
         console.log('  1. Run \'claude\' to start Claude Code');
-        console.log('  2. Type \'/sisyphus-default\' for project or \'/sisyphus-default-global\' for global');
-        console.log('  3. Or use \'/sisyphus <task>\' for one-time activation');
+        console.log('  2. Type \'/harmony-default\' for project or \'/harmony-default-global\' for global');
+        console.log('  3. Or use \'/harmony <task>\' for one-time activation');
       }
     } else {
       console.error(chalk.red(`Installation failed: ${result.message}`));
@@ -548,7 +548,7 @@ program
   .description('Run post-install setup (called automatically by npm)')
   .action(async () => {
     // Silent install - only show errors
-    const result = installSisyphus({
+    const result = installHarmony({
       force: false,
       verbose: false,
       skipClaudeCheck: true
@@ -557,10 +557,10 @@ program
     if (result.success) {
       console.log(chalk.green('✓ Say-Your-Harmony installed successfully!'));
       console.log(chalk.gray('  Run "say-your-harmony info" to see available agents.'));
-      console.log(chalk.yellow('  Run "/sisyphus-default" (project) or "/sisyphus-default-global" (global) in Claude Code.'));
+      console.log(chalk.yellow('  Run "/harmony-default" (project) or "/harmony-default-global" (global) in Claude Code.'));
     } else {
       // Don't fail the npm install, just warn
-      console.warn(chalk.yellow('⚠ Could not complete Sisyphus setup:'), result.message);
+      console.warn(chalk.yellow('⚠ Could not complete Harmony setup:'), result.message);
       console.warn(chalk.gray('  Run "say-your-harmony install" manually to complete setup.'));
     }
   });

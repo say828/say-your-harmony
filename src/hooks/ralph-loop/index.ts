@@ -48,17 +48,17 @@ const DEFAULT_COMPLETION_PROMISE = 'TASK_COMPLETE';
  * Get the state file path for Ralph Loop
  */
 function getStateFilePath(directory: string): string {
-  const sisyphusDir = join(directory, '.sisyphus');
-  return join(sisyphusDir, 'ralph-state.json');
+  const harmonyDir = join(directory, '.harmony');
+  return join(harmonyDir, 'ralph-state.json');
 }
 
 /**
- * Ensure the .sisyphus directory exists
+ * Ensure the .harmony directory exists
  */
 function ensureStateDir(directory: string): void {
-  const sisyphusDir = join(directory, '.sisyphus');
-  if (!existsSync(sisyphusDir)) {
-    mkdirSync(sisyphusDir, { recursive: true });
+  const harmonyDir = join(directory, '.harmony');
+  if (!existsSync(harmonyDir)) {
+    mkdirSync(harmonyDir, { recursive: true });
   }
 }
 

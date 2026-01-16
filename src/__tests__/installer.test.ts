@@ -25,7 +25,7 @@ describe('Installer Constants', () => {
         'multimodal-looker.md',
         'momus.md',
         'metis.md',
-        'sisyphus-junior.md',
+        'harmony-builder.md',
         'prometheus.md',
         'qa-tester.md',
       ];
@@ -41,8 +41,8 @@ describe('Installer Constants', () => {
       const tieredAgents = [
         'oracle-medium.md',
         'oracle-low.md',
-        'sisyphus-junior-high.md',
-        'sisyphus-junior-low.md',
+        'harmony-builder-high.md',
+        'harmony-builder-low.md',
         'librarian-low.md',
         'explore-medium.md',
         'frontend-engineer-low.md',
@@ -97,9 +97,9 @@ describe('Installer Constants', () => {
         'librarian-low.md': 'haiku',
         'explore.md': 'haiku',
         'explore-medium.md': 'sonnet',
-        'sisyphus-junior.md': 'sonnet',
-        'sisyphus-junior-high.md': 'opus',
-        'sisyphus-junior-low.md': 'haiku',
+        'harmony-builder.md': 'sonnet',
+        'harmony-builder-high.md': 'opus',
+        'harmony-builder-low.md': 'haiku',
         'frontend-engineer.md': 'sonnet',
         'frontend-engineer-low.md': 'haiku',
         'frontend-engineer-high.md': 'opus',
@@ -131,9 +131,9 @@ describe('Installer Constants', () => {
         'ultrawork/skill.md',
         'deepsearch/skill.md',
         'analyze/skill.md',
-        'sisyphus/skill.md',
-        'sisyphus-default.md',
-        'sisyphus-default-global.md',
+        'harmony/skill.md',
+        'harmony-default.md',
+        'harmony-default-global.md',
         'plan.md',
         'review/skill.md',
         'prometheus/skill.md',
@@ -176,9 +176,9 @@ describe('Installer Constants', () => {
         'ultrawork/skill.md',
         'deepsearch/skill.md',
         'analyze/skill.md',
-        'sisyphus/skill.md',
-        'sisyphus-default.md',
-        'sisyphus-default-global.md',
+        'harmony/skill.md',
+        'harmony-default.md',
+        'harmony-default-global.md',
         'plan.md',
         'review/skill.md',
         'prometheus/skill.md',
@@ -201,7 +201,7 @@ describe('Installer Constants', () => {
 
     it('should contain essential sections', () => {
       const essentialSections = [
-        'Sisyphus Multi-Agent System',
+        'Harmony Multi-Agent System',
         'DEFAULT OPERATING MODE',
         'Available Subagents',
         'Slash Commands',
@@ -223,7 +223,7 @@ describe('Installer Constants', () => {
         'multimodal-looker',
         'momus',
         'metis',
-        'sisyphus-junior',
+        'harmony-builder',
         'prometheus',
         'qa-tester',
       ];
@@ -238,8 +238,8 @@ describe('Installer Constants', () => {
       expect(CLAUDE_MD_CONTENT).toContain('Smart Model Routing');
       expect(CLAUDE_MD_CONTENT).toContain('oracle-low');
       expect(CLAUDE_MD_CONTENT).toContain('oracle-medium');
-      expect(CLAUDE_MD_CONTENT).toContain('sisyphus-junior-low');
-      expect(CLAUDE_MD_CONTENT).toContain('sisyphus-junior-high');
+      expect(CLAUDE_MD_CONTENT).toContain('harmony-builder-low');
+      expect(CLAUDE_MD_CONTENT).toContain('harmony-builder-high');
     });
 
     it('should document all slash commands', () => {
@@ -366,9 +366,9 @@ describe('Installer Constants', () => {
 
     it('should have implementation agents include Edit/Write tools', () => {
       const implementationAgents = [
-        'sisyphus-junior.md',
-        'sisyphus-junior-high.md',
-        'sisyphus-junior-low.md',
+        'harmony-builder.md',
+        'harmony-builder-high.md',
+        'harmony-builder-low.md',
         'frontend-engineer.md',
         'document-writer.md',
       ];

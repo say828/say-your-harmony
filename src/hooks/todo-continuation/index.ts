@@ -43,7 +43,7 @@ function getTodoFilePaths(sessionId?: string, directory?: string): string[] {
 
   // Project-specific todos
   if (directory) {
-    paths.push(join(directory, '.sisyphus', 'todos.json'));
+    paths.push(join(directory, '.harmony', 'todos.json'));
     paths.push(join(directory, '.claude', 'todos.json'));
   }
 

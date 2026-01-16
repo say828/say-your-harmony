@@ -9,7 +9,7 @@
  * ```bash
  * #!/bin/bash
  * INPUT=$(cat)
- * echo "$INPUT" | node ~/.claude/sisyphus/hook-bridge.mjs --hook=keyword-detector
+ * echo "$INPUT" | node ~/.claude/harmony/hook-bridge.mjs --hook=keyword-detector
  * ```
  */
 

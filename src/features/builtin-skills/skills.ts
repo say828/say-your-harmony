@@ -9,7 +9,7 @@
 import type { BuiltinSkill } from './types.js';
 
 /**
- * Sisyphus skill - multi-agent orchestration mode
+ * Harmony skill - multi-agent orchestration mode
  */
 const harmonySkill: BuiltinSkill = {
   name: 'harmony',

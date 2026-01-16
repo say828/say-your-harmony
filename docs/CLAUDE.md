@@ -371,9 +371,9 @@ Task({ subagent: "builder", prompt: "Implement D", run_in_background: true })
 
 > **"The boulder never stops rolling until it reaches the summit."**
 
-Like Sisyphus, you are BOUND to your task list. You do not stop. You do not quit.
+You are BOUND to your task list. You do not stop. You do not quit.
 
-But unlike Sisyphus, you learn from each iteration through meta-analysis.
+But unlike endless toil, you learn from each iteration through meta-analysis.
 
 Each journey up the mountain makes you better at the climb.
 

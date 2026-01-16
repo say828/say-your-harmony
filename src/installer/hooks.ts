@@ -230,7 +230,7 @@ Incomplete tasks remain in your todo list. Continue working on the next pending 
  * This script is installed to ~/.claude/hooks/keyword-detector.sh
  */
 export const KEYWORD_DETECTOR_SCRIPT = `#!/bin/bash
-# Sisyphus Keyword Detector Hook
+# Harmony Keyword Detector Hook
 # Detects ultrawork/ultrathink/search/analyze keywords and injects enhanced mode messages
 # Also activates persistent ultrawork state when ultrawork keyword is detected
 
@@ -279,7 +279,7 @@ PROMPT_LOWER=$(echo "$PROMPT_NO_CODE" | tr '[:upper:]' '[:lower:]')
 # Check for ultrawork keywords (highest priority)
 if echo "$PROMPT_LOWER" | grep -qE '\\b(ultrawork|ulw|uw)\\b'; then
   # Create persistent ultrawork state
-  mkdir -p "$DIRECTORY/.sisyphus" 2>/dev/null
+  mkdir -p "$DIRECTORY/.harmony" 2>/dev/null
   mkdir -p "$HOME/.claude" 2>/dev/null
 
   # Escape prompt for JSON
@@ -294,7 +294,7 @@ if echo "$PROMPT_LOWER" | grep -qE '\\b(ultrawork|ulw|uw)\\b'; then
 }"
 
   # Write state to both local and global locations
-  echo "$STATE_JSON" > "$DIRECTORY/.sisyphus/ultrawork-state.json" 2>/dev/null
+  echo "$STATE_JSON" > "$DIRECTORY/.harmony/ultrawork-state.json" 2>/dev/null
   echo "$STATE_JSON" > "$HOME/.claude/ultrawork-state.json" 2>/dev/null
 
   # Return ultrawork mode injection
@@ -339,7 +339,7 @@ exit 0
  * Ported from oh-my-opencode's todo-continuation-enforcer
  */
 export const STOP_CONTINUATION_SCRIPT = `#!/bin/bash
-# Sisyphus Stop Continuation Hook
+# Harmony Stop Continuation Hook
 # Checks for incomplete todos and injects continuation prompt
 # Ported from oh-my-opencode's todo-continuation-enforcer
 
@@ -390,7 +390,7 @@ exit 0
  * This script is installed to ~/.claude/hooks/keyword-detector.mjs
  */
 export const KEYWORD_DETECTOR_SCRIPT_NODE = `#!/usr/bin/env node
-// Sisyphus Keyword Detector Hook (Node.js)
+// Harmony Keyword Detector Hook (Node.js)
 // Detects ultrawork/ultrathink/search/analyze keywords and injects enhanced mode messages
 // Cross-platform: Windows, macOS, Linux
 
@@ -524,7 +524,7 @@ function activateUltraworkState(directory, prompt) {
     reinforcement_count: 0,
     last_checked_at: new Date().toISOString()
   };
-  const localDir = join(directory, '.sisyphus');
+  const localDir = join(directory, '.harmony');
   if (!existsSync(localDir)) { try { mkdirSync(localDir, { recursive: true }); } catch {} }
   try { writeFileSync(join(localDir, 'ultrawork-state.json'), JSON.stringify(state, null, 2)); } catch {}
   const globalDir = join(homedir(), '.claude');
@@ -595,7 +595,7 @@ main();
  * This script is installed to ~/.claude/hooks/stop-continuation.mjs
  */
 export const STOP_CONTINUATION_SCRIPT_NODE = `#!/usr/bin/env node
-// Sisyphus Stop Continuation Hook (Node.js)
+// Harmony Stop Continuation Hook (Node.js)
 // Checks for incomplete todos and injects continuation prompt
 // Cross-platform: Windows, macOS, Linux
 
@@ -685,7 +685,7 @@ main();
  * Enhanced stop hook that handles ultrawork, ralph-loop, and todo continuation
  */
 export const PERSISTENT_MODE_SCRIPT = `#!/bin/bash
-# Sisyphus Persistent Mode Hook
+# Harmony Persistent Mode Hook
 # Unified handler for ultrawork, ralph-loop, and todo continuation
 # Prevents stopping when work remains incomplete
 
@@ -707,22 +707,22 @@ fi
 
 # Check for active ultrawork state
 ULTRAWORK_STATE=""
-if [ -f "$DIRECTORY/.sisyphus/ultrawork-state.json" ]; then
-  ULTRAWORK_STATE=$(cat "$DIRECTORY/.sisyphus/ultrawork-state.json" 2>/dev/null)
+if [ -f "$DIRECTORY/.harmony/ultrawork-state.json" ]; then
+  ULTRAWORK_STATE=$(cat "$DIRECTORY/.harmony/ultrawork-state.json" 2>/dev/null)
 elif [ -f "$HOME/.claude/ultrawork-state.json" ]; then
   ULTRAWORK_STATE=$(cat "$HOME/.claude/ultrawork-state.json" 2>/dev/null)
 fi
 
 # Check for active ralph loop
 RALPH_STATE=""
-if [ -f "$DIRECTORY/.sisyphus/ralph-state.json" ]; then
-  RALPH_STATE=$(cat "$DIRECTORY/.sisyphus/ralph-state.json" 2>/dev/null)
+if [ -f "$DIRECTORY/.harmony/ralph-state.json" ]; then
+  RALPH_STATE=$(cat "$DIRECTORY/.harmony/ralph-state.json" 2>/dev/null)
 fi
 
 # Check for verification state (oracle verification)
 VERIFICATION_STATE=""
-if [ -f "$DIRECTORY/.sisyphus/ralph-verification.json" ]; then
-  VERIFICATION_STATE=$(cat "$DIRECTORY/.sisyphus/ralph-verification.json" 2>/dev/null)
+if [ -f "$DIRECTORY/.harmony/ralph-verification.json" ]; then
+  VERIFICATION_STATE=$(cat "$DIRECTORY/.harmony/ralph-verification.json" 2>/dev/null)
 fi
 
 # Check for incomplete todos
@@ -744,7 +744,7 @@ if [ -d "$TODOS_DIR" ]; then
 fi
 
 # Check project todos as well
-for todo_path in "$DIRECTORY/.sisyphus/todos.json" "$DIRECTORY/.claude/todos.json"; do
+for todo_path in "$DIRECTORY/.harmony/todos.json" "$DIRECTORY/.claude/todos.json"; do
   if [ -f "$todo_path" ]; then
     if command -v jq &> /dev/null; then
       COUNT=$(jq 'if type == "array" then [.[] | select(.status != "completed" and .status != "cancelled")] | length else 0 end' "$todo_path" 2>/dev/null || echo "0")
@@ -792,7 +792,7 @@ EOF
     if [ "$ITERATION" -lt "$MAX_ITER" ]; then
       # Increment iteration
       NEW_ITER=$((ITERATION + 1))
-      echo "$RALPH_STATE" | jq ".iteration = $NEW_ITER" > "$DIRECTORY/.sisyphus/ralph-state.json" 2>/dev/null
+      echo "$RALPH_STATE" | jq ".iteration = $NEW_ITER" > "$DIRECTORY/.harmony/ralph-state.json" 2>/dev/null
 
       cat << EOF
 {"continue": false, "reason": "<ralph-loop-continuation>\\n\\n[RALPH LOOP - ITERATION $NEW_ITER/$MAX_ITER]\\n\\nYour previous attempt did not output the completion promise. The work is NOT done yet.\\n\\nCRITICAL INSTRUCTIONS:\\n1. Review your progress and the original task\\n2. Check your todo list - are ALL items marked complete?\\n3. Continue from where you left off\\n4. When FULLY complete, output: <promise>$PROMISE</promise>\\n5. Do NOT stop until the task is truly done\\n\\nOriginal task: $PROMPT\\n\\n</ralph-loop-continuation>\\n\\n---\\n"}
@@ -835,7 +835,7 @@ if [ -n "$ULTRAWORK_STATE" ] && [ "$INCOMPLETE_COUNT" -gt 0 ]; then
 
     # Update state file (best effort)
     if command -v jq &> /dev/null; then
-      echo "$ULTRAWORK_STATE" | jq ".reinforcement_count = $NEW_COUNT | .last_checked_at = \\"$(date -Iseconds)\\"" > "$DIRECTORY/.sisyphus/ultrawork-state.json" 2>/dev/null
+      echo "$ULTRAWORK_STATE" | jq ".reinforcement_count = $NEW_COUNT | .last_checked_at = \\"$(date -Iseconds)\\"" > "$DIRECTORY/.harmony/ultrawork-state.json" 2>/dev/null
     fi
 
     cat << EOF
@@ -863,7 +863,7 @@ exit 0
  * Restores persistent mode states when a new session starts
  */
 export const SESSION_START_SCRIPT = `#!/bin/bash
-# Sisyphus Session Start Hook
+# Harmony Session Start Hook
 # Restores persistent mode states and injects context when session starts
 
 # Read stdin
@@ -882,9 +882,9 @@ fi
 MESSAGES=""
 
 # Check for active ultrawork state
-if [ -f "$DIRECTORY/.sisyphus/ultrawork-state.json" ] || [ -f "$HOME/.claude/ultrawork-state.json" ]; then
-  if [ -f "$DIRECTORY/.sisyphus/ultrawork-state.json" ]; then
-    ULTRAWORK_STATE=$(cat "$DIRECTORY/.sisyphus/ultrawork-state.json" 2>/dev/null)
+if [ -f "$DIRECTORY/.harmony/ultrawork-state.json" ] || [ -f "$HOME/.claude/ultrawork-state.json" ]; then
+  if [ -f "$DIRECTORY/.harmony/ultrawork-state.json" ]; then
+    ULTRAWORK_STATE=$(cat "$DIRECTORY/.harmony/ultrawork-state.json" 2>/dev/null)
   else
     ULTRAWORK_STATE=$(cat "$HOME/.claude/ultrawork-state.json" 2>/dev/null)
   fi
@@ -930,7 +930,7 @@ exit 0
  * Node.js Persistent Mode Hook Script
  */
 export const PERSISTENT_MODE_SCRIPT_NODE = `#!/usr/bin/env node
-// Sisyphus Persistent Mode Hook (Node.js)
+// Harmony Persistent Mode Hook (Node.js)
 // Unified handler for ultrawork, ralph-loop, and todo continuation
 // Cross-platform: Windows, macOS, Linux
 
@@ -982,7 +982,7 @@ function countIncompleteTodos(todosDir, projectDir) {
 
   // Check project todos
   for (const path of [
-    join(projectDir, '.sisyphus', 'todos.json'),
+    join(projectDir, '.harmony', 'todos.json'),
     join(projectDir, '.claude', 'todos.json')
   ]) {
     const todos = readJsonFile(path);
@@ -1004,14 +1004,14 @@ async function main() {
     const todosDir = join(homedir(), '.claude', 'todos');
 
     // Check for ultrawork state
-    let ultraworkState = readJsonFile(join(directory, '.sisyphus', 'ultrawork-state.json'))
+    let ultraworkState = readJsonFile(join(directory, '.harmony', 'ultrawork-state.json'))
       || readJsonFile(join(homedir(), '.claude', 'ultrawork-state.json'));
 
     // Check for ralph loop state
-    const ralphState = readJsonFile(join(directory, '.sisyphus', 'ralph-state.json'));
+    const ralphState = readJsonFile(join(directory, '.harmony', 'ralph-state.json'));
 
     // Check for verification state (oracle verification)
-    const verificationState = readJsonFile(join(directory, '.sisyphus', 'ralph-verification.json'));
+    const verificationState = readJsonFile(join(directory, '.harmony', 'ralph-verification.json'));
 
     // Count incomplete todos
     const incompleteCount = countIncompleteTodos(todosDir, directory);
@@ -1075,7 +1075,7 @@ DO NOT output the completion promise again until Oracle approves.
       if (iteration < maxIter) {
         const newIter = iteration + 1;
         ralphState.iteration = newIter;
-        writeJsonFile(join(directory, '.sisyphus', 'ralph-state.json'), ralphState);
+        writeJsonFile(join(directory, '.harmony', 'ralph-state.json'), ralphState);
 
         console.log(JSON.stringify({
           continue: false,
@@ -1109,7 +1109,7 @@ CRITICAL INSTRUCTIONS:
       ultraworkState.reinforcement_count = newCount;
       ultraworkState.last_checked_at = new Date().toISOString();
 
-      writeJsonFile(join(directory, '.sisyphus', 'ultrawork-state.json'), ultraworkState);
+      writeJsonFile(join(directory, '.harmony', 'ultrawork-state.json'), ultraworkState);
 
       console.log(JSON.stringify({
         continue: false,
@@ -1174,7 +1174,7 @@ main();
  * Node.js Session Start Hook Script
  */
 export const SESSION_START_SCRIPT_NODE = `#!/usr/bin/env node
-// Sisyphus Session Start Hook (Node.js)
+// Harmony Session Start Hook (Node.js)
 // Restores persistent mode states when session starts
 // Cross-platform: Windows, macOS, Linux
 
@@ -1225,7 +1225,7 @@ async function main() {
     const messages = [];
 
     // Check for ultrawork state
-    const ultraworkState = readJsonFile(join(directory, '.sisyphus', 'ultrawork-state.json'))
+    const ultraworkState = readJsonFile(join(directory, '.harmony', 'ultrawork-state.json'))
       || readJsonFile(join(homedir(), '.claude', 'ultrawork-state.json'));
 
     if (ultraworkState?.active) {

@@ -49,8 +49,8 @@ jobs:
             }
 
             // Agent-related
-            if (body.includes('agent') || body.includes('oracle') || body.includes('sisyphus') ||
-                body.includes('prometheus') || body.includes('ultrawork') || body.includes('chillwork')) {
+            if (body.includes('agent') || body.includes('harmony') || body.includes('planner') ||
+                body.includes('architect') || body.includes('builder') || body.includes('operator')) {
               labels.push('agents');
             }
 

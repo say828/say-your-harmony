@@ -5,7 +5,7 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    exclude: ['node_modules', 'dist', '.sisyphus'],
+    exclude: ['node_modules', 'dist', '.harmony'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

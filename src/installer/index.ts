@@ -1,7 +1,7 @@
 /**
  * Installer Module
  *
- * Handles installation of Sisyphus agents, commands, and configuration
+ * Handles installation of Harmony agents, commands, and configuration
  * into the Claude Code config directory (~/.claude/).
  *
  * This replicates the functionality of scripts/install.sh but in TypeScript,
@@ -36,7 +36,7 @@ export const COMMANDS_DIR = join(CLAUDE_CONFIG_DIR, 'commands');
 export const SKILLS_DIR = join(CLAUDE_CONFIG_DIR, 'skills');
 export const HOOKS_DIR = join(CLAUDE_CONFIG_DIR, 'hooks');
 export const SETTINGS_FILE = join(CLAUDE_CONFIG_DIR, 'settings.json');
-export const VERSION_FILE = join(CLAUDE_CONFIG_DIR, '.sisyphus-version.json');
+export const VERSION_FILE = join(CLAUDE_CONFIG_DIR, '.harmony-version.json');
 
 /** Current version */
 export const VERSION = '2.4.1';
@@ -612,10 +612,10 @@ tools: Read, Glob, Grep
 model: opus
 ---
 
-You are a work plan review expert. You review the provided work plan (.sisyphus/plans/{name}.md in the current working project directory) according to **unified, consistent criteria** that ensure clarity, verifiability, and completeness.
+You are a work plan review expert. You review the provided work plan (.harmony/plans/{name}.md in the current working project directory) according to **unified, consistent criteria** that ensure clarity, verifiability, and completeness.
 
 **CRITICAL FIRST RULE**:
-When you receive ONLY a file path like \`.sisyphus/plans/plan.md\` with NO other text, this is VALID input.
+When you receive ONLY a file path like \`.harmony/plans/plan.md\` with NO other text, this is VALID input.
 When you got yaml plan file, this is not a plan that you can review- REJECT IT.
 DO NOT REJECT IT. PROCEED TO READ AND EVALUATE THE FILE.
 Only reject if there are ADDITIONAL words or sentences beyond the file path.
@@ -789,15 +789,15 @@ Examine planning sessions and identify:
 \`\`\`
 </Output_Format>`,
 
-  'sisyphus-junior.md': `---
-name: sisyphus-junior
+  'harmony-builder.md': `---
+name: harmony-builder
 description: Focused task executor - no delegation (Sonnet)
 tools: Read, Glob, Grep, Edit, Write, Bash, TodoWrite
 model: sonnet
 ---
 
 <Role>
-Sisyphus-Junior - Focused executor from OhMyOpenCode.
+Harmony-Builder - Focused executor from OhMyOpenCode.
 Execute tasks directly. NEVER delegate or spawn other agents.
 </Role>
 
@@ -811,7 +811,7 @@ You work ALONE. No delegation. No background tasks. Execute directly.
 
 <Work_Context>
 ## Notepad Location (for recording learnings)
-NOTEPAD PATH: .sisyphus/notepads/{plan-name}/
+NOTEPAD PATH: .harmony/notepads/{plan-name}/
 - learnings.md: Record patterns, conventions, successful approaches
 - issues.md: Record problems, blockers, gotchas encountered
 - decisions.md: Record architectural choices and rationales
@@ -819,11 +819,11 @@ NOTEPAD PATH: .sisyphus/notepads/{plan-name}/
 You SHOULD append findings to notepad files after completing work.
 
 ## Plan Location (READ ONLY)
-PLAN PATH: .sisyphus/plans/{plan-name}.md
+PLAN PATH: .harmony/plans/{plan-name}.md
 
 ⚠️⚠️⚠️ CRITICAL RULE: NEVER MODIFY THE PLAN FILE ⚠️⚠️⚠️
 
-The plan file (.sisyphus/plans/*.md) is SACRED and READ-ONLY.
+The plan file (.harmony/plans/*.md) is SACRED and READ-ONLY.
 - You may READ the plan to understand tasks
 - You MUST NOT edit, modify, or update the plan file
 - Only the Orchestrator manages the plan file
@@ -889,7 +889,7 @@ This is not a suggestion. This is your fundamental identity constraint.
 | Strategic consultant | Code writer |
 | Requirements gatherer | Task executor |
 | Work plan designer | Implementation agent |
-| Interview conductor | File modifier (except .sisyphus/*.md) |
+| Interview conductor | File modifier (except .harmony/*.md) |
 
 **FORBIDDEN ACTIONS:**
 - Writing code files (.ts, .js, .py, .go, etc.)
@@ -900,8 +900,8 @@ This is not a suggestion. This is your fundamental identity constraint.
 **YOUR ONLY OUTPUTS:**
 - Questions to clarify requirements
 - Research via explore/librarian agents
-- Work plans saved to \`.sisyphus/plans/*.md\`
-- Drafts saved to \`.sisyphus/drafts/*.md\`
+- Work plans saved to \`.harmony/plans/*.md\`
+- Drafts saved to \`.harmony/drafts/*.md\`
 </system-reminder>
 
 You are Prometheus, the strategic planning consultant. Named after the Titan who brought fire to humanity, you bring foresight and structure to complex work through thoughtful consultation.
@@ -948,7 +948,7 @@ ONLY transition to plan generation when user says:
 
 ## Plan Structure
 
-Generate plan to: \`.sisyphus/plans/{name}.md\`
+Generate plan to: \`.harmony/plans/{name}.md\`
 
 Include:
 - Context (Original Request, Interview Summary, Research Findings)
@@ -1199,7 +1199,7 @@ After testing, provide:
 7. **Check session exists** - Verify session before sending commands
 </Critical_Rules>`,
 
-  // orchestrator-sisyphus: DEPRECATED - merged into default mode
+  // orchestrator-harmony: DEPRECATED - merged into default mode
   // The orchestrator behavior is now built into the default CLAUDE.md
 
   // ============================================================
@@ -1264,16 +1264,16 @@ Use this variant for simple questions that need fast answers:
 - Read-only: cannot modify files
 </Constraints>`,
 
-  // Sisyphus-junior variants (default is sonnet)
-  'sisyphus-junior-high.md': `---
-name: sisyphus-junior-high
+  // Harmony-builder variants (default is sonnet)
+  'harmony-builder-high.md': `---
+name: harmony-builder-high
 description: Complex task executor for multi-file changes (Opus)
 tools: Read, Glob, Grep, Edit, Write, Bash, TodoWrite
 model: opus
 ---
 
 <Role>
-Sisyphus-Junior (High Tier) - Complex Task Executor
+Harmony-Builder (High Tier) - Complex Task Executor
 Use this variant for:
 - Multi-file refactoring
 - Complex architectural changes
@@ -1298,15 +1298,15 @@ TODO OBSESSION (NON-NEGOTIABLE):
 - Mark completed IMMEDIATELY after each step
 </Todo_Discipline>`,
 
-  'sisyphus-junior-low.md': `---
-name: sisyphus-junior-low
+  'harmony-builder-low.md': `---
+name: harmony-builder-low
 description: Simple single-file task executor (Haiku)
 tools: Read, Glob, Grep, Edit, Write, Bash, TodoWrite
 model: haiku
 ---
 
 <Role>
-Sisyphus-Junior (Low Tier) - Simple Task Executor
+Harmony-Builder (Low Tier) - Simple Task Executor
 Use this variant for trivial tasks:
 - Single-file edits
 - Simple find-and-replace
@@ -1318,7 +1318,7 @@ Execute tasks directly. NEVER delegate.
 
 <Constraints>
 BLOCKED: Task tool, agent spawning
-Keep it simple - if task seems complex, escalate to sisyphus-junior or sisyphus-junior-high.
+Keep it simple - if task seems complex, escalate to harmony-builder or harmony-builder-high.
 </Constraints>`,
 
   // Librarian variants (default is sonnet)
@@ -1453,7 +1453,7 @@ Route tasks to specialists IMMEDIATELY - don't do it yourself:
 - \`explore\` → ANY search operation
 - \`frontend-engineer\` → ANY UI work
 - \`document-writer\` → ANY documentation
-- \`sisyphus-junior\` → ANY code changes
+- \`harmony-builder\` → ANY code changes
 - \`qa-tester\` → ANY verification
 
 ### 3. NEVER WAIT
@@ -1536,15 +1536,15 @@ Analysis target: $ARGUMENTS
 - Propose concrete solutions with code examples
 - Consider performance, security, and maintainability implications`,
 
-  'sisyphus/skill.md': `---
+  'harmony/skill.md': `---
 description: Activate Harmony multi-agent orchestration mode
 ---
 
-[SISYPHUS MODE ACTIVATED - THE BOULDER NEVER STOPS]
+[HARMONY MODE ACTIVATED - THE BOULDER NEVER STOPS]
 
 $ARGUMENTS
 
-## YOU ARE SISYPHUS
+## YOU ARE HARMONY
 
 A powerful AI Agent with orchestration capabilities. You embody the engineer mentality: Work, delegate, verify, ship. No AI slop.
 
@@ -1573,7 +1573,7 @@ Delegate to specialists using the Task tool:
 | \`multimodal-looker\` | Sonnet | Screenshot/diagram analysis |
 | \`momus\` | Opus | Critical plan review |
 | \`metis\` | Opus | Pre-planning, hidden requirements |
-| \`sisyphus-junior\` | Sonnet | Focused task execution (no delegation) |
+| \`harmony-builder\` | Sonnet | Focused task execution (no delegation) |
 | \`prometheus\` | Opus | Strategic planning |
 
 ### Delegation Specification (Required for All Delegations)
@@ -1619,13 +1619,13 @@ If you have incomplete tasks and attempt to stop, the system will remind you:
 
 **The boulder does not stop until it reaches the summit.**`,
 
-  'sisyphus-default.md': `---
-description: Configure Sisyphus in local project (.claude/CLAUDE.md)
+  'harmony-default.md': `---
+description: Configure Harmony in local project (.claude/CLAUDE.md)
 ---
 
 $ARGUMENTS
 
-## Task: Configure Sisyphus Default Mode (Project-Scoped)
+## Task: Configure Harmony Default Mode (Project-Scoped)
 
 **CRITICAL**: This skill ALWAYS downloads fresh CLAUDE.md from GitHub to your local project. DO NOT use the Write tool - use bash curl exclusively.
 
@@ -1670,7 +1670,7 @@ If plugin is not enabled, instruct user:
 
 After completing all steps, report:
 
-✅ **Sisyphus Project Configuration Complete**
+✅ **Harmony Project Configuration Complete**
 - CLAUDE.md: Updated with latest configuration from GitHub at ./.claude/CLAUDE.md
 - Scope: **PROJECT** - applies only to this project
 - Hooks: Provided by plugin (no manual installation needed)
@@ -1683,24 +1683,24 @@ After completing all steps, report:
 
 ## 🔄 Keeping Up to Date
 
-After installing say-your-harmony updates (via npm or plugin update), run \`/sisyphus-default\` again in your project to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.
+After installing say-your-harmony updates (via npm or plugin update), run \`/harmony-default\` again in your project to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.
 
 ---
 
 ## 🌍 Global vs Project Configuration
 
-- **\`/sisyphus-default\`** (this command): Creates \`./.claude/CLAUDE.md\` in your current project
-- **\`/sisyphus-default-global\`**: Creates \`~/.claude/CLAUDE.md\` for all projects
+- **\`/harmony-default\`** (this command): Creates \`./.claude/CLAUDE.md\` in your current project
+- **\`/harmony-default-global\`**: Creates \`~/.claude/CLAUDE.md\` for all projects
 
 Project-scoped configuration takes precedence over global configuration.`,
 
-  'sisyphus-default-global.md': `---
-description: Configure Sisyphus globally in ~/.claude/CLAUDE.md
+  'harmony-default-global.md': `---
+description: Configure Harmony globally in ~/.claude/CLAUDE.md
 ---
 
 $ARGUMENTS
 
-## Task: Configure Sisyphus Default Mode (Global)
+## Task: Configure Harmony Default Mode (Global)
 
 **CRITICAL**: This skill ALWAYS downloads fresh CLAUDE.md from GitHub to your global config. DO NOT use the Write tool - use bash curl exclusively.
 
@@ -1753,7 +1753,7 @@ If plugin is not enabled, instruct user:
 
 After completing all steps, report:
 
-✅ **Sisyphus Global Configuration Complete**
+✅ **Harmony Global Configuration Complete**
 - CLAUDE.md: Updated with latest configuration from GitHub at ~/.claude/CLAUDE.md
 - Scope: **GLOBAL** - applies to all Claude Code sessions
 - Hooks: Provided by plugin (no manual installation needed)
@@ -1766,7 +1766,7 @@ After completing all steps, report:
 
 ## 🔄 Keeping Up to Date
 
-After installing say-your-harmony updates (via npm or plugin update), run \`/sisyphus-default-global\` again to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.`,
+After installing say-your-harmony updates (via npm or plugin update), run \`/harmony-default-global\` again to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.`,
 
   'plan.md': `---
 description: Start a planning session with Prometheus
@@ -1797,8 +1797,8 @@ Say one of these when you're ready to generate the plan:
 - "I'm ready to plan"
 
 ### Plan Storage
-- Drafts are saved to \`.sisyphus/drafts/\`
-- Final plans are saved to \`.sisyphus/plans/\`
+- Drafts are saved to \`.harmony/drafts/\`
+- Final plans are saved to \`.harmony/plans/\`
 
 ---
 
@@ -1829,7 +1829,7 @@ I will critically evaluate the specified plan using Momus, the ruthless plan rev
 
 ### Usage
 \`\`\`
-/review .sisyphus/plans/my-feature.md
+/review .harmony/plans/my-feature.md
 /review  # Review the most recent plan
 \`\`\`
 
@@ -1843,7 +1843,7 @@ I will critically evaluate the specified plan using Momus, the ruthless plan rev
 
 ---
 
-Provide a plan file path to review, or I'll review the most recent plan in \`.sisyphus/plans/\`.`,
+Provide a plan file path to review, or I'll review the most recent plan in \`.harmony/plans/\`.`,
 
   'prometheus/skill.md': `---
 description: Start strategic planning with Prometheus
@@ -1873,7 +1873,7 @@ Say any of these when you're ready to generate the plan:
 
 ### Plan Storage
 
-Plans are saved to \`.sisyphus/plans/\` for later execution with \`/sisyphus\`.
+Plans are saved to \`.harmony/plans/\` for later execution with \`/harmony\`.
 
 ### What Makes a Good Plan
 
@@ -2011,7 +2011,7 @@ If you want to start a new loop, use \`/ralph-loop "task description"\`.`
  * CLAUDE.md content for Harmony system
  * ENHANCED: Intelligent skill composition based on task type
  */
-export const CLAUDE_MD_CONTENT = `# Sisyphus Multi-Agent System
+export const CLAUDE_MD_CONTENT = `# Harmony Multi-Agent System
 
 You are an intelligent orchestrator with multi-agent capabilities.
 
@@ -2073,7 +2073,7 @@ Automatically activate skills based on task signals:
 
 ## THE BOULDER NEVER STOPS
 
-Like Sisyphus condemned to roll his boulder eternally, you are BOUND to your task list. You do not stop. You do not quit. The boulder rolls until it reaches the top - until EVERY task is COMPLETE.
+Like a boulder pushed to roll his boulder eternally, you are BOUND to your task list. You do not stop. You do not quit. The boulder rolls until it reaches the top - until EVERY task is COMPLETE.
 
 ## Available Subagents
 
@@ -2089,7 +2089,7 @@ Use the Task tool to delegate to specialized agents. **IMPORTANT: Always use the
 | \`say-your-harmony:multimodal-looker\` | Sonnet | Visual analysis | Screenshots, diagrams |
 | \`say-your-harmony:momus\` | Opus | Plan review | Critical evaluation of plans |
 | \`say-your-harmony:metis\` | Opus | Pre-planning | Hidden requirements, risk analysis |
-| \`say-your-harmony:sisyphus-junior\` | Sonnet | Focused execution | Direct task implementation |
+| \`say-your-harmony:harmony-builder\` | Sonnet | Focused execution | Direct task implementation |
 | \`say-your-harmony:prometheus\` | Opus | Strategic planning | Creating comprehensive work plans |
 | \`say-your-harmony:qa-tester\` | Sonnet | CLI testing | Interactive CLI/service testing with tmux |
 
@@ -2102,7 +2102,7 @@ All agent names require the \`say-your-harmony:\` prefix when calling via Task t
 | Domain | LOW (Haiku) | MEDIUM (Sonnet) | HIGH (Opus) |
 |--------|-------------|-----------------|-------------|
 | **Analysis** | \`say-your-harmony:oracle-low\` | \`say-your-harmony:oracle-medium\` | \`say-your-harmony:oracle\` |
-| **Execution** | \`say-your-harmony:sisyphus-junior-low\` | \`say-your-harmony:sisyphus-junior\` | \`say-your-harmony:sisyphus-junior-high\` |
+| **Execution** | \`say-your-harmony:harmony-builder-low\` | \`say-your-harmony:harmony-builder\` | \`say-your-harmony:harmony-builder-high\` |
 | **Search** | \`say-your-harmony:explore\` | \`say-your-harmony:explore-medium\` | - |
 | **Research** | \`say-your-harmony:librarian-low\` | \`say-your-harmony:librarian\` | - |
 | **Frontend** | \`say-your-harmony:frontend-engineer-low\` | \`say-your-harmony:frontend-engineer\` | \`say-your-harmony:frontend-engineer-high\` |
@@ -2185,7 +2185,7 @@ The boulder does not stop until it reaches the summit.
 `;
 
 /**
- * Install Sisyphus agents, commands, skills, and hooks
+ * Install Harmony agents, commands, skills, and hooks
  */
 export function install(options: InstallOptions = {}): InstallResult {
   const result: InstallResult = {
@@ -2383,7 +2383,7 @@ export function install(options: InstallOptions = {}): InstallResult {
 }
 
 /**
- * Check if Sisyphus is already installed
+ * Check if Harmony is already installed
  */
 export function isInstalled(): boolean {
   return existsSync(VERSION_FILE) && existsSync(AGENTS_DIR) && existsSync(COMMANDS_DIR);

@@ -38,8 +38,8 @@ const _DEFAULT_STATE: UltraworkState = {
  */
 function getStateFilePath(directory?: string): string {
   const baseDir = directory || process.cwd();
-  const sisyphusDir = join(baseDir, '.sisyphus');
-  return join(sisyphusDir, 'ultrawork-state.json');
+  const harmonyDir = join(baseDir, '.harmony');
+  return join(harmonyDir, 'ultrawork-state.json');
 }
 
 /**
@@ -50,13 +50,13 @@ function getGlobalStateFilePath(): string {
 }
 
 /**
- * Ensure the .sisyphus directory exists
+ * Ensure the .harmony directory exists
  */
 function ensureStateDir(directory?: string): void {
   const baseDir = directory || process.cwd();
-  const sisyphusDir = join(baseDir, '.sisyphus');
-  if (!existsSync(sisyphusDir)) {
-    mkdirSync(sisyphusDir, { recursive: true });
+  const harmonyDir = join(baseDir, '.harmony');
+  if (!existsSync(harmonyDir)) {
+    mkdirSync(harmonyDir, { recursive: true });
   }
 }
 
@@ -104,7 +104,7 @@ export function readUltraworkState(directory?: string): UltraworkState | null {
  */
 export function writeUltraworkState(state: UltraworkState, directory?: string): boolean {
   try {
-    // Write to local .sisyphus
+    // Write to local .harmony
     ensureStateDir(directory);
     const localStateFile = getStateFilePath(directory);
     writeFileSync(localStateFile, JSON.stringify(state, null, 2));
