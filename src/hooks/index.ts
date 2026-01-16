@@ -1,5 +1,5 @@
 /**
- * Hooks Module for Oh-My-Claude-Sisyphus
+ * Hooks Module for Say-Your-Harmony
  *
  * This module provides the TypeScript bridge for Claude Code's native shell hook system.
  * Shell scripts call these TypeScript functions for complex logic processing.
@@ -124,7 +124,7 @@ export {
   checkBoulderContinuation,
   processOrchestratorPreTool,
   processOrchestratorPostTool,
-  HOOK_NAME as SISYPHUS_ORCHESTRATOR_HOOK_NAME,
+  HOOK_NAME as HARMONY_ORCHESTRATOR_HOOK_NAME,
   ALLOWED_PATH_PREFIX,
   WRITE_EDIT_TOOLS,
   DIRECT_WORK_REMINDER,

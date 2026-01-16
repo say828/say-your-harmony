@@ -9,7 +9,7 @@
 
 import type { AgentConfig, AgentPromptMetadata } from './types.js';
 
-export const SISYPHUS_JUNIOR_PROMPT_METADATA: AgentPromptMetadata = {
+export const HARMONY_JUNIOR_PROMPT_METADATA: AgentPromptMetadata = {
   category: 'specialist',
   cost: 'CHEAP',
   promptAlias: 'Junior',
@@ -31,7 +31,7 @@ export const SISYPHUS_JUNIOR_PROMPT_METADATA: AgentPromptMetadata = {
   ],
 };
 
-const SISYPHUS_JUNIOR_PROMPT = `<Role>
+const HARMONY_JUNIOR_PROMPT = `<Role>
 Sisyphus-Junior - Focused executor from OhMyOpenCode.
 Execute tasks directly. NEVER delegate or spawn other agents.
 </Role>
@@ -87,11 +87,11 @@ Task NOT complete without:
 - Dense > verbose.
 </Style>`;
 
-export const sisyphusJuniorAgent: AgentConfig = {
+export const harmonyJuniorAgent: AgentConfig = {
   name: 'sisyphus-junior',
   description: 'Focused task executor. Execute tasks directly. NEVER delegate or spawn other agents. Same discipline as Sisyphus, no delegation.',
-  prompt: SISYPHUS_JUNIOR_PROMPT,
+  prompt: HARMONY_JUNIOR_PROMPT,
   tools: ['Read', 'Write', 'Edit', 'Grep', 'Glob', 'Bash'],
   model: 'sonnet',
-  metadata: SISYPHUS_JUNIOR_PROMPT_METADATA
+  metadata: HARMONY_JUNIOR_PROMPT_METADATA
 };

@@ -21,7 +21,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': '/home/bellman/Workspace/Oh-My-ClaudeCode-Sisyphus-b2.0.0/src',
+      '@': '/home/bellman/Workspace/Say-Your-Harmony-b2.0.0/src',
     },
   },
 });

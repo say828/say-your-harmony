@@ -727,7 +727,7 @@ Execute this bash command to download fresh CLAUDE.md to local project config:
 
 ```bash
 # Download fresh CLAUDE.md to project-local .claude/
-curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main/docs/CLAUDE.md" -o .claude/CLAUDE.md && \
+curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main/docs/CLAUDE.md" -o .claude/CLAUDE.md && \
 echo "✅ CLAUDE.md downloaded successfully to .claude/CLAUDE.md" || \
 echo "❌ Failed to download CLAUDE.md"
 ```
@@ -736,18 +736,18 @@ echo "❌ Failed to download CLAUDE.md"
 
 **FALLBACK** if curl fails:
 Tell user to manually download from:
-https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main/docs/CLAUDE.md
+https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main/docs/CLAUDE.md
 
 ### Step 3: Verify Plugin Installation
 
-The oh-my-claude-sisyphus plugin provides all hooks automatically via the plugin system. Verify the plugin is enabled:
+The say-your-harmony plugin provides all hooks automatically via the plugin system. Verify the plugin is enabled:
 
 ```bash
-grep -q "oh-my-claude-sisyphus" ~/.claude/settings.json && echo "Plugin enabled" || echo "Plugin NOT enabled"
+grep -q "say-your-harmony" ~/.claude/settings.json && echo "Plugin enabled" || echo "Plugin NOT enabled"
 ```
 
 If plugin is not enabled, instruct user:
-> Run: `claude /install-plugin oh-my-claude-sisyphus` to enable the plugin.
+> Run: `claude /install-plugin say-your-harmony` to enable the plugin.
 
 ### Step 4: Confirm Success
 
@@ -766,7 +766,7 @@ After completing all steps, report:
 
 ## 🔄 Keeping Up to Date
 
-After installing oh-my-claude-sisyphus updates (via npm or plugin update), run `/sisyphus-default` again in your project to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.
+After installing say-your-harmony updates (via npm or plugin update), run `/sisyphus-default` again in your project to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.
 
 ---
 
@@ -797,7 +797,7 @@ Execute this bash command to erase and download fresh CLAUDE.md to global config
 ```bash
 # Remove existing CLAUDE.md and download fresh from GitHub
 rm -f ~/.claude/CLAUDE.md && \
-curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main/docs/CLAUDE.md" -o ~/.claude/CLAUDE.md && \
+curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main/docs/CLAUDE.md" -o ~/.claude/CLAUDE.md && \
 echo "✅ CLAUDE.md downloaded successfully to ~/.claude/CLAUDE.md" || \
 echo "❌ Failed to download CLAUDE.md"
 ```
@@ -806,7 +806,7 @@ echo "❌ Failed to download CLAUDE.md"
 
 **FALLBACK** if curl fails:
 Tell user to manually download from:
-https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main/docs/CLAUDE.md
+https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main/docs/CLAUDE.md
 
 ### Step 2: Clean Up Legacy Hooks (if present)
 
@@ -826,14 +826,14 @@ Check `~/.claude/settings.json` for manual hook entries. If the "hooks" key exis
 
 ### Step 3: Verify Plugin Installation
 
-The oh-my-claude-sisyphus plugin provides all hooks automatically via the plugin system. Verify the plugin is enabled:
+The say-your-harmony plugin provides all hooks automatically via the plugin system. Verify the plugin is enabled:
 
 ```bash
-grep -q "oh-my-claude-sisyphus" ~/.claude/settings.json && echo "Plugin enabled" || echo "Plugin NOT enabled"
+grep -q "say-your-harmony" ~/.claude/settings.json && echo "Plugin enabled" || echo "Plugin NOT enabled"
 ```
 
 If plugin is not enabled, instruct user:
-> Run: `claude /install-plugin oh-my-claude-sisyphus` to enable the plugin.
+> Run: `claude /install-plugin say-your-harmony` to enable the plugin.
 
 ### Step 4: Confirm Success
 
@@ -852,7 +852,7 @@ After completing all steps, report:
 
 ## 🔄 Keeping Up to Date
 
-After installing oh-my-claude-sisyphus updates (via npm or plugin update), run `/sisyphus-default-global` again to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.
+After installing say-your-harmony updates (via npm or plugin update), run `/sisyphus-default-global` again to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.
 CMD_EOF
 
 # Plan command (Prometheus planning system)
@@ -1217,7 +1217,7 @@ INPUT=$(cat)
   STATE_FILE="$HOME/.claude/.sisyphus-silent-update.json"
   LOG_FILE="$HOME/.claude/.sisyphus-update.log"
   CHECK_INTERVAL_HOURS=24
-  REPO_URL="https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main"
+  REPO_URL="https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main"
 
   # Log function (silent - only to file)
   log() {
@@ -1850,7 +1850,7 @@ echo ""
 echo -e "${YELLOW}Updating:${NC}"
 echo "  /update                       # Check for and install updates"
 echo "  # Or run this install script again:"
-echo "  curl -fsSL https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main/scripts/install.sh | bash"
+echo "  curl -fsSL https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main/scripts/install.sh | bash"
 echo ""
 echo -e "${YELLOW}After Updates:${NC}"
 echo "  Run '/sisyphus-default' (project) or '/sisyphus-default-global' (global)"

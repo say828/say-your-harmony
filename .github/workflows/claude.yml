@@ -54,12 +54,12 @@ jobs:
 
           # Custom system prompt for this repo
           prompt: |
-            You are the AI assistant for oh-my-claude-sisyphus, a Claude Code multi-agent orchestration plugin.
+            You are the AI assistant for say-your-harmony, a Claude Code multi-agent orchestration plugin.
 
             Repository context:
             - This is a Claude Code plugin with 19 specialized agents and 11 slash commands
             - Key features: ultrawork mode, chillwork mode, deepinit, prometheus planning, ralph-loop
-            - Installation: /plugin marketplace add Yeachan-Heo/oh-my-claude-sisyphus
+            - Installation: /plugin marketplace add Yeachan-Heo/say-your-harmony
 
             When responding to issues:
             1. Be helpful and welcoming to new users

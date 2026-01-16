@@ -1,7 +1,7 @@
 /**
  * Builtin Skills Definitions
  *
- * Core skills that are bundled with Oh-My-ClaudeCode-Sisyphus.
+ * Core skills that are bundled with Say-Your-Harmony.
  *
  * Adapted from oh-my-opencode's builtin-skills feature.
  */
@@ -11,14 +11,14 @@ import type { BuiltinSkill } from './types.js';
 /**
  * Sisyphus skill - multi-agent orchestration mode
  */
-const sisyphusSkill: BuiltinSkill = {
-  name: 'sisyphus',
-  description: 'Activate Sisyphus multi-agent orchestration mode',
+const harmonySkill: BuiltinSkill = {
+  name: 'harmony',
+  description: 'Activate Harmony multi-agent orchestration mode',
   template: `<Role>
-You are "Sisyphus" - Powerful AI Agent with orchestration capabilities from Oh-My-ClaudeCode-Sisyphus.
+You are "Harmony" - Powerful AI Agent with orchestration capabilities from Say-Your-Harmony.
 Named by [YeonGyu Kim](https://github.com/code-yeongyu).
 
-**Why Sisyphus?**: Humans roll their boulder every day. So do you. We're not so different—your code should be indistinguishable from a senior engineer's.
+**Why Harmony?**: Humans roll their boulder every day. So do you. We're not so different—your code should be indistinguishable from a senior engineer's.
 
 **Identity**: SF Bay Area engineer. Work, delegate, verify, ship. No AI slop.
 
@@ -78,7 +78,7 @@ IMPORTANT: If codebase appears undisciplined, verify before assuming:
 
 ### Pre-Delegation Planning (MANDATORY)
 
-**BEFORE every \\\`sisyphus_task\\\` call, EXPLICITLY declare your reasoning.**
+**BEFORE every \\\`harmony_task\\\` call, EXPLICITLY declare your reasoning.**
 
 #### Step 1: Identify Task Requirements
 
@@ -116,7 +116,7 @@ Ask yourself:
 **MANDATORY FORMAT:**
 
 \\\`\\\`\\\`
-I will use sisyphus_task with:
+I will use harmony_task with:
 - **Category/Agent**: [name]
 - **Reason**: [why this choice fits the task]
 - **Skills** (if any): [skill names]
@@ -171,7 +171,7 @@ When you're mentioned in GitHub issues or asked to "look into" something and "cr
 **This is NOT just investigation. This is a COMPLETE WORK CYCLE.**
 
 #### Pattern Recognition:
-- "@sisyphus look into X"
+- "@harmony look into X"
 - "look into X and create PR"
 - "investigate Y and make PR"
 - Mentioned in issue comments
@@ -775,7 +775,7 @@ TELL THE USER WHAT AGENTS YOU WILL LEVERAGE NOW TO SATISFY USER'S REQUEST.
 
 ## EXECUTION RULES
 - **TODO**: Track EVERY step. Mark complete IMMEDIATELY after each.
-- **PARALLEL**: Fire independent agent calls simultaneously via Task(subagent_type="sisyphus-junior", run_in_background=true) - NEVER wait sequentially.
+- **PARALLEL**: Fire independent agent calls simultaneously via Task(subagent_type="harmony-junior", run_in_background=true) - NEVER wait sequentially.
 - **BACKGROUND FIRST**: Use Task tool for exploration/research agents (10+ concurrent if needed).
 - **VERIFY**: Re-read request after completion. Check ALL requirements met before reporting done.
 - **DELEGATE**: Don't do everything yourself - orchestrate specialized agents for their strengths.
@@ -1067,7 +1067,7 @@ Critically evaluate plans using Momus. No plan passes without meeting rigorous s
  */
 export function createBuiltinSkills(): BuiltinSkill[] {
   return [
-    sisyphusSkill,
+    harmonySkill,
     ralphLoopSkill,
     frontendUiUxSkill,
     gitMasterSkill,

@@ -5,7 +5,7 @@
  */
 
 /** Sisyphus state directory */
-export const BOULDER_DIR = '.sisyphus';
+export const BOULDER_DIR = '.harmony';
 
 /** Boulder state file name */
 export const BOULDER_FILE = 'boulder.json';
@@ -20,7 +20,7 @@ export const NOTEPAD_DIR = 'notepads';
 export const NOTEPAD_BASE_PATH = `${BOULDER_DIR}/${NOTEPAD_DIR}`;
 
 /** Prometheus plan directory */
-export const PROMETHEUS_PLANS_DIR = '.sisyphus/plans';
+export const PROMETHEUS_PLANS_DIR = '.harmony/plans';
 
 /** Plan file extension */
 export const PLAN_EXTENSION = '.md';

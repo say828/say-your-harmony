@@ -10,9 +10,9 @@ import { join } from 'path';
 import { homedir } from 'os';
 
 /** Storage directory for agent usage reminder state */
-export const SISYPHUS_STORAGE_DIR = join(homedir(), '.sisyphus');
+export const HARMONY_STORAGE_DIR = join(homedir(), '.sisyphus');
 export const AGENT_USAGE_REMINDER_STORAGE = join(
-  SISYPHUS_STORAGE_DIR,
+  HARMONY_STORAGE_DIR,
   'agent-usage-reminder',
 );
 

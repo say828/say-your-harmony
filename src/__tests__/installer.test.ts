@@ -229,8 +229,8 @@ describe('Installer Constants', () => {
       ];
 
       for (const agent of coreAgents) {
-        // Agents are prefixed with oh-my-claude-sisyphus: in the content
-        expect(CLAUDE_MD_CONTENT).toMatch(new RegExp(`oh-my-claude-sisyphus:${agent}`));
+        // Agents are prefixed with say-your-harmony: in the content
+        expect(CLAUDE_MD_CONTENT).toMatch(new RegExp(`say-your-harmony:${agent}`));
       }
     });
 

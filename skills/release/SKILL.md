@@ -1,11 +1,11 @@
 ---
 name: release
-description: Automated release workflow for oh-my-claude-sisyphus
+description: Automated release workflow for say-your-harmony
 ---
 
 # Release Skill
 
-Automate the release process for oh-my-claude-sisyphus.
+Automate the release process for say-your-harmony.
 
 ## Usage
 
@@ -57,8 +57,8 @@ gh release create v<version> --title "v<version> - <title>" --notes "<release no
 ```
 
 ### 7. Verify
-- [ ] npm: https://www.npmjs.com/package/oh-my-claude-sisyphus
-- [ ] GitHub: https://github.com/Yeachan-Heo/oh-my-claude-sisyphus/releases
+- [ ] npm: https://www.npmjs.com/package/say-your-harmony
+- [ ] GitHub: https://github.com/Yeachan-Heo/say-your-harmony/releases
 
 ## Version Files Reference
 

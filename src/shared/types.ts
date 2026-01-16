@@ -1,5 +1,5 @@
 /**
- * Shared types for Oh-My-Claude-Sisyphus
+ * Shared types for Say-Your-Harmony
  */
 
 export type ModelType = 'sonnet' | 'opus' | 'haiku' | 'inherit';
@@ -15,7 +15,7 @@ export interface AgentConfig {
 export interface PluginConfig {
   // Agent model overrides
   agents?: {
-    sisyphus?: { model?: string };
+    harmony?: { model?: string };
     oracle?: { model?: string; enabled?: boolean };
     librarian?: { model?: string };
     explore?: { model?: string };
@@ -25,8 +25,8 @@ export interface PluginConfig {
     // New agents from oh-my-opencode
     momus?: { model?: string; enabled?: boolean };
     metis?: { model?: string; enabled?: boolean };
-    orchestratorSisyphus?: { model?: string; enabled?: boolean };
-    sisyphusJunior?: { model?: string; enabled?: boolean };
+    orchestratorHarmony?: { model?: string; enabled?: boolean };
+    harmonyJunior?: { model?: string; enabled?: boolean };
     prometheus?: { model?: string; enabled?: boolean };
   };
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Oh-My-Claude-Sisyphus CLI
+ * Say-Your-Harmony CLI
  *
- * Command-line interface for the Sisyphus multi-agent system.
+ * Command-line interface for the Harmony multi-agent system.
  *
  * Commands:
  * - run: Start an interactive session
@@ -21,7 +21,7 @@ import {
   getConfigPaths,
   generateConfigSchema
 } from '../config/loader.js';
-import { createSisyphusSession } from '../index.js';
+import { createHarmonySession } from '../index.js';
 import {
   checkForUpdates,
   performUpdate,
@@ -49,7 +49,7 @@ try {
 const program = new Command();
 
 program
-  .name('oh-my-claude-sisyphus')
+  .name('say-your-harmony')
   .description('Multi-agent orchestration system for Claude Agent SDK')
   .version(version);
 
@@ -66,7 +66,7 @@ program
     const targetPath = options.global ? paths.user : paths.project;
     const targetDir = dirname(targetPath);
 
-    console.log(chalk.blue('Oh-My-Claude-Sisyphus Configuration Setup\n'));
+    console.log(chalk.blue('Say-Your-Harmony Configuration Setup\n'));
 
     // Check if config already exists
     if (existsSync(targetPath) && !options.force) {
@@ -82,8 +82,8 @@ program
     }
 
     // Generate config content
-    const configContent = `// Oh-My-Claude-Sisyphus Configuration
-// See: https://github.com/your-repo/oh-my-claude-sisyphus for documentation
+    const configContent = `// Say-Your-Harmony Configuration
+// See: https://github.com/your-repo/say-your-harmony for documentation
 {
   "$schema": "./sisyphus-schema.json",
 
@@ -269,9 +269,9 @@ program
   .command('info')
   .description('Show system and agent information')
   .action(async () => {
-    const session = createSisyphusSession();
+    const session = createHarmonySession();
 
-    console.log(chalk.blue.bold('\nOh-My-Claude-Sisyphus System Information\n'));
+    console.log(chalk.blue.bold('\nSay-Your-Harmony System Information\n'));
     console.log(chalk.gray('━'.repeat(50)));
 
     console.log(chalk.blue('\nAvailable Agents:'));
@@ -313,7 +313,7 @@ program
   .command('test-prompt <prompt>')
   .description('Test how a prompt would be enhanced')
   .action(async (prompt: string) => {
-    const session = createSisyphusSession();
+    const session = createHarmonySession();
 
     console.log(chalk.blue('Original prompt:'));
     console.log(chalk.gray(prompt));
@@ -339,7 +339,7 @@ program
   .option('-q, --quiet', 'Suppress output except for errors')
   .action(async (options) => {
     if (!options.quiet) {
-      console.log(chalk.blue('Oh-My-Claude-Sisyphus Update\n'));
+      console.log(chalk.blue('Say-Your-Harmony Update\n'));
     }
 
     try {
@@ -412,7 +412,7 @@ program
   .action(async () => {
     const installed = getInstalledVersion();
 
-    console.log(chalk.blue.bold('\nOh-My-Claude-Sisyphus Version Information\n'));
+    console.log(chalk.blue.bold('\nSay-Your-Harmony Version Information\n'));
     console.log(chalk.gray('━'.repeat(50)));
 
     console.log(`\n  Package version:   ${chalk.green(version)}`);
@@ -433,7 +433,7 @@ program
     }
 
     console.log(chalk.gray('\n━'.repeat(50)));
-    console.log(chalk.gray('\nTo check for updates, run: oh-my-claude-sisyphus update --check'));
+    console.log(chalk.gray('\nTo check for updates, run: say-your-harmony update --check'));
   });
 
 /**
@@ -448,7 +448,7 @@ program
   .action(async (options) => {
     if (!options.quiet) {
       console.log(chalk.blue('╔═══════════════════════════════════════════════════════════╗'));
-      console.log(chalk.blue('║         Oh-My-Claude-Sisyphus Installer                   ║'));
+      console.log(chalk.blue('║         Say-Your-Harmony Installer                   ║'));
       console.log(chalk.blue('║   Multi-Agent Orchestration for Claude Code               ║'));
       console.log(chalk.blue('╚═══════════════════════════════════════════════════════════╝'));
       console.log('');
@@ -555,13 +555,13 @@ program
     });
 
     if (result.success) {
-      console.log(chalk.green('✓ Oh-My-Claude-Sisyphus installed successfully!'));
-      console.log(chalk.gray('  Run "oh-my-claude-sisyphus info" to see available agents.'));
+      console.log(chalk.green('✓ Say-Your-Harmony installed successfully!'));
+      console.log(chalk.gray('  Run "say-your-harmony info" to see available agents.'));
       console.log(chalk.yellow('  Run "/sisyphus-default" (project) or "/sisyphus-default-global" (global) in Claude Code.'));
     } else {
       // Don't fail the npm install, just warn
       console.warn(chalk.yellow('⚠ Could not complete Sisyphus setup:'), result.message);
-      console.warn(chalk.gray('  Run "oh-my-claude-sisyphus install" manually to complete setup.'));
+      console.warn(chalk.gray('  Run "say-your-harmony install" manually to complete setup.'));
     }
   });
 

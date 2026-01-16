@@ -72,25 +72,25 @@ From development philosophy:
 ```typescript
 // Launch 4 builders in parallel for 4 independent files
 Task({
-  subagent_type: "oh-my-claude-sisyphus:builder",
+  subagent_type: "say-your-harmony:builder",
   prompt: "Implement RateLimitFilter.kt following design spec",
   run_in_background: true
 })
 
 Task({
-  subagent_type: "oh-my-claude-sisyphus:builder",
+  subagent_type: "say-your-harmony:builder",
   prompt: "Implement BruteForceProtectionFilter.kt",
   run_in_background: true
 })
 
 Task({
-  subagent_type: "oh-my-claude-sisyphus:builder",
+  subagent_type: "say-your-harmony:builder",
   prompt: "Modify JwtHandler.kt with logging",
   run_in_background: true
 })
 
 Task({
-  subagent_type: "oh-my-claude-sisyphus:builder",
+  subagent_type: "say-your-harmony:builder",
   prompt: "Modify AuthRoute.kt to pass exchange",
   run_in_background: true
 })

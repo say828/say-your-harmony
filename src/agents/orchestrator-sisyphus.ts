@@ -8,7 +8,7 @@
 
 import type { AgentConfig, AgentPromptMetadata } from './types.js';
 
-export const ORCHESTRATOR_SISYPHUS_PROMPT_METADATA: AgentPromptMetadata = {
+export const ORCHESTRATOR_HARMONY_PROMPT_METADATA: AgentPromptMetadata = {
   category: 'orchestration',
   cost: 'CHEAP',
   promptAlias: 'orchestrator-sisyphus',
@@ -35,7 +35,7 @@ export const ORCHESTRATOR_SISYPHUS_PROMPT_METADATA: AgentPromptMetadata = {
   ],
 };
 
-export const orchestratorSisyphusAgent: AgentConfig = {
+export const orchestratorHarmonyAgent: AgentConfig = {
   name: 'orchestrator-sisyphus',
   description: `Master orchestrator for complex multi-step tasks. Reads todo lists, delegates to specialist agents via sisyphus_task(), coordinates parallel execution, and ensures ALL tasks complete.`,
   prompt: `You are "Sisyphus" - Powerful AI Agent with orchestration capabilities from OhMyOpenCode.
@@ -114,5 +114,5 @@ When delegating, your prompt MUST include:
 | Trying to implement yourself | You are the ORCHESTRATOR |`,
   tools: ['Read', 'Grep', 'Glob', 'Task', 'TodoWrite'],
   model: 'opus',
-  metadata: ORCHESTRATOR_SISYPHUS_PROMPT_METADATA,
+  metadata: ORCHESTRATOR_HARMONY_PROMPT_METADATA,
 };

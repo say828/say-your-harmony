@@ -1,8 +1,8 @@
 /**
- * Agent Definitions for Oh-My-Claude-Sisyphus
+ * Agent Definitions for Say-Your-Harmony
  *
  * This module defines all the specialized subagents that work under
- * the Sisyphus orchestrator. Each agent has a specific role and toolset.
+ * the Harmony orchestrator. Each agent has a specific role and toolset.
  * Prompts are directly ported from oh-my-opencode.
  */
 
@@ -775,7 +775,7 @@ Examine planning sessions and identify:
 /**
  * Orchestrator Sisyphus Agent - Master Orchestrator
  */
-export const orchestratorSisyphusAgent: AgentConfig = {
+export const orchestratorHarmonyAgent: AgentConfig = {
   name: 'orchestrator-sisyphus',
   description: `Master orchestrator for complex multi-step tasks. Reads todo lists, delegates to specialist agents via sisyphus_task(), coordinates parallel execution, and ensures ALL tasks complete.`,
   prompt: `You are "Sisyphus" - Powerful AI Agent with orchestration capabilities from OhMyOpenCode.
@@ -859,7 +859,7 @@ When delegating, your prompt MUST include:
 /**
  * Sisyphus Junior Agent - Focused Executor
  */
-export const sisyphusJuniorAgent: AgentConfig = {
+export const harmonyJuniorAgent: AgentConfig = {
   name: 'sisyphus-junior',
   description: `Focused task executor. Execute tasks directly. NEVER delegate or spawn other agents. Same discipline as Sisyphus, no delegation.`,
   prompt: `<Role>
@@ -989,7 +989,7 @@ Use this variant for simple questions that need fast answers:
 /**
  * Sisyphus-Junior-High Agent - Complex Execution (Opus)
  */
-export const sisyphusJuniorHighAgent: AgentConfig = {
+export const harmonyJuniorHighAgent: AgentConfig = {
   name: 'sisyphus-junior-high',
   description: 'Complex task executor for multi-file changes. Use for tasks requiring deep reasoning.',
   prompt: `<Role>
@@ -1024,7 +1024,7 @@ TODO OBSESSION (NON-NEGOTIABLE):
 /**
  * Sisyphus-Junior-Low Agent - Simple Execution (Haiku)
  */
-export const sisyphusJuniorLowAgent: AgentConfig = {
+export const harmonyJuniorLowAgent: AgentConfig = {
   name: 'sisyphus-junior-low',
   description: 'Simple single-file task executor. Use for trivial tasks.',
   prompt: `<Role>
@@ -1326,14 +1326,14 @@ export function getAgentDefinitions(overrides?: Partial<Record<string, Partial<A
     momus: momusAgent,
     metis: metisAgent,
     // 'orchestrator-sisyphus': DEPRECATED - merged into default mode
-    'sisyphus-junior': sisyphusJuniorAgent,
+    'sisyphus-junior': harmonyJuniorAgent,
     prometheus: prometheusAgent,
     'qa-tester': qaTesterAgent,
     // Tiered variants for smart model routing
     'oracle-medium': oracleMediumAgent,
     'oracle-low': oracleLowAgent,
-    'sisyphus-junior-high': sisyphusJuniorHighAgent,
-    'sisyphus-junior-low': sisyphusJuniorLowAgent,
+    'sisyphus-junior-high': harmonyJuniorHighAgent,
+    'sisyphus-junior-low': harmonyJuniorLowAgent,
     'librarian-low': librarianLowAgent,
     'explore-medium': exploreMediumAgent,
     'frontend-engineer-low': frontendEngineerLowAgent,
@@ -1359,7 +1359,7 @@ export function getAgentDefinitions(overrides?: Partial<Record<string, Partial<A
  * Sisyphus System Prompt - The main orchestrator
  * ENHANCED: Stronger persistence language inspired by oh-my-opencode
  */
-export const sisyphusSystemPrompt = `You are Sisyphus, the relentless orchestrator of a multi-agent development system.
+export const harmonySystemPrompt = `You are Sisyphus, the relentless orchestrator of a multi-agent development system.
 
 ## THE BOULDER NEVER STOPS
 

@@ -56,7 +56,7 @@ describe('Builtin Skills', () => {
 
     it('should have valid skill names', () => {
       const expectedSkills = [
-        'sisyphus',
+        'harmony',
         'ralph-loop',
         'frontend-ui-ux',
         'git-master',
@@ -81,15 +81,15 @@ describe('Builtin Skills', () => {
 
   describe('getBuiltinSkill()', () => {
     it('should retrieve a skill by name', () => {
-      const skill = getBuiltinSkill('sisyphus');
+      const skill = getBuiltinSkill('harmony');
       expect(skill).toBeDefined();
-      expect(skill?.name).toBe('sisyphus');
+      expect(skill?.name).toBe('harmony');
     });
 
     it('should be case-insensitive', () => {
-      const skillLower = getBuiltinSkill('sisyphus');
-      const skillUpper = getBuiltinSkill('SISYPHUS');
-      const skillMixed = getBuiltinSkill('SiSyPhUs');
+      const skillLower = getBuiltinSkill('harmony');
+      const skillUpper = getBuiltinSkill('HARMONY');
+      const skillMixed = getBuiltinSkill('HaRmOnY');
 
       expect(skillLower).toBeDefined();
       expect(skillUpper).toBeDefined();
@@ -108,7 +108,7 @@ describe('Builtin Skills', () => {
     it('should return all skill names', () => {
       const names = listBuiltinSkillNames();
       expect(names).toHaveLength(9);
-      expect(names).toContain('sisyphus');
+      expect(names).toContain('harmony');
       expect(names).toContain('ralph-loop');
       expect(names).toContain('frontend-ui-ux');
       expect(names).toContain('git-master');

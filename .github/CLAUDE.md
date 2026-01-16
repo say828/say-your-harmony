@@ -1,10 +1,10 @@
-# Claude AI Instructions for oh-my-claude-sisyphus
+# Claude AI Instructions for say-your-harmony
 
 This file provides context for Claude when working on this repository via GitHub Actions.
 
 ## Repository Overview
 
-oh-my-claude-sisyphus is a Claude Code plugin that provides multi-agent orchestration capabilities.
+say-your-harmony is a Claude Code plugin that provides multi-agent orchestration capabilities.
 
 ### Key Features
 - **19 specialized agents** with intelligent model routing (Haiku/Sonnet/Opus tiers)
@@ -15,7 +15,7 @@ oh-my-claude-sisyphus is a Claude Code plugin that provides multi-agent orchestr
 
 ### Installation
 ```bash
-/plugin marketplace add Yeachan-Heo/oh-my-claude-sisyphus
+/plugin marketplace add Yeachan-Heo/say-your-harmony
 ```
 
 ## Code Structure
@@ -36,7 +36,7 @@ tests/                   # Test files
 
 ### Installation Issues
 - Recommend running `/doctor` to diagnose problems
-- Check if user installed via correct method: `/plugin marketplace add Yeachan-Heo/oh-my-claude-sisyphus`
+- Check if user installed via correct method: `/plugin marketplace add Yeachan-Heo/say-your-harmony`
 - Common issues: outdated Claude Code version, missing dependencies
 
 ### Bug Reports

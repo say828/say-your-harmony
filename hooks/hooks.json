@@ -1,5 +1,5 @@
 {
-  "description": "Sisyphus orchestration hooks for keyword detection, tool enforcement, session restoration, and continuation persistence",
+  "description": "Harmony orchestration hooks for keyword detection, tool enforcement, session restoration, and continuation persistence",
   "hooks": {
     "UserPromptSubmit": [
       {

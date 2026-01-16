@@ -1,7 +1,7 @@
 /**
  * Builtin Skills Feature
  *
- * Provides bundled skills for Oh-My-ClaudeCode-Sisyphus.
+ * Provides bundled skills for Say-Your-Harmony.
  *
  * Adapted from oh-my-opencode's builtin-skills feature.
  */

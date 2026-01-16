@@ -50,7 +50,7 @@ Learning: Always verify user's PRIMARY source first
 ```typescript
 // Use explorer for codebase understanding
 Task({
-  subagent_type: "oh-my-claude-sisyphus:explorer",
+  subagent_type: "say-your-harmony:explorer",
   prompt: "Find all files related to: [user request]"
 })
 

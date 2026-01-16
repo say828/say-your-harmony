@@ -39,7 +39,7 @@ PLANNING → DESIGN → IMPLEMENTATION → OPERATION
 **Delegate to**:
 ```typescript
 Task({
-  subagent_type: "oh-my-claude-sisyphus:planner",
+  subagent_type: "say-your-harmony:planner",
   prompt: "Execute Phase 1: Planning\n\n[User request]\n\nGather all context, define problem, collect requirements."
 })
 ```
@@ -66,7 +66,7 @@ Task({
 **Delegate to**:
 ```typescript
 Task({
-  subagent_type: "oh-my-claude-sisyphus:architect",
+  subagent_type: "say-your-harmony:architect",
   prompt: "Execute Phase 2: Design\n\n[Planning results]\n\nDesign architecture, document decisions, analyze tradeoffs."
 })
 ```
@@ -120,7 +120,7 @@ Task({ subagent: "builder", prompt: "Implement file D" })
 **Delegate to**:
 ```typescript
 Task({
-  subagent_type: "oh-my-claude-sisyphus:operator",
+  subagent_type: "say-your-harmony:operator",
   prompt: "Execute Phase 4: Operation\n\n[Implementation results]\n\nDeploy, verify, generate meta-analysis."
 })
 ```
@@ -133,7 +133,7 @@ After Phase 4 completion, **ALWAYS generate meta-analysis**:
 
 ```typescript
 Task({
-  subagent_type: "oh-my-claude-sisyphus:meta-analyzer",
+  subagent_type: "say-your-harmony:meta-analyzer",
   prompt: "Generate meta-analysis for this session:\n\n- Tool usage patterns\n- Decision trees\n- Problem-solving patterns\n- Efficiency metrics\n- Continuous improvement suggestions"
 })
 ```

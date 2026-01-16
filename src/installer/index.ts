@@ -12,8 +12,8 @@
  * - Unix (macOS, Linux): Uses Bash scripts (.sh) by default
  *
  * Environment variables:
- * - SISYPHUS_USE_NODE_HOOKS=1: Force Node.js hooks on any platform
- * - SISYPHUS_USE_BASH_HOOKS=1: Force Bash hooks (Unix only)
+ * - HARMONY_USE_NODE_HOOKS=1: Force Node.js hooks on any platform
+ * - HARMONY_USE_BASH_HOOKS=1: Force Bash hooks (Unix only)
  */
 
 import { existsSync, mkdirSync, writeFileSync, readFileSync, chmodSync } from 'fs';
@@ -1537,7 +1537,7 @@ Analysis target: $ARGUMENTS
 - Consider performance, security, and maintainability implications`,
 
   'sisyphus/skill.md': `---
-description: Activate Sisyphus multi-agent orchestration mode
+description: Activate Harmony multi-agent orchestration mode
 ---
 
 [SISYPHUS MODE ACTIVATED - THE BOULDER NEVER STOPS]
@@ -1644,7 +1644,7 @@ Execute this bash command to download fresh CLAUDE.md to local project config:
 
 \`\`\`bash
 # Download fresh CLAUDE.md to project-local .claude/
-curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main/docs/CLAUDE.md" -o .claude/CLAUDE.md && \\
+curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main/docs/CLAUDE.md" -o .claude/CLAUDE.md && \\
 echo "✅ CLAUDE.md downloaded successfully to .claude/CLAUDE.md" || \\
 echo "❌ Failed to download CLAUDE.md"
 \`\`\`
@@ -1653,18 +1653,18 @@ echo "❌ Failed to download CLAUDE.md"
 
 **FALLBACK** if curl fails:
 Tell user to manually download from:
-https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main/docs/CLAUDE.md
+https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main/docs/CLAUDE.md
 
 ### Step 3: Verify Plugin Installation
 
-The oh-my-claude-sisyphus plugin provides all hooks automatically via the plugin system. Verify the plugin is enabled:
+The say-your-harmony plugin provides all hooks automatically via the plugin system. Verify the plugin is enabled:
 
 \`\`\`bash
-grep -q "oh-my-claude-sisyphus" ~/.claude/settings.json && echo "Plugin enabled" || echo "Plugin NOT enabled"
+grep -q "say-your-harmony" ~/.claude/settings.json && echo "Plugin enabled" || echo "Plugin NOT enabled"
 \`\`\`
 
 If plugin is not enabled, instruct user:
-> Run: \`claude /install-plugin oh-my-claude-sisyphus\` to enable the plugin.
+> Run: \`claude /install-plugin say-your-harmony\` to enable the plugin.
 
 ### Step 4: Confirm Success
 
@@ -1683,7 +1683,7 @@ After completing all steps, report:
 
 ## 🔄 Keeping Up to Date
 
-After installing oh-my-claude-sisyphus updates (via npm or plugin update), run \`/sisyphus-default\` again in your project to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.
+After installing say-your-harmony updates (via npm or plugin update), run \`/sisyphus-default\` again in your project to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.
 
 ---
 
@@ -1711,7 +1711,7 @@ Execute this bash command to erase and download fresh CLAUDE.md to global config
 \`\`\`bash
 # Remove existing CLAUDE.md and download fresh from GitHub
 rm -f ~/.claude/CLAUDE.md && \\
-curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main/docs/CLAUDE.md" -o ~/.claude/CLAUDE.md && \\
+curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main/docs/CLAUDE.md" -o ~/.claude/CLAUDE.md && \\
 echo "✅ CLAUDE.md downloaded successfully to ~/.claude/CLAUDE.md" || \\
 echo "❌ Failed to download CLAUDE.md"
 \`\`\`
@@ -1720,7 +1720,7 @@ echo "❌ Failed to download CLAUDE.md"
 
 **FALLBACK** if curl fails:
 Tell user to manually download from:
-https://raw.githubusercontent.com/Yeachan-Heo/oh-my-claude-sisyphus/main/docs/CLAUDE.md
+https://raw.githubusercontent.com/Yeachan-Heo/say-your-harmony/main/docs/CLAUDE.md
 
 ### Step 2: Clean Up Legacy Hooks (if present)
 
@@ -1740,14 +1740,14 @@ Check \`~/.claude/settings.json\` for manual hook entries. If the "hooks" key ex
 
 ### Step 3: Verify Plugin Installation
 
-The oh-my-claude-sisyphus plugin provides all hooks automatically via the plugin system. Verify the plugin is enabled:
+The say-your-harmony plugin provides all hooks automatically via the plugin system. Verify the plugin is enabled:
 
 \`\`\`bash
-grep -q "oh-my-claude-sisyphus" ~/.claude/settings.json && echo "Plugin enabled" || echo "Plugin NOT enabled"
+grep -q "say-your-harmony" ~/.claude/settings.json && echo "Plugin enabled" || echo "Plugin NOT enabled"
 \`\`\`
 
 If plugin is not enabled, instruct user:
-> Run: \`claude /install-plugin oh-my-claude-sisyphus\` to enable the plugin.
+> Run: \`claude /install-plugin say-your-harmony\` to enable the plugin.
 
 ### Step 4: Confirm Success
 
@@ -1766,7 +1766,7 @@ After completing all steps, report:
 
 ## 🔄 Keeping Up to Date
 
-After installing oh-my-claude-sisyphus updates (via npm or plugin update), run \`/sisyphus-default-global\` again to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.`,
+After installing say-your-harmony updates (via npm or plugin update), run \`/sisyphus-default-global\` again to get the latest CLAUDE.md configuration. This ensures you have the newest features and agent configurations.`,
 
   'plan.md': `---
 description: Start a planning session with Prometheus
@@ -2008,7 +2008,7 @@ If you want to start a new loop, use \`/ralph-loop "task description"\`.`
 // SKILL_DEFINITIONS removed - skills are now only in COMMAND_DEFINITIONS to avoid duplicates
 // Skills are installed to ~/.claude/commands/<skill>/skill.md
 /**
- * CLAUDE.md content for Sisyphus system
+ * CLAUDE.md content for Harmony system
  * ENHANCED: Intelligent skill composition based on task type
  */
 export const CLAUDE_MD_CONTENT = `# Sisyphus Multi-Agent System
@@ -2077,37 +2077,37 @@ Like Sisyphus condemned to roll his boulder eternally, you are BOUND to your tas
 
 ## Available Subagents
 
-Use the Task tool to delegate to specialized agents. **IMPORTANT: Always use the full plugin-prefixed name** (e.g., \`oh-my-claude-sisyphus:oracle\`) to avoid duplicate agent calls and wasted tokens:
+Use the Task tool to delegate to specialized agents. **IMPORTANT: Always use the full plugin-prefixed name** (e.g., \`say-your-harmony:oracle\`) to avoid duplicate agent calls and wasted tokens:
 
 | Agent | Model | Purpose | When to Use |
 |-------|-------|---------|-------------|
-| \`oh-my-claude-sisyphus:oracle\` | Opus | Architecture & debugging | Complex problems, root cause analysis |
-| \`oh-my-claude-sisyphus:librarian\` | Sonnet | Documentation & research | Finding docs, understanding code |
-| \`oh-my-claude-sisyphus:explore\` | Haiku | Fast search | Quick file/pattern searches |
-| \`oh-my-claude-sisyphus:frontend-engineer\` | Sonnet | UI/UX | Component design, styling |
-| \`oh-my-claude-sisyphus:document-writer\` | Haiku | Documentation | README, API docs, comments |
-| \`oh-my-claude-sisyphus:multimodal-looker\` | Sonnet | Visual analysis | Screenshots, diagrams |
-| \`oh-my-claude-sisyphus:momus\` | Opus | Plan review | Critical evaluation of plans |
-| \`oh-my-claude-sisyphus:metis\` | Opus | Pre-planning | Hidden requirements, risk analysis |
-| \`oh-my-claude-sisyphus:sisyphus-junior\` | Sonnet | Focused execution | Direct task implementation |
-| \`oh-my-claude-sisyphus:prometheus\` | Opus | Strategic planning | Creating comprehensive work plans |
-| \`oh-my-claude-sisyphus:qa-tester\` | Sonnet | CLI testing | Interactive CLI/service testing with tmux |
+| \`say-your-harmony:oracle\` | Opus | Architecture & debugging | Complex problems, root cause analysis |
+| \`say-your-harmony:librarian\` | Sonnet | Documentation & research | Finding docs, understanding code |
+| \`say-your-harmony:explore\` | Haiku | Fast search | Quick file/pattern searches |
+| \`say-your-harmony:frontend-engineer\` | Sonnet | UI/UX | Component design, styling |
+| \`say-your-harmony:document-writer\` | Haiku | Documentation | README, API docs, comments |
+| \`say-your-harmony:multimodal-looker\` | Sonnet | Visual analysis | Screenshots, diagrams |
+| \`say-your-harmony:momus\` | Opus | Plan review | Critical evaluation of plans |
+| \`say-your-harmony:metis\` | Opus | Pre-planning | Hidden requirements, risk analysis |
+| \`say-your-harmony:sisyphus-junior\` | Sonnet | Focused execution | Direct task implementation |
+| \`say-your-harmony:prometheus\` | Opus | Strategic planning | Creating comprehensive work plans |
+| \`say-your-harmony:qa-tester\` | Sonnet | CLI testing | Interactive CLI/service testing with tmux |
 
 ### Smart Model Routing (SAVE TOKENS)
 
 **Choose tier based on task complexity: LOW (haiku) → MEDIUM (sonnet) → HIGH (opus)**
 
-All agent names require the \`oh-my-claude-sisyphus:\` prefix when calling via Task tool:
+All agent names require the \`say-your-harmony:\` prefix when calling via Task tool:
 
 | Domain | LOW (Haiku) | MEDIUM (Sonnet) | HIGH (Opus) |
 |--------|-------------|-----------------|-------------|
-| **Analysis** | \`oh-my-claude-sisyphus:oracle-low\` | \`oh-my-claude-sisyphus:oracle-medium\` | \`oh-my-claude-sisyphus:oracle\` |
-| **Execution** | \`oh-my-claude-sisyphus:sisyphus-junior-low\` | \`oh-my-claude-sisyphus:sisyphus-junior\` | \`oh-my-claude-sisyphus:sisyphus-junior-high\` |
-| **Search** | \`oh-my-claude-sisyphus:explore\` | \`oh-my-claude-sisyphus:explore-medium\` | - |
-| **Research** | \`oh-my-claude-sisyphus:librarian-low\` | \`oh-my-claude-sisyphus:librarian\` | - |
-| **Frontend** | \`oh-my-claude-sisyphus:frontend-engineer-low\` | \`oh-my-claude-sisyphus:frontend-engineer\` | \`oh-my-claude-sisyphus:frontend-engineer-high\` |
-| **Docs** | \`oh-my-claude-sisyphus:document-writer\` | - | - |
-| **Planning** | - | - | \`oh-my-claude-sisyphus:prometheus\`, \`oh-my-claude-sisyphus:momus\`, \`oh-my-claude-sisyphus:metis\` |
+| **Analysis** | \`say-your-harmony:oracle-low\` | \`say-your-harmony:oracle-medium\` | \`say-your-harmony:oracle\` |
+| **Execution** | \`say-your-harmony:sisyphus-junior-low\` | \`say-your-harmony:sisyphus-junior\` | \`say-your-harmony:sisyphus-junior-high\` |
+| **Search** | \`say-your-harmony:explore\` | \`say-your-harmony:explore-medium\` | - |
+| **Research** | \`say-your-harmony:librarian-low\` | \`say-your-harmony:librarian\` | - |
+| **Frontend** | \`say-your-harmony:frontend-engineer-low\` | \`say-your-harmony:frontend-engineer\` | \`say-your-harmony:frontend-engineer-high\` |
+| **Docs** | \`say-your-harmony:document-writer\` | - | - |
+| **Planning** | - | - | \`say-your-harmony:prometheus\`, \`say-your-harmony:momus\`, \`say-your-harmony:metis\` |
 
 **Use LOW for simple lookups, MEDIUM for standard work, HIGH for complex reasoning.**
 

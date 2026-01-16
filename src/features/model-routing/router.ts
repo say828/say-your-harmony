@@ -218,12 +218,12 @@ export function quickTierForAgent(agentType: string): ComplexityTier | null {
     explore: 'LOW',
     'document-writer': 'LOW',
     librarian: 'MEDIUM',
-    'sisyphus-junior': 'MEDIUM',
+    'harmony-junior': 'MEDIUM',
     'frontend-engineer': 'MEDIUM',
     'multimodal-looker': 'MEDIUM',
     // DEPRECATED: orchestrator-sisyphus merged into default mode (v2.0)
     // Kept for backward compatibility if users still have it installed
-    'orchestrator-sisyphus': 'MEDIUM',
+    'orchestrator-harmony': 'MEDIUM',
   };
 
   return agentTiers[agentType] ?? null;
@@ -241,7 +241,7 @@ export function quickTierForAgent(agentType: string): ComplexityTier | null {
 export function isFixedTierAgent(agentType: string): boolean {
   // Only orchestrators are fixed - they need Opus to analyze and delegate
   // DEPRECATED: orchestrator-sisyphus merged into default mode (v2.0)
-  const fixedAgents = ['orchestrator-sisyphus'];
+  const fixedAgents = ['orchestrator-harmony'];
   return fixedAgents.includes(agentType);
 }
 

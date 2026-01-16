@@ -104,7 +104,7 @@ export function createFetchServer(): McpServerConfig {
 }
 
 /**
- * Get all default MCP servers for the Sisyphus system
+ * Get all default MCP servers for the Harmony system
  */
 export interface McpServersConfig {
   exa?: McpServerConfig;

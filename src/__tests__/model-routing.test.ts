@@ -495,7 +495,7 @@ describe('Routing Rules', () => {
     it('should evaluate orchestrator rule', () => {
       const context: RoutingContext = {
         taskPrompt: 'test',
-        agentType: 'orchestrator-sisyphus',
+        agentType: 'orchestrator-harmony',
       };
       const signals = extractAllSignals(context.taskPrompt, context);
       const result = evaluateRules(context, signals);
@@ -565,7 +565,7 @@ describe('Routing Rules', () => {
       const context: RoutingContext = {
         taskPrompt: 'test',
         explicitModel: 'haiku',
-        agentType: 'orchestrator-sisyphus',
+        agentType: 'orchestrator-harmony',
       };
       const signals = extractAllSignals(context.taskPrompt, context);
       const result = evaluateRules(context, signals);
@@ -685,11 +685,11 @@ describe('Router', () => {
     it('should respect agent overrides', () => {
       const context: RoutingContext = {
         taskPrompt: 'test',
-        agentType: 'orchestrator-sisyphus',
+        agentType: 'orchestrator-harmony',
       };
       const decision = routeTask(context, {
         agentOverrides: {
-          'orchestrator-sisyphus': { tier: 'HIGH', reason: 'Test override' },
+          'orchestrator-harmony': { tier: 'HIGH', reason: 'Test override' },
         },
       });
 
@@ -767,8 +767,8 @@ describe('Router', () => {
       expect(quickTierForAgent('explore')).toBe('LOW');
     });
 
-    it('should return MEDIUM for sisyphus-junior', () => {
-      expect(quickTierForAgent('sisyphus-junior')).toBe('MEDIUM');
+    it('should return MEDIUM for harmony-junior', () => {
+      expect(quickTierForAgent('harmony-junior')).toBe('MEDIUM');
     });
 
     it('should return null for unknown agent', () => {
@@ -777,16 +777,16 @@ describe('Router', () => {
   });
 
   describe('isFixedTierAgent', () => {
-    it('should return true for orchestrator-sisyphus', () => {
-      expect(isFixedTierAgent('orchestrator-sisyphus')).toBe(true);
+    it('should return true for orchestrator-harmony', () => {
+      expect(isFixedTierAgent('orchestrator-harmony')).toBe(true);
     });
 
     it('should return false for oracle', () => {
       expect(isFixedTierAgent('oracle')).toBe(false);
     });
 
-    it('should return false for sisyphus-junior', () => {
-      expect(isFixedTierAgent('sisyphus-junior')).toBe(false);
+    it('should return false for harmony-junior', () => {
+      expect(isFixedTierAgent('harmony-junior')).toBe(false);
     });
 
     it('should return false for unknown agent', () => {
@@ -796,7 +796,7 @@ describe('Router', () => {
 
   describe('getModelForTask', () => {
     it('should return opus for orchestrator', () => {
-      const result = getModelForTask('orchestrator-sisyphus', 'test task');
+      const result = getModelForTask('orchestrator-harmony', 'test task');
       expect(result.model).toBe('opus');
       expect(result.tier).toBe('HIGH');
     });
@@ -820,7 +820,7 @@ describe('Router', () => {
     });
 
     it('should provide reasoning', () => {
-      const result = getModelForTask('sisyphus-junior', 'implement feature');
+      const result = getModelForTask('harmony-junior', 'implement feature');
       expect(result.reason).toBeDefined();
       expect(result.reason.length).toBeGreaterThan(0);
     });
@@ -958,7 +958,7 @@ describe('Integration Scenarios', () => {
   it('should handle real-world refactoring task', () => {
     const context: RoutingContext = {
       taskPrompt: 'Refactor the API layer to separate concerns and improve maintainability across auth, user, and admin modules',
-      agentType: 'sisyphus-junior',
+      agentType: 'harmony-junior',
     };
     const decision = routeTask(context);
 
@@ -969,7 +969,7 @@ describe('Integration Scenarios', () => {
   it('should handle real-world simple change', () => {
     const context: RoutingContext = {
       taskPrompt: 'Add a console.log statement in utils.ts',
-      agentType: 'sisyphus-junior',
+      agentType: 'harmony-junior',
     };
     const decision = routeTask(context);
 

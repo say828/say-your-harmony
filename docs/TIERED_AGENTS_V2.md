@@ -113,15 +113,15 @@ Output escalation recommendation:
 - No escalation needed (highest tier)
 ```
 
-### Sisyphus-Junior Family (Execution)
+### Harmony-Junior Family (Execution)
 
 **Base Identity**: Focused executor, works ALONE, no delegation, TODO obsessed
 
 | Variant | Model | Tools | Focus |
 |---------|-------|-------|-------|
-| sisyphus-junior-low | Haiku | Read, Glob, Grep, Edit, Write, Bash, TodoWrite | Single-file, trivial changes |
-| sisyphus-junior | Sonnet | Same | Multi-step, moderate complexity |
-| sisyphus-junior-high | Opus | Same | Multi-file, complex refactoring |
+| harmony-junior-low | Haiku | Read, Glob, Grep, Edit, Write, Bash, TodoWrite | Single-file, trivial changes |
+| harmony-junior | Sonnet | Same | Multi-step, moderate complexity |
+| harmony-junior-high | Opus | Same | Multi-file, complex refactoring |
 
 **Shared Constraints**:
 - Task tool BLOCKED (no delegation)
@@ -132,19 +132,19 @@ Output escalation recommendation:
 **Tier-Specific Behaviors**:
 
 ```markdown
-## sisyphus-junior-low
+## harmony-junior-low
 - Single-file edits only
 - Trivial changes (typos, simple additions)
 - Skip TodoWrite for <2 step tasks
 - Escalate if: multi-file changes, complex logic, architectural decisions
 
-## sisyphus-junior (medium)
+## harmony-junior (medium)
 - Multi-step tasks within a module
 - Standard complexity
 - Always use TodoWrite
 - Escalate if: system-wide changes, cross-module dependencies
 
-## sisyphus-junior-high
+## harmony-junior-high
 - Multi-file refactoring
 - Complex architectural changes
 - Deep analysis before changes
@@ -282,7 +282,7 @@ Escalate when: [specific conditions]
 
 <Escalation_Protocol>
 When you detect tasks beyond your scope, output:
-**ESCALATION RECOMMENDED**: [reason] → Use oh-my-claude-sisyphus:[higher-tier]
+**ESCALATION RECOMMENDED**: [reason] → Use say-your-harmony:[higher-tier]
 </Escalation_Protocol>
 ```
 

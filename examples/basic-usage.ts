@@ -1,21 +1,21 @@
 /**
  * Basic Usage Example
  *
- * This example demonstrates how to use Oh-My-Claude-Sisyphus
+ * This example demonstrates how to use Say-Your-Harmony
  * with the Claude Agent SDK.
  */
 
-// Note: In real usage, import from 'oh-my-claude-sisyphus'
-import { createSisyphusSession, enhancePrompt } from '../src/index.js';
+// Note: In real usage, import from 'say-your-harmony'
+import { createHarmonySession, enhancePrompt } from '../src/index.js';
 
 // For demonstration - in real usage, import from '@anthropic-ai/claude-agent-sdk'
 // import { query } from '@anthropic-ai/claude-agent-sdk';
 
 async function main() {
-  console.log('=== Oh-My-Claude-Sisyphus Example ===\n');
+  console.log('=== Say-Your-Harmony Example ===\n');
 
-  // Create a Sisyphus session
-  const session = createSisyphusSession({
+  // Create a Harmony session
+  const session = createHarmonySession({
     // Optional: custom configuration overrides
     config: {
       features: {
@@ -58,7 +58,7 @@ async function main() {
 // Real usage with Claude Agent SDK:
 import { query } from '@anthropic-ai/claude-agent-sdk';
 
-const session = createSisyphusSession();
+const session = createHarmonySession();
 
 for await (const message of query({
   prompt: session.processPrompt("ultrawork implement user authentication"),

@@ -1,7 +1,7 @@
 /**
  * Advanced Usage Example
  *
- * This example demonstrates advanced features of Oh-My-Claude-Sisyphus:
+ * This example demonstrates advanced features of Say-Your-Harmony:
  * - Custom agent configuration
  * - Custom system prompts
  * - Context file injection
@@ -9,23 +9,23 @@
  */
 
 import {
-  createSisyphusSession,
+  createHarmonySession,
   getAgentDefinitions,
-  getSisyphusSystemPrompt,
+  getHarmonySystemPrompt,
   getDefaultMcpServers
 } from '../src/index.js';
 
 async function main() {
-  console.log('=== Advanced Oh-My-Claude-Sisyphus Example ===\n');
+  console.log('=== Advanced Say-Your-Harmony Example ===\n');
 
   // Example 1: Custom agent configuration
   console.log('Example 1: Custom Agents');
 
-  const customSession = createSisyphusSession({
+  const customSession = createHarmonySession({
     config: {
       agents: {
         // Use a faster model for the orchestrator in dev
-        sisyphus: { model: 'claude-sonnet-4-5-20250514' },
+        harmony: { model: 'claude-sonnet-4-5-20250514' },
         // Disable some agents
         frontendEngineer: { enabled: false },
         documentWriter: { enabled: false }
@@ -61,7 +61,7 @@ async function main() {
   // Example 3: Custom system prompt
   console.log('Example 3: Custom System Prompt');
 
-  const customPrompt = getSisyphusSystemPrompt({
+  const customPrompt = getHarmonySystemPrompt({
     includeContinuation: true,
     customAddition: `
 ## Project-Specific Instructions
@@ -102,7 +102,7 @@ Always validate user input with Zod schemas.
   // Example 5: Full custom configuration
   console.log('Example 5: Full Custom Session');
 
-  const fullCustomSession = createSisyphusSession({
+  const fullCustomSession = createHarmonySession({
     workingDirectory: '/path/to/project',
     skipConfigLoad: true, // Don't load from files
     skipContextInjection: false, // Still inject AGENTS.md
@@ -115,7 +115,7 @@ Always:
 `,
     config: {
       agents: {
-        sisyphus: { model: 'claude-opus-4-5-20251101' }
+        harmony: { model: 'claude-opus-4-5-20251101' }
       },
       features: {
         parallelExecution: true,
@@ -154,7 +154,7 @@ Always:
 
 import { createSdkMcpServer, tool } from '@anthropic-ai/claude-agent-sdk';
 import { z } from 'zod';
-import { createSisyphusSession } from 'oh-my-claude-sisyphus';
+import { createHarmonySession } from 'say-your-harmony';
 
 // Create custom MCP server with your tools
 const customTools = createSdkMcpServer({
@@ -174,7 +174,7 @@ const customTools = createSdkMcpServer({
 });
 
 // Create session and merge custom MCP server
-const session = createSisyphusSession();
+const session = createHarmonySession();
 const options = {
   ...session.queryOptions.options,
   mcpServers: {

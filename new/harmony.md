@@ -77,8 +77,8 @@ Operation    : Deployment + Verification + Continuous Improvement
 - `oracle.ts` → `architect.ts`로 대체
 - `prometheus.ts` → `planner.ts`로 대체
 - `librarian.ts` → 삭제 (explorer에 통합)
-- `sisyphus-junior.ts` → `builder.ts`로 대체
-- `orchestrator-sisyphus.ts` → `harmony.ts`로 대체
+- `harmony-junior.ts` → `builder.ts`로 대체
+- `orchestrator-harmony.ts` → `harmony.ts`로 대체
 - `metis.ts` → 삭제 (planner에 통합)
 - `momus.ts` → 삭제 (meta-analyzer에 통합)
 - `frontend-engineer.ts` → 삭제 (builder에 통합)

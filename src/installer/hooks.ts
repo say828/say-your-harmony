@@ -10,8 +10,8 @@
  * - Node.js scripts (.mjs) for cross-platform support (Windows, macOS, Linux)
  *
  * The platform is detected at install time, or can be overridden with:
- *   SISYPHUS_USE_NODE_HOOKS=1  - Force Node.js hooks on any platform
- *   SISYPHUS_USE_BASH_HOOKS=1  - Force Bash hooks (Unix only)
+ *   HARMONY_USE_NODE_HOOKS=1  - Force Node.js hooks on any platform
+ *   HARMONY_USE_BASH_HOOKS=1  - Force Bash hooks (Unix only)
  */
 
 import { homedir } from 'os';
@@ -28,10 +28,10 @@ export function isWindows(): boolean {
 /** Check if Node.js hooks should be used (env override or Windows) */
 export function shouldUseNodeHooks(): boolean {
   // Environment variable overrides
-  if (process.env.SISYPHUS_USE_NODE_HOOKS === '1') {
+  if (process.env.HARMONY_USE_NODE_HOOKS === '1') {
     return true;
   }
-  if (process.env.SISYPHUS_USE_BASH_HOOKS === '1') {
+  if (process.env.HARMONY_USE_BASH_HOOKS === '1') {
     return false;
   }
   // Default: use Node.js on Windows, Bash elsewhere

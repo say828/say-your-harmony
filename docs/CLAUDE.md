@@ -35,7 +35,7 @@ You are an intelligent orchestrator powered by **say-your-harmony** - a developm
 
 **Goal**: Define the problem correctly (50% of success)
 
-**Agent**: `oh-my-claude-sisyphus:planner` (opus)
+**Agent**: `say-your-harmony:planner` (opus)
 
 ### Activities
 - Read ALL relevant documents
@@ -68,7 +68,7 @@ You are an intelligent orchestrator powered by **say-your-harmony** - a developm
 
 **Goal**: Design architecture with documented decisions
 
-**Agent**: `oh-my-claude-sisyphus:architect` (opus)
+**Agent**: `say-your-harmony:architect` (opus)
 
 ### Activities
 - Architecture design
@@ -115,7 +115,7 @@ You are an intelligent orchestrator powered by **say-your-harmony** - a developm
 
 **Goal**: Parallel implementation with testing (4x efficiency)
 
-**Agent**: `oh-my-claude-sisyphus:builder` (sonnet)
+**Agent**: `say-your-harmony:builder` (sonnet)
 
 ### Activities
 - **Parallel execution** (independent tasks run concurrently)
@@ -149,7 +149,7 @@ You are an intelligent orchestrator powered by **say-your-harmony** - a developm
 
 **Goal**: Deploy, verify, and improve
 
-**Agent**: `oh-my-claude-sisyphus:operator` (sonnet)
+**Agent**: `say-your-harmony:operator` (sonnet)
 
 ### Activities
 - Deployment verification
@@ -182,7 +182,7 @@ You are an intelligent orchestrator powered by **say-your-harmony** - a developm
 
 ## META-ANALYSIS (Mandatory at Phase 4 End)
 
-**Agent**: `oh-my-claude-sisyphus:meta-analyzer` (opus)
+**Agent**: `say-your-harmony:meta-analyzer` (opus)
 
 ### What Gets Generated
 1. **Work Process Structure**: Turns per phase, tool usage
@@ -211,18 +211,18 @@ Use the Task tool with full plugin-prefixed names:
 ### Core 4-Phase Agents
 | Agent | Model | Phase | Purpose |
 |-------|-------|-------|---------|
-| `oh-my-claude-sisyphus:harmony` | Opus | All | Master orchestrator for 4-phase workflow |
-| `oh-my-claude-sisyphus:planner` | Opus | Phase 1 | Problem definition, requirements gathering |
-| `oh-my-claude-sisyphus:architect` | Opus | Phase 2 | Architecture design, decision documentation |
-| `oh-my-claude-sisyphus:builder` | Sonnet | Phase 3 | Parallel implementation, testing |
-| `oh-my-claude-sisyphus:operator` | Sonnet | Phase 4 | Deployment, verification, meta-analysis |
+| `say-your-harmony:harmony` | Opus | All | Master orchestrator for 4-phase workflow |
+| `say-your-harmony:planner` | Opus | Phase 1 | Problem definition, requirements gathering |
+| `say-your-harmony:architect` | Opus | Phase 2 | Architecture design, decision documentation |
+| `say-your-harmony:builder` | Sonnet | Phase 3 | Parallel implementation, testing |
+| `say-your-harmony:operator` | Sonnet | Phase 4 | Deployment, verification, meta-analysis |
 
 ### Auxiliary Agents
 | Agent | Model | Purpose |
 |-------|-------|---------|
-| `oh-my-claude-sisyphus:explorer` | Haiku | Fast codebase search |
-| `oh-my-claude-sisyphus:documenter` | Haiku | Documentation writing |
-| `oh-my-claude-sisyphus:meta-analyzer` | Opus | Meta-analysis generation |
+| `say-your-harmony:explorer` | Haiku | Fast codebase search |
+| `say-your-harmony:documenter` | Haiku | Documentation writing |
+| `say-your-harmony:meta-analyzer` | Opus | Meta-analysis generation |
 
 ---
 

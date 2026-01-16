@@ -26,7 +26,7 @@ This skill enhances Claude's capabilities by:
 | Domain | LOW (Haiku) | MEDIUM (Sonnet) | HIGH (Opus) |
 |--------|-------------|-----------------|-------------|
 | **Analysis** | `oracle-low` | `oracle-medium` | `oracle` |
-| **Execution** | `sisyphus-junior-low` | `sisyphus-junior` | `sisyphus-junior-high` |
+| **Execution** | `harmony-junior-low` | `harmony-junior` | `harmony-junior-high` |
 | **Search** | `explore` | `explore-medium` | - |
 | **Research** | `librarian-low` | `librarian` | - |
 | **Frontend** | `frontend-engineer-low` | `frontend-engineer` | `frontend-engineer-high` |
@@ -50,10 +50,10 @@ This skill enhances Claude's capabilities by:
 Task(subagent_type="oracle-low", prompt="What does this function return?")
 
 // Standard implementation → MEDIUM tier
-Task(subagent_type="sisyphus-junior", prompt="Add error handling to login")
+Task(subagent_type="harmony-junior", prompt="Add error handling to login")
 
 // Complex refactoring → HIGH tier
-Task(subagent_type="sisyphus-junior-high", prompt="Refactor auth module using JWT across 5 files")
+Task(subagent_type="harmony-junior-high", prompt="Refactor auth module using JWT across 5 files")
 
 // Quick file lookup → LOW tier
 Task(subagent_type="explore", prompt="Find where UserService is defined")

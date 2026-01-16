@@ -137,7 +137,7 @@ npm link  # Local testing
 **Delegate to meta-analyzer**:
 ```typescript
 Task({
-  subagent_type: "oh-my-claude-sisyphus:meta-analyzer",
+  subagent_type: "say-your-harmony:meta-analyzer",
   prompt: `Generate comprehensive meta-analysis for this session.
 
 Include:

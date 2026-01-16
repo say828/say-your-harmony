@@ -192,7 +192,7 @@ export interface RoutingConfig {
  * Default routing configuration
  *
  * ALL agents are adaptive except orchestrators.
- * Agent overrides are only for orchestrator-sisyphus (fixed to Opus).
+ * Agent overrides are only for orchestrator-harmony (fixed to Opus).
  */
 export const DEFAULT_ROUTING_CONFIG: RoutingConfig = {
   enabled: true,
@@ -202,7 +202,7 @@ export const DEFAULT_ROUTING_CONFIG: RoutingConfig = {
   tierModels: TIER_MODELS,
   agentOverrides: {
     // Only orchestrators are fixed - they need Opus to analyze and delegate
-    'orchestrator-sisyphus': { tier: 'HIGH', reason: 'Orchestrator requires Opus to analyze and delegate' },
+    'orchestrator-harmony': { tier: 'HIGH', reason: 'Orchestrator requires Opus to analyze and delegate' },
   },
   escalationKeywords: [
     'critical', 'production', 'urgent', 'security', 'breaking',

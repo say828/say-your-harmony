@@ -26,14 +26,14 @@ export const DEFAULT_ROUTING_RULES: RoutingRule[] = [
   },
 
   // NOTE: ALL agents are now ADAPTIVE based on task complexity
-  // Only orchestrators (orchestrator-sisyphus) are fixed to Opus
+  // Only orchestrators (orchestrator-harmony) are fixed to Opus
   // This includes: oracle, prometheus, momus, metis, explore, document-writer, etc.
 
   // ============ Orchestrator Rule (Fixed Tier) ============
 
   {
     name: 'orchestrator-fixed-opus',
-    condition: (ctx) => ctx.agentType === 'orchestrator-sisyphus',
+    condition: (ctx) => ctx.agentType === 'orchestrator-harmony',
     action: { tier: 'HIGH', reason: 'Orchestrator requires Opus to analyze complexity and delegate' },
     priority: 90,
   },

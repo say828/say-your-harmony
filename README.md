@@ -336,13 +336,13 @@ operator:
 
 ---
 
-## 📊 Comparison: say-your-harmony vs oh-my-claude-sisyphus
+## 📊 Comparison: say-your-harmony vs say-your-harmony
 
-| Aspect | oh-my-claude-sisyphus | say-your-harmony |
+| Aspect | say-your-harmony | say-your-harmony |
 |--------|----------------------|------------------|
 | **Agent Count** | 12 agents (specialized roles) | 8 agents (4-phase workflow) |
 | **Philosophy** | Task-based agent delegation | 4-phase structured workflow |
-| **Orchestration** | Sisyphus orchestrator | Harmony orchestrator |
+| **Orchestration** | Harmony orchestrator | Harmony orchestrator |
 | **Workflow** | Flexible agent routing | Mandatory 4-phase progression |
 | **Meta-Analysis** | Optional | Mandatory after every session |
 | **Decision Docs** | Optional | Mandatory for all decisions |
@@ -371,9 +371,29 @@ MIT License - See [LICENSE](LICENSE)
 
 ## 🙏 Acknowledgments
 
-- Inspired by [oh-my-claude-sisyphus](https://github.com/Yeachan-Heo/oh-my-claude-sisyphus)
+This project builds upon the excellent foundation provided by [**oh-my-claude-sisyphus**](https://github.com/Yeachan-Heo/oh-my-claude-sisyphus), created by Yeachan Heo. We are deeply grateful for:
+
+- **Agent orchestration architecture**: The multi-agent delegation system and skill-based routing
+- **Sisyphus's persistence principle**: The unwavering commitment to task completion
+- **Technical implementation**: TypeScript infrastructure, Claude Agent SDK integration, and tool management
+- **Open-source spirit**: Making sophisticated orchestration accessible to all
+
+Say-Your-Harmony enhances this foundation with:
+- Mandatory 4-phase structured workflow (Planning → Design → Implementation → Operation)
+- Systematic meta-analysis for continuous improvement
+- Decision documentation culture with full rationale
+- Target 4.25x efficiency through parallel execution
+- Production-ready standards enforcement
+
+We stand on the shoulders of giants. Thank you, **oh-my-claude-sisyphus**, for showing us the way.
+
+---
+
+### Additional Credits
+
 - Development philosophy from Phase 1 security implementation (2026-01-16)
 - Built with Claude Code and the Anthropic API
+- Inspired by real-world proven methodologies
 
 ---
 

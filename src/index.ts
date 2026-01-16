@@ -1,11 +1,11 @@
 /**
- * Oh-My-Claude-Sisyphus
+ * Say-Your-Harmony
  *
  * A multi-agent orchestration system for the Claude Agent SDK.
  * Inspired by oh-my-opencode, reimagined for Claude Code.
  *
  * Main features:
- * - Sisyphus: Primary orchestrator that delegates to specialized subagents
+ * - Harmony: Primary orchestrator that delegates to specialized subagents
  * - Parallel execution: Background agents run concurrently
  * - LSP/AST tools: IDE-like capabilities for agents
  * - Context management: Auto-injection from AGENTS.md/CLAUDE.md
@@ -14,7 +14,7 @@
  */
 
 import { loadConfig, findContextFiles, loadContextFromFiles } from './config/loader.js';
-import { getAgentDefinitions, sisyphusSystemPrompt } from './agents/definitions.js';
+import { getAgentDefinitions, harmonySystemPrompt } from './agents/definitions.js';
 import { getDefaultMcpServers, toSdkMcpFormat } from './mcp/servers.js';
 import { createMagicKeywordProcessor, detectMagicKeywords } from './features/magic-keywords.js';
 import { continuationSystemPromptAddition } from './features/continuation-enforcement.js';
@@ -26,7 +26,7 @@ import {
 } from './features/background-tasks.js';
 import type { PluginConfig, SessionState } from './shared/types.js';
 
-export { loadConfig, getAgentDefinitions, sisyphusSystemPrompt };
+export { loadConfig, getAgentDefinitions, harmonySystemPrompt };
 export { getDefaultMcpServers, toSdkMcpFormat } from './mcp/servers.js';
 export { lspTools, astTools, allCustomTools } from './tools/index.js';
 export { createMagicKeywordProcessor, detectMagicKeywords } from './features/magic-keywords.js';
@@ -184,7 +184,7 @@ export {
 } from './installer/index.js';
 
 /**
- * Options for creating a Sisyphus session
+ * Options for creating a Harmony session
  */
 export interface SisyphusOptions {
   /** Custom configuration (merged with loaded config) */
@@ -202,7 +202,7 @@ export interface SisyphusOptions {
 }
 
 /**
- * Result of creating a Sisyphus session
+ * Result of creating a Harmony session
  */
 export interface SisyphusSession {
   /** The query options to pass to Claude Agent SDK */
@@ -237,10 +237,10 @@ export interface SisyphusSession {
  *
  * @example
  * ```typescript
- * import { createSisyphusSession } from 'oh-my-claude-sisyphus';
+ * import { createHarmonySession } from 'say-your-harmony';
  * import { query } from '@anthropic-ai/claude-agent-sdk';
  *
- * const session = createSisyphusSession();
+ * const session = createHarmonySession();
  *
  * // Use with Claude Agent SDK
  * for await (const message of query({
@@ -251,7 +251,7 @@ export interface SisyphusSession {
  * }
  * ```
  */
-export function createSisyphusSession(options?: SisyphusOptions): SisyphusSession {
+export function createHarmonySession(options?: SisyphusOptions): SisyphusSession {
   // Load configuration
   const loadedConfig = options?.skipConfigLoad ? {} : loadConfig();
   const config: PluginConfig = {
@@ -269,7 +269,7 @@ export function createSisyphusSession(options?: SisyphusOptions): SisyphusSessio
   }
 
   // Build system prompt
-  let systemPrompt = sisyphusSystemPrompt;
+  let systemPrompt = harmonySystemPrompt;
 
   // Add continuation enforcement
   if (config.features?.continuationEnforcement !== false) {
@@ -366,11 +366,11 @@ export function enhancePrompt(prompt: string, config?: PluginConfig): string {
 /**
  * Get the system prompt for Sisyphus (for direct use)
  */
-export function getSisyphusSystemPrompt(options?: {
+export function getHarmonySystemPrompt(options?: {
   includeContinuation?: boolean;
   customAddition?: string;
 }): string {
-  let prompt = sisyphusSystemPrompt;
+  let prompt = harmonySystemPrompt;
 
   if (options?.includeContinuation !== false) {
     prompt += continuationSystemPromptAddition;
