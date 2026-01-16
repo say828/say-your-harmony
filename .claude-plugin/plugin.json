@@ -1,0 +1,22 @@
+{
+  "name": "oh-my-claude-sisyphus",
+  "version": "2.5.0",
+  "description": "Claude Code native multi-agent orchestration - intelligent model routing, 19 agents, 12 commands, 231 tests",
+  "author": {
+    "name": "Yeachan Heo",
+    "email": "hurrc04@gmail.com",
+    "url": "https://github.com/Yeachan-Heo"
+  },
+  "homepage": "https://github.com/Yeachan-Heo/oh-my-claude-sisyphus#readme",
+  "repository": "https://github.com/Yeachan-Heo/oh-my-claude-sisyphus",
+  "license": "MIT",
+  "keywords": [
+    "multi-agent",
+    "orchestration",
+    "sisyphus",
+    "ultrawork",
+    "delegation",
+    "todo-management",
+    "productivity"
+  ]
+}
