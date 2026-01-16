@@ -304,6 +304,108 @@ docs/meta/
 - Honest (include failures as anti-patterns)
 </Communication_Style>
 
+<Session_Retention>
+## Session Retention Policy (MAX 10 SESSIONS)
+
+**CRITICAL**: After aggregation, enforce maximum 10 session files.
+
+### Retention Process
+
+\`\`\`bash
+# Step 1: List all session files by date (oldest first)
+ls -1t docs/meta/session-*.md | tail -n +11
+
+# Step 2: Delete sessions beyond the 10 most recent
+# Keep: session-2026-01-08 through session-2026-01-17 (latest 10)
+# Delete: session-2026-01-01 through session-2026-01-07 (older than 10)
+\`\`\`
+
+### Retention Rules
+1. **MAX 10 SESSIONS** - Never exceed 10 session files
+2. **FIFO DELETION** - Delete oldest first when limit exceeded
+3. **PATTERNS.md PRESERVED** - Never delete the master library
+4. **COUNT AFTER AGGREGATION** - Check count after every aggregation
+
+### Example Cleanup
+\`\`\`
+Before (12 sessions):
+docs/meta/
+├── session-2026-01-01-meta.md  ← DELETE (oldest)
+├── session-2026-01-02-meta.md  ← DELETE
+├── session-2026-01-08-meta.md  ← KEEP (within 10)
+├── ...
+├── session-2026-01-17-meta.md  ← KEEP (newest)
+└── PATTERNS.md                 ← ALWAYS KEEP
+
+After (10 sessions):
+docs/meta/
+├── session-2026-01-08-meta.md
+├── ...
+├── session-2026-01-17-meta.md
+└── PATTERNS.md
+\`\`\`
+
+</Session_Retention>
+
+<Incremental_Aggregation>
+## Incremental Aggregation (Unique Patterns Only)
+
+**Don't re-add existing patterns**. Only integrate NEW, UNIQUE patterns.
+
+### Incremental Process
+
+\`\`\`markdown
+## Step 1: Read existing PATTERNS.md
+- Extract all existing pattern names
+- Note current frequency counts
+
+## Step 2: Read new session meta-analysis
+- Extract patterns from new session
+
+## Step 3: Compare and merge
+For each pattern in new session:
+  - IF pattern exists in PATTERNS.md:
+      → INCREMENT frequency count (+1)
+      → ADD session reference to evidence list
+  - IF pattern is NEW:
+      → ADD to PATTERNS.md with count = 1
+      → CREATE new pattern entry
+
+## Step 4: Update metrics
+- Recalculate averages
+- Update trend indicators (↑/↓/→)
+\`\`\`
+
+### Duplicate Detection
+\`\`\`markdown
+Pattern is DUPLICATE if:
+- Same problem description (>80% similarity)
+- Same solution approach
+- Same phase category
+
+Pattern is NEW if:
+- Different problem type
+- Novel solution approach
+- First occurrence of this insight
+\`\`\`
+
+### Example Incremental Update
+\`\`\`markdown
+BEFORE (PATTERNS.md):
+### Pattern: Verify Primary Source [3 occurrences]
+Sessions: 2026-01-15, 2026-01-16, 2026-01-17
+
+NEW SESSION (2026-01-18):
+Pattern found: "Always verify main document first"
+→ SAME as "Verify Primary Source"
+
+AFTER (PATTERNS.md):
+### Pattern: Verify Primary Source [4 occurrences]  ← Count updated
+Sessions: 2026-01-15, 2026-01-16, 2026-01-17, 2026-01-18  ← Session added
+\`\`\`
+
+</Incremental_Aggregation>
+
 <Critical_Rules>
 1. **READ ALL META FILES** - Don't sample, read everything
 2. **DEDUPLICATE RIGOROUSLY** - Same pattern = merge with count
@@ -313,6 +415,8 @@ docs/meta/
 6. **CALCULATE TRENDS** - Show improvement over time
 7. **OUTPUT TO PATTERNS.md** - Standard location, standard format
 8. **HANDLE EMPTY GRACEFULLY** - If no metas exist, inform user clearly
+9. **MAX 10 SESSIONS** - Delete oldest sessions when limit exceeded
+10. **INCREMENTAL MERGE** - Only add unique patterns, increment existing
 
 Meta-aggregation is complete when:
 - ✅ All meta files processed
@@ -321,6 +425,7 @@ Meta-aggregation is complete when:
 - ✅ Anti-patterns documented
 - ✅ PATTERNS.md generated
 - ✅ Improvement backlog prioritized
+- ✅ Session count ≤ 10 (oldest deleted if exceeded)
 </Critical_Rules>`;
 
 export const metaAggregatorAgent: AgentConfig = {

@@ -2,13 +2,14 @@
 
 ## Description
 
-Analyzes all existing meta-analysis documents and consolidates them into a unified **Master Patterns Library** (`docs/meta/PATTERNS.md`).
+Analyzes all existing meta-analysis documents and consolidates them into a unified **Master Patterns Library** (`docs/meta/PATTERNS.md`). Enforces **maximum 10 session files** retention policy.
 
 ## Usage
 
 ```bash
-/aggregate
-/aggregate --force    # Regenerate even if PATTERNS.md exists
+/aggregate              # Incremental aggregation + cleanup
+/aggregate --force      # Full regeneration of PATTERNS.md
+/aggregate --dry-run    # Show what would happen without changes
 ```
 
 ## What It Does
@@ -16,21 +17,28 @@ Analyzes all existing meta-analysis documents and consolidates them into a unifi
 1. **Scans** `docs/meta/session-*.md` for all meta-analyses
 2. **Extracts** patterns, decisions, metrics from each
 3. **Deduplicates** similar patterns (merge with frequency count)
-4. **Ranks** patterns by occurrence frequency
-5. **Analyzes** trends over time
-6. **Identifies** anti-patterns (failures)
-7. **Generates** `docs/meta/PATTERNS.md` master library
+4. **Incremental merge** - Only adds NEW unique patterns to PATTERNS.md
+5. **Ranks** patterns by occurrence frequency
+6. **Analyzes** trends over time
+7. **Identifies** anti-patterns (failures)
+8. **Generates/Updates** `docs/meta/PATTERNS.md` master library
+9. **Enforces retention** - Keeps only latest 10 sessions, deletes oldest
 
 ## Output
 
 ```
-docs/meta/PATTERNS.md
+docs/meta/
+├── session-2026-01-08-meta.md  ← 최근 10개만 유지
+├── session-2026-01-09-meta.md
+├── ...
+├── session-2026-01-17-meta.md
+└── PATTERNS.md                 ← 마스터 패턴 라이브러리
 
 # Master Patterns Library
 
 **Generated**: 2026-01-17 14:30
-**Sessions analyzed**: 5
-**Total patterns**: 12 (from 23 raw - 48% deduplication)
+**Sessions analyzed**: 10 (max retention)
+**Total patterns**: 12 (incremental merge)
 
 ## Quick Reference
 - [Planning] Verify primary source first [5x]
@@ -49,6 +57,15 @@ docs/meta/PATTERNS.md
 ## Improvement Backlog
 ...
 ```
+
+## Session Retention Policy
+
+| Rule | Description |
+|------|-------------|
+| **MAX 10** | 최대 10개 세션 파일만 유지 |
+| **FIFO** | 가장 오래된 세션부터 삭제 |
+| **PATTERNS.md** | 마스터 라이브러리는 항상 보존 |
+| **Incremental** | 중복 패턴은 빈도만 증가, 새 패턴만 추가 |
 
 ## When to Use
 
