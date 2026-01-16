@@ -61,11 +61,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/say/say-your-harmony.git"
+    "url": "git+https://github.com/say828/say-your-harmony.git"
   },
-  "homepage": "https://github.com/say/say-your-harmony#readme",
+  "homepage": "https://github.com/say828/say-your-harmony#readme",
   "bugs": {
-    "url": "https://github.com/say/say-your-harmony/issues"
+    "url": "https://github.com/say828/say-your-harmony/issues"
   },
   "author": "Yeachan Heo",
   "license": "MIT",
