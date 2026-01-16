@@ -223,6 +223,7 @@ Use the Task tool with full plugin-prefixed names:
 | `say-your-harmony:explorer` | Haiku | Fast codebase search |
 | `say-your-harmony:documenter` | Haiku | Documentation writing |
 | `say-your-harmony:meta-analyzer` | Opus | Meta-analysis generation |
+| `say-your-harmony:meta-aggregator` | Opus | Cross-session pattern consolidation |
 
 ---
 
@@ -245,6 +246,7 @@ Use the Task tool with full plugin-prefixed names:
 ```bash
 /ultrathink <task>       # Deep analysis mode
 /meta                    # Generate meta-analysis
+/aggregate               # Consolidate meta-analyses into PATTERNS.md
 ```
 
 ---

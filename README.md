@@ -13,7 +13,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7%2B-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green?style=flat-square&logo=node.js)](https://nodejs.org/)
 
-[![8 Agents](https://img.shields.io/badge/🤖_Agents-8-blue?style=flat-square)](./src/agents)
+[![9 Agents](https://img.shields.io/badge/🤖_Agents-9-blue?style=flat-square)](./src/agents)
 [![4 Skills](https://img.shields.io/badge/⚡_Skills-4-purple?style=flat-square)](./skills)
 [![7 Commands](https://img.shields.io/badge/📝_Commands-7-orange?style=flat-square)](./commands)
 [![4x Efficiency](https://img.shields.io/badge/⚡_Parallel_Speedup-4.25x-brightgreen?style=flat-square)](#)
@@ -77,7 +77,7 @@ Say-Your-Harmony enforces a structured development methodology through four mand
 
 ---
 
-## 🤖 The 8-Agent System
+## 🤖 The 9-Agent System
 
 ### Core Agents (4-Phase Workflow)
 
@@ -96,6 +96,7 @@ Say-Your-Harmony enforces a structured development methodology through four mand
 | **explorer** | Fast codebase search and pattern discovery | haiku |
 | **documenter** | Technical writing and documentation | haiku |
 | **meta-analyzer** | Session analysis and pattern extraction | opus |
+| **meta-aggregator** | Cross-session pattern consolidation | opus |
 
 ---
 
@@ -161,7 +162,7 @@ claude  # Start Claude Code
 ```
 
 The configuration enables:
-- **8-Agent System**: planner, architect, builder, operator, explorer, documenter, meta-analyzer, harmony
+- **9-Agent System**: planner, architect, builder, operator, explorer, documenter, meta-analyzer, meta-aggregator, harmony
 - **7 Slash Commands**: /harmony, /plan, /design, /build, /operate, /meta, /ultrathink
 - **4 Skills**: ultrathink, parallel, meta, phase
 - **Keyword Detection**: Automatic activation for "harmony", "4-phase", "ultrathink"
@@ -195,6 +196,9 @@ Task({ subagent_type: "builder", prompt: "Implement auth handlers" })
 
 # Invoke operator for deployment
 Task({ subagent_type: "operator", prompt: "Deploy and verify build" })
+
+# Invoke meta-aggregator to consolidate patterns
+/aggregate  # Consolidates insights across multiple meta-analysis sessions
 ```
 
 ---
@@ -326,7 +330,7 @@ graph LR
 ```
 say-your-harmony/
 ├── src/
-│   ├── agents/          # 8 agent implementations
+│   ├── agents/          # 9 agent implementations
 │   │   ├── harmony.ts         # Main orchestrator
 │   │   ├── planner.ts         # Phase 1: Planning
 │   │   ├── architect.ts       # Phase 2: Design
@@ -334,7 +338,8 @@ say-your-harmony/
 │   │   ├── operator.ts        # Phase 4: Operation
 │   │   ├── explorer.ts        # Support: Code search
 │   │   ├── documenter.ts      # Support: Documentation
-│   │   └── meta-analyzer.ts   # Support: Meta-analysis
+│   │   ├── meta-analyzer.ts   # Support: Meta-analysis
+│   │   └── meta-aggregator.ts # Support: Cross-session consolidation
 │   ├── features/        # Feature modules
 │   ├── cli/             # CLI entry point
 │   └── index.ts         # Main exports
@@ -407,7 +412,7 @@ operator:
 
 | Aspect | say-your-harmony | oh-my-claude-sisyphus |
 |--------|----------------------|------------------|
-| **Agent Count** | 12 agents (specialized roles) | 8 agents (4-phase workflow) |
+| **Agent Count** | 12 agents (specialized roles) | 9 agents (4-phase workflow) |
 | **Philosophy** | Task-based agent delegation | 4-phase structured workflow |
 | **Orchestration** | Harmony orchestrator | Harmony orchestrator |
 | **Workflow** | Flexible agent routing | Mandatory 4-phase progression |

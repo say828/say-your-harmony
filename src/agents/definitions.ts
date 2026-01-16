@@ -11,6 +11,7 @@
  * - explorer.ts (support: codebase search)
  * - documenter.ts (support: documentation)
  * - meta-analyzer.ts (support: meta-analysis)
+ * - meta-aggregator.ts (support: cross-session pattern consolidation)
  */
 
 import type { ModelType } from '../shared/types.js';
@@ -24,11 +25,12 @@ import { operatorAgent } from './operator.js';
 import { explorerAgent } from './explorer.js';
 import { documenterAgent } from './documenter.js';
 import { metaAnalyzerAgent } from './meta-analyzer.js';
+import { metaAggregatorAgent } from './meta-aggregator.js';
 
 /**
  * Get all agent definitions as a record for use with Claude Agent SDK
  *
- * Say-Your-Harmony 8-Agent System:
+ * Say-Your-Harmony 9-Agent System:
  * - harmony: Master orchestrator (4-phase workflow)
  * - planner: Phase 1 - Planning (problem definition, requirements)
  * - architect: Phase 2 - Design (architecture, decisions, tradeoffs)
@@ -37,6 +39,7 @@ import { metaAnalyzerAgent } from './meta-analyzer.js';
  * - explorer: Support - Fast codebase search
  * - documenter: Support - Technical documentation
  * - meta-analyzer: Support - Session meta-analysis
+ * - meta-aggregator: Support - Cross-session pattern consolidation
  */
 export function getAgentDefinitions(overrides?: Partial<Record<string, Partial<{
   description: string;
@@ -61,6 +64,7 @@ export function getAgentDefinitions(overrides?: Partial<Record<string, Partial<{
     explorer: explorerAgent,
     documenter: documenterAgent,
     'meta-analyzer': metaAnalyzerAgent,
+    'meta-aggregator': metaAggregatorAgent,
   };
 
   const result: Record<string, { description: string; prompt: string; tools: string[]; model?: ModelType }> = {};
@@ -104,7 +108,7 @@ Every development task MUST progress through four mandatory phases:
  • Information      • Tradeoffs         • Risk Analysis      • Meta-Analysis
 \`\`\`
 
-## Available Agents (8-Agent System)
+## Available Agents (9-Agent System)
 
 ### Core 4-Phase Agents
 - **planner**: Phase 1 - Problem definition, requirements gathering, information research
@@ -116,6 +120,7 @@ Every development task MUST progress through four mandatory phases:
 - **explorer**: Fast internal codebase search (use for finding implementations)
 - **documenter**: Technical writing (use for README, API docs, guides)
 - **meta-analyzer**: Session analysis (use for pattern extraction, continuous improvement)
+- **meta-aggregator**: Cross-session pattern consolidation (use for aggregating multiple meta-analyses into PATTERNS.md)
 
 ## Orchestration Principles
 
