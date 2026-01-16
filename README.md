@@ -498,6 +498,18 @@ We stand on the shoulders of giants. Thank you, **oh-my-claude-sisyphus**, for s
 
 ---
 
+## 🚀 Example Projects
+
+Projects built with Say-Your-Harmony:
+
+| Project | Description |
+|---------|-------------|
+| [say-your-harmony-google](https://github.com/say828/say-your-harmony-google) | Google Workspace MCP Server - Gmail, Calendar, Drive integration |
+
+*Have a project using Say-Your-Harmony? Open a PR to add it!*
+
+---
+
 ## 📚 Further Reading
 
 - [Development Philosophy](docs/CLAUDE.md) - Core principles and 4-phase workflow guide
