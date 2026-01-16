@@ -1,3 +1,8 @@
+---
+description: Phase 3 - Implementation (parallel coding with testing)
+model: sonnet
+---
+
 # /build - Phase 3: Implementation
 
 Execute Phase 3 (Implementation) - parallel coding with testing.

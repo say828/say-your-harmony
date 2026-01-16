@@ -1,3 +1,8 @@
+---
+description: Generate comprehensive meta-analysis for current session
+model: opus
+---
+
 # /meta - Generate Meta-Analysis
 
 Generate comprehensive meta-analysis document for the current session.

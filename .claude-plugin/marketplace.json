@@ -10,7 +10,7 @@
     {
       "name": "say-your-harmony",
       "description": "4-Phase Development Orchestration System: Planning, Design, Implementation, Operation. Features 9 specialized agents (harmony, planner, architect, builder, operator, explorer, documenter, meta-analyzer, meta-aggregator), meta-analysis feedback loop, session retention, and 4.25x efficiency via parallel execution.",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "Say",
         "email": "say@example.com"

@@ -1,3 +1,9 @@
+---
+description: Phase 1 - Planning (problem definition & requirements)
+argument-hint: <task description>
+model: opus
+---
+
 # /plan - Phase 1: Planning
 
 Execute Phase 1 (Planning) only - problem definition and requirements gathering.

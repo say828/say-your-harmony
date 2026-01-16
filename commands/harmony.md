@@ -1,3 +1,9 @@
+---
+description: Execute complete 4-phase development workflow
+argument-hint: <task description>
+model: opus
+---
+
 # /harmony - Complete 4-Phase Workflow
 
 Execute a task through the complete 4-phase development workflow:

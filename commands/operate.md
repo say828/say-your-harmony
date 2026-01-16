@@ -1,3 +1,8 @@
+---
+description: Phase 4 - Operation (deployment, verification & meta-analysis)
+model: sonnet
+---
+
 # /operate - Phase 4: Operation
 
 Execute Phase 4 (Operation) - deployment, verification, and meta-analysis.

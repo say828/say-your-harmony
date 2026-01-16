@@ -1,6 +1,6 @@
 {
   "name": "say-your-harmony",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "4-Phase Development Orchestration System for Claude Code - Planning, Design, Implementation, Operation",
   "type": "module",
   "main": "dist/index.js",

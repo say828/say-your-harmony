@@ -1,3 +1,9 @@
+---
+description: Consolidate meta-analyses into master patterns library
+argument-hint: [--force | --dry-run]
+model: opus
+---
+
 # /aggregate - Consolidate Meta-Analyses into Master Patterns Library
 
 ## Description

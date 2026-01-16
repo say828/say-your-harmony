@@ -1,3 +1,8 @@
+---
+description: Phase 2 - Design (architecture & decision documentation)
+model: opus
+---
+
 # /design - Phase 2: Design
 
 Execute Phase 2 (Design) - architecture design and decision documentation.

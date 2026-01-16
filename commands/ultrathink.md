@@ -1,3 +1,9 @@
+---
+description: Deep structured analysis mode for complex problems
+argument-hint: <task description>
+model: opus
+---
+
 # /ultrathink - Deep Analysis Mode
 
 Activate deep, structured analysis mode for complex problems.
