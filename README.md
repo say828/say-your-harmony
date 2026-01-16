@@ -101,20 +101,70 @@ Say-Your-Harmony enforces a structured development methodology through four mand
 
 ## ⚡ Quick Install
 
-### Option A: Clone and Build (Development)
+**Choose ONE installation method below. Do not mix methods.**
+
+### Option A: Claude Code Plugin (Recommended - Coming Soon)
+
+In Claude Code, run:
 
 ```bash
-git clone https://github.com/say/say-your-harmony.git
-cd say-your-harmony
-npm install
-npm run build
+/plugin marketplace add say828/say-your-harmony
+/plugin install say-your-harmony
 ```
 
-### Option B: npm Package (Coming Soon)
+Direct integration with Claude Code's plugin system. Requires Node.js 20+.
+
+### Option B: Curl One-Liner (macOS/Linux)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/say828/say-your-harmony/main/scripts/install.sh | bash
+```
+
+Installs agents, commands, and skills to `~/.claude/` directory.
+
+### Option C: npm Global Install (Windows & Cross-Platform)
 
 ```bash
 npm install -g say-your-harmony
 ```
+
+Cross-platform installation. Recommended for Windows users. Requires Node.js 20+.
+
+### Option D: Manual Clone (Development)
+
+```bash
+git clone https://github.com/say828/say-your-harmony.git
+cd say-your-harmony
+npm install
+npm run build
+chmod +x scripts/install.sh
+./scripts/install.sh
+```
+
+Best for development and customization.
+
+---
+
+## 📋 Post-Installation Configuration
+
+After installation, configure Say-Your-Harmony by running:
+
+```bash
+# Configure globally (~/.claude/CLAUDE.md)
+# This makes harmony available in all Claude Code sessions
+claude  # Start Claude Code
+# Then in the session:
+# The system is automatically configured via install.sh
+
+# Or for project-specific configuration (./.claude/CLAUDE.md)
+# Copy the CLAUDE.md template to your project directory
+```
+
+The configuration enables:
+- **8-Agent System**: planner, architect, builder, operator, explorer, documenter, meta-analyzer, harmony
+- **7 Slash Commands**: /harmony, /plan, /design, /build, /operate, /meta, /ultrathink
+- **4 Skills**: ultrathink, parallel, meta, phase
+- **Keyword Detection**: Automatic activation for "harmony", "4-phase", "ultrathink"
 
 ---
 
@@ -238,7 +288,7 @@ docs/meta/session-2026-01-16-14-30.md
 
 ### Agent Flow
 
-\`\`\`mermaid
+```mermaid
 graph TD
     A[User Request] --> B[harmony]
     B --> C[planner]
@@ -252,11 +302,11 @@ graph TD
     I[documenter] -.-> E
 
     G --> J[docs/meta/session.md]
-\`\`\`
+```
 
 ### Parallel Execution
 
-\`\`\`mermaid
+```mermaid
 graph LR
     A[builder] --> B1[Component 1]
     A --> B2[Component 2]
@@ -267,7 +317,7 @@ graph LR
     B2 --> C
     B3 --> C
     B4 --> C
-\`\`\`
+```
 
 ---
 
@@ -329,7 +379,7 @@ Create `.harmonyrc.yaml` in your project root:
 ```yaml
 # 4-Phase Workflow Configuration
 agents:
-  model: "claude-3.5-sonnet"  # Default LLM model
+  model: "claude-4.5-opus"  # Default LLM model
 
 # Orchestrator behavior
 orchestrator:

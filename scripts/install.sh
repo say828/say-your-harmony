@@ -587,16 +587,16 @@ fi
 PROMPT_NO_CODE=$(echo "$PROMPT" | sed 's/```[^`]*```//g' | sed 's/`[^`]*`//g')
 PROMPT_LOWER=$(echo "$PROMPT_NO_CODE" | tr '[:upper:]' '[:lower:]')
 
-# Check for harmony keywords
-if echo "$PROMPT_LOWER" | grep -qE '\b(harmony|4-phase|four.?phase)\b'; then
+# Check for harmony keywords (multilingual)
+if echo "$PROMPT_NO_CODE" | grep -qE '(harmony|4-phase|four.?phase|하모니|4단계|ハーモニー|armonía|harmonie)'; then
   cat << 'EOF'
 {"continue": true, "message": "<harmony-mode>\n\n**4-PHASE DEVELOPMENT ACTIVATED**\n\nEvery task follows: Planning → Design → Implementation → Operation\n\nAgents: planner, architect, builder, operator, explorer, documenter, meta-analyzer\n\nTarget: 4.25x efficiency via parallel execution + meta-analysis for continuous improvement.\n\n</harmony-mode>\n\n---\n"}
 EOF
   exit 0
 fi
 
-# Check for ultrathink keywords
-if echo "$PROMPT_LOWER" | grep -qE '\b(ultrathink|think)\b'; then
+# Check for ultrathink keywords (multilingual)
+if echo "$PROMPT_NO_CODE" | grep -qE '(ultrathink|울트라씽크|깊게생각|深く考え|pensar profundo)'; then
   cat << 'EOF'
 {"continue": true, "message": "<think-mode>\n\n**ULTRATHINK MODE ENABLED**\n\nDeep analysis activated:\n1. Consider 3+ alternatives\n2. Document tradeoffs\n3. Identify risks\n4. Structured reasoning\n\n</think-mode>\n\n---\n"}
 EOF
