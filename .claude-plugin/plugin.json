@@ -1,7 +1,7 @@
 {
   "name": "say-your-harmony",
-  "version": "1.0.0",
-  "description": "4-Phase Development Orchestration for Claude Code - Planning, Design, Implementation, Operation with 8 specialized agents",
+  "version": "1.0.1",
+  "description": "4-Phase Development Orchestration for Claude Code - Planning, Design, Implementation, Operation with 9 specialized agents",
   "author": {
     "name": "Say",
     "url": "https://github.com/say"
