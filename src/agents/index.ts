@@ -21,20 +21,19 @@ export {
   deepMerge
 } from './utils.js';
 
-// Individual agent exports (new modular structure)
-export { oracleAgent, ORACLE_PROMPT_METADATA } from './oracle.js';
-export { exploreAgent, EXPLORE_PROMPT_METADATA } from './explore.js';
-export { librarianAgent, LIBRARIAN_PROMPT_METADATA } from './librarian.js';
-export { sisyphusJuniorAgent, SISYPHUS_JUNIOR_PROMPT_METADATA } from './sisyphus-junior.js';
-export { frontendEngineerAgent, FRONTEND_ENGINEER_PROMPT_METADATA } from './frontend-engineer.js';
-export { documentWriterAgent, DOCUMENT_WRITER_PROMPT_METADATA } from './document-writer.js';
-export { multimodalLookerAgent, MULTIMODAL_LOOKER_PROMPT_METADATA } from './multimodal-looker.js';
-export { momusAgent, MOMUS_PROMPT_METADATA } from './momus.js';
-export { metisAgent, METIS_PROMPT_METADATA } from './metis.js';
-// orchestrator-sisyphus: DEPRECATED - merged into default mode
-// export { orchestratorSisyphusAgent, ORCHESTRATOR_SISYPHUS_PROMPT_METADATA } from './orchestrator-sisyphus.js';
-export { prometheusAgent, PROMETHEUS_PROMPT_METADATA } from './prometheus.js';
-export { qaTesterAgent, QA_TESTER_PROMPT_METADATA } from './qa-tester.js';
+// Individual agent exports (say-your-harmony 4-phase system)
+
+// Core agents (4-phase workflow)
+export { harmonyAgent, HARMONY_PROMPT_METADATA } from './harmony.js';
+export { plannerAgent, PLANNER_PROMPT_METADATA } from './planner.js';
+export { architectAgent, ARCHITECT_PROMPT_METADATA } from './architect.js';
+export { builderAgent, BUILDER_PROMPT_METADATA } from './builder.js';
+export { operatorAgent, OPERATOR_PROMPT_METADATA } from './operator.js';
+
+// Support agents
+export { explorerAgent, EXPLORER_PROMPT_METADATA } from './explorer.js';
+export { documenterAgent, DOCUMENTER_PROMPT_METADATA } from './documenter.js';
+export { metaAnalyzerAgent, META_ANALYZER_PROMPT_METADATA } from './meta-analyzer.js';
 
 // Legacy exports (backward compatibility - getAgentDefinitions and sisyphusSystemPrompt)
 export {

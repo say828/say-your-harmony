@@ -1,7 +1,7 @@
 {
-  "name": "oh-my-claude-sisyphus",
-  "version": "2.5.0",
-  "description": "Multi-agent orchestration system for Claude Code - Inspired by oh-my-opencode",
+  "name": "say-your-harmony",
+  "version": "1.0.0",
+  "description": "4-Phase Development Orchestration System for Claude Code - Planning, Design, Implementation, Operation",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,8 @@
     }
   },
   "bin": {
-    "oh-my-claude-sisyphus": "dist/cli/index.js"
+    "say-your-harmony": "dist/cli/index.js",
+    "syh": "dist/cli/index.js"
   },
   "files": [
     "dist",
@@ -60,11 +61,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Yeachan-Heo/oh-my-claude-sisyphus.git"
+    "url": "git+https://github.com/say/say-your-harmony.git"
   },
-  "homepage": "https://github.com/Yeachan-Heo/oh-my-claude-sisyphus#readme",
+  "homepage": "https://github.com/say/say-your-harmony#readme",
   "bugs": {
-    "url": "https://github.com/Yeachan-Heo/oh-my-claude-sisyphus/issues"
+    "url": "https://github.com/say/say-your-harmony/issues"
   },
   "author": "Yeachan Heo",
   "license": "MIT",
@@ -75,7 +76,11 @@
     "agent",
     "multi-agent",
     "orchestration",
-    "sisyphus",
+    "planning",
+    "design",
+    "implementation",
+    "operation",
+    "meta-analysis",
     "anthropic",
     "llm"
   ],

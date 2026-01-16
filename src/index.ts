@@ -136,28 +136,23 @@ export {
   buildKeyTriggersSection,
   validateAgentConfig,
   deepMerge,
-  // Individual agents with metadata
-  oracleAgent,
-  ORACLE_PROMPT_METADATA,
-  exploreAgent,
-  EXPLORE_PROMPT_METADATA,
-  librarianAgent,
-  LIBRARIAN_PROMPT_METADATA,
-  sisyphusJuniorAgent,
-  SISYPHUS_JUNIOR_PROMPT_METADATA,
-  frontendEngineerAgent,
-  FRONTEND_ENGINEER_PROMPT_METADATA,
-  documentWriterAgent,
-  DOCUMENT_WRITER_PROMPT_METADATA,
-  multimodalLookerAgent,
-  MULTIMODAL_LOOKER_PROMPT_METADATA,
-  momusAgent,
-  MOMUS_PROMPT_METADATA,
-  metisAgent,
-  METIS_PROMPT_METADATA,
-  // orchestrator-sisyphus: DEPRECATED - merged into default mode
-  prometheusAgent,
-  PROMETHEUS_PROMPT_METADATA
+  // say-your-harmony agents (4-phase system)
+  harmonyAgent,
+  HARMONY_PROMPT_METADATA,
+  plannerAgent,
+  PLANNER_PROMPT_METADATA,
+  architectAgent,
+  ARCHITECT_PROMPT_METADATA,
+  builderAgent,
+  BUILDER_PROMPT_METADATA,
+  operatorAgent,
+  OPERATOR_PROMPT_METADATA,
+  explorerAgent,
+  EXPLORER_PROMPT_METADATA,
+  documenterAgent,
+  DOCUMENTER_PROMPT_METADATA,
+  metaAnalyzerAgent,
+  META_ANALYZER_PROMPT_METADATA
 } from './agents/index.js';
 
 // Command expansion utilities for SDK integration
