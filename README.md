@@ -83,18 +83,18 @@ Say-Your-Harmony enforces a structured development methodology through four mand
 
 ### Option A: Clone and Build (Development)
 
-\`\`\`bash
+```bash
 git clone https://github.com/say/say-your-harmony.git
 cd say-your-harmony
 npm install
 npm run build
-\`\`\`
+```
 
 ### Option B: npm Package (Coming Soon)
 
-\`\`\`bash
+```bash
 npm install -g say-your-harmony
-\`\`\`
+```
 
 ---
 
@@ -113,7 +113,7 @@ When you receive a development task, the **harmony** orchestrator will automatic
 
 You can also invoke specific agents directly:
 
-\`\`\`bash
+```bash
 # Invoke planner for a new feature
 Task({ subagent_type: "planner", prompt: "Plan authentication system" })
 
@@ -125,7 +125,7 @@ Task({ subagent_type: "builder", prompt: "Implement auth handlers" })
 
 # Invoke operator for deployment
 Task({ subagent_type: "operator", prompt: "Deploy and verify build" })
-\`\`\`
+```
 
 ---
 
@@ -184,7 +184,7 @@ After every major task, the **operator** agent automatically generates a compreh
 
 ### Meta-Analysis Output
 
-\`\`\`markdown
+```markdown
 docs/meta/session-2026-01-16-14-30.md
 
 ## Session Meta-Analysis: [Task Name]
@@ -210,7 +210,7 @@ docs/meta/session-2026-01-16-14-30.md
 
 ### Improvement Opportunities
 [Actionable recommendations]
-\`\`\`
+```
 
 ---
 
@@ -253,7 +253,7 @@ graph LR
 
 ## 📁 Project Structure
 
-\`\`\`
+```
 say-your-harmony/
 ├── src/
 │   ├── agents/          # 8 agent implementations
@@ -278,7 +278,7 @@ say-your-harmony/
 │   ├── session.md       # Full session transcript
 │   └── development-philosophy.md  # Core principles
 └── package.json
-\`\`\`
+```
 
 ---
 
@@ -306,7 +306,7 @@ This project embodies a proven development methodology extracted from real-world
 
 Create `.harmonyrc.yaml` in your project root:
 
-\`\`\`yaml
+```yaml
 # 4-Phase Workflow Configuration
 agents:
   model: "claude-3.5-sonnet"  # Default LLM model
@@ -332,13 +332,13 @@ builder:
 operator:
   auto_meta_analysis: true    # Generate meta-analysis after completion
   deployment_verification: true
-\`\`\`
+```
 
 ---
 
-## 📊 Comparison: say-your-harmony vs say-your-harmony
+## 📊 Comparison: say-your-harmony vs oh-my-claude-sisyphus
 
-| Aspect | say-your-harmony | say-your-harmony |
+| Aspect | say-your-harmony | oh-my-claude-sisyphus |
 |--------|----------------------|------------------|
 | **Agent Count** | 12 agents (specialized roles) | 8 agents (4-phase workflow) |
 | **Philosophy** | Task-based agent delegation | 4-phase structured workflow |
