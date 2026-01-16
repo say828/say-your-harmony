@@ -1,22 +1,23 @@
 {
   "name": "say-your-harmony",
-  "version": "2.5.0",
-  "description": "Claude Code native multi-agent orchestration - intelligent model routing, 19 agents, 12 commands, 231 tests",
+  "version": "1.0.0",
+  "description": "4-Phase Development Orchestration for Claude Code - Planning, Design, Implementation, Operation with 8 specialized agents",
   "author": {
-    "name": "Yeachan Heo",
-    "email": "hurrc04@gmail.com",
-    "url": "https://github.com/Yeachan-Heo"
+    "name": "Say",
+    "url": "https://github.com/say"
   },
-  "homepage": "https://github.com/Yeachan-Heo/say-your-harmony#readme",
-  "repository": "https://github.com/Yeachan-Heo/say-your-harmony",
+  "homepage": "https://github.com/say/say-your-harmony#readme",
+  "repository": "https://github.com/say/say-your-harmony",
   "license": "MIT",
   "keywords": [
-    "multi-agent",
+    "4-phase",
     "orchestration",
     "harmony",
-    "ultrawork",
-    "delegation",
-    "todo-management",
-    "productivity"
+    "planning",
+    "design",
+    "implementation",
+    "operation",
+    "meta-analysis",
+    "parallel-execution"
   ]
 }
