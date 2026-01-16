@@ -504,7 +504,9 @@ Projects built with Say-Your-Harmony:
 
 | Project | Description |
 |---------|-------------|
-| [say-your-harmony-google](https://github.com/say828/say-your-harmony-google) | Google Workspace MCP Server - Gmail, Calendar, Drive integration |
+| [say-your-harmony-google](https://github.com/say828/say-your-harmony-google) | YouTube Spring Cloud Backend - 25개 마이크로서비스 기반 대규모 비디오 플랫폼 |
+
+**Features**: Spring Cloud (Config, Eureka, Gateway), Kafka, Elasticsearch, Redis, HLS/DASH 스트리밍
 
 *Have a project using Say-Your-Harmony? Open a PR to add it!*
 
