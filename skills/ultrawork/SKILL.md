@@ -1,0 +1,86 @@
+---
+name: ultrawork
+description: Activate maximum performance mode with parallel agent orchestration for high-throughput task completion
+---
+
+# Ultrawork Skill
+
+Activates maximum performance mode with parallel agent orchestration.
+
+## When Activated
+
+This skill enhances Claude's capabilities by:
+
+1. **Parallel Execution**: Running multiple agents simultaneously for independent tasks
+2. **Aggressive Delegation**: Routing tasks to specialist agents immediately
+3. **Background Operations**: Using `run_in_background: true` for long operations
+4. **Persistence Enforcement**: Never stopping until all tasks are verified complete
+5. **Smart Model Routing**: Using tiered agents to save tokens
+
+## Smart Model Routing (CRITICAL - SAVE TOKENS)
+
+**Choose tier based on task complexity: LOW (haiku) → MEDIUM (sonnet) → HIGH (opus)**
+
+### Available Agents by Tier
+
+| Domain | LOW (Haiku) | MEDIUM (Sonnet) | HIGH (Opus) |
+|--------|-------------|-----------------|-------------|
+| **Analysis** | `oracle-low` | `oracle-medium` | `oracle` |
+| **Execution** | `harmony-junior-low` | `harmony-junior` | `harmony-junior-high` |
+| **Search** | `explore` | `explore-medium` | - |
+| **Research** | `librarian-low` | `librarian` | - |
+| **Frontend** | `frontend-engineer-low` | `frontend-engineer` | `frontend-engineer-high` |
+| **Docs** | `document-writer` | - | - |
+| **Visual** | - | `multimodal-looker` | - |
+| **Planning** | - | - | `prometheus`, `momus`, `metis` |
+| **Testing** | - | `qa-tester` | - |
+
+### Tier Selection Guide
+
+| Task Complexity | Tier | Examples |
+|-----------------|------|----------|
+| Simple lookups | LOW | "What does this function return?", "Find where X is defined" |
+| Standard work | MEDIUM | "Add error handling", "Implement this feature" |
+| Complex analysis | HIGH | "Debug this race condition", "Refactor auth module across 5 files" |
+
+### Routing Examples
+
+```
+// Simple question → LOW tier (saves tokens!)
+Task(subagent_type="oracle-low", prompt="What does this function return?")
+
+// Standard implementation → MEDIUM tier
+Task(subagent_type="harmony-junior", prompt="Add error handling to login")
+
+// Complex refactoring → HIGH tier
+Task(subagent_type="harmony-junior-high", prompt="Refactor auth module using JWT across 5 files")
+
+// Quick file lookup → LOW tier
+Task(subagent_type="explore", prompt="Find where UserService is defined")
+
+// Thorough search → MEDIUM tier
+Task(subagent_type="explore-medium", prompt="Find all authentication patterns in the codebase")
+```
+
+## Background Execution Rules
+
+**Run in Background** (set `run_in_background: true`):
+- Package installation: npm install, pip install, cargo build
+- Build processes: npm run build, make, tsc
+- Test suites: npm test, pytest, cargo test
+- Docker operations: docker build, docker pull
+
+**Run Blocking** (foreground):
+- Quick status checks: git status, ls, pwd
+- File reads, edits
+- Simple commands
+
+## Verification Checklist
+
+Before stopping, verify:
+- [ ] TODO LIST: Zero pending/in_progress tasks
+- [ ] FUNCTIONALITY: All requested features work
+- [ ] TESTS: All tests pass (if applicable)
+- [ ] ERRORS: Zero unaddressed errors
+
+**If ANY checkbox is unchecked, CONTINUE WORKING.**

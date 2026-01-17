@@ -1,0 +1,24 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "say-your-harmony",
+  "description": "4-Phase Development Orchestration for Claude Code with 9 specialized agents",
+  "owner": {
+    "name": "Say",
+    "email": "say@example.com"
+  },
+  "plugins": [
+    {
+      "name": "say-your-harmony",
+      "description": "4-Phase Development Orchestration System: Planning, Design, Implementation, Operation. Features 9 specialized agents (harmony, planner, architect, builder, operator, explorer, documenter, meta-analyzer, meta-aggregator), meta-analysis feedback loop, session retention, and 4.25x efficiency via parallel execution.",
+      "version": "1.0.2",
+      "author": {
+        "name": "Say",
+        "email": "say@example.com"
+      },
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://github.com/say828/say-your-harmony",
+      "tags": ["4-phase", "orchestration", "planning", "design", "implementation", "operation", "meta-analysis"]
+    }
+  ]
+}

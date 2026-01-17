@@ -1,0 +1,80 @@
+name: Claude AI Assistant
+
+on:
+  # Auto-respond to issues
+  issues:
+    types: [opened, reopened]
+
+  # Handle @claude mentions in comments
+  issue_comment:
+    types: [created]
+
+  # Code review on PRs
+  pull_request:
+    types: [opened, synchronize]
+
+  # Handle PR review comments with @claude
+  pull_request_review_comment:
+    types: [created]
+
+# Prevent concurrent runs on same PR/issue
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.issue.number || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  claude:
+    runs-on: ubuntu-latest
+
+    # Only run if:
+    # - Issue/PR opened (not comment)
+    # - Comment contains @claude mention
+    # - PR opened/updated (for code review)
+    if: |
+      github.event_name == 'issues' ||
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude'))
+
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Claude Code Action
+        uses: anthropics/claude-code-action@v1
+        with:
+          api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+          # Custom system prompt for this repo
+          prompt: |
+            You are the AI assistant for say-your-harmony, a Claude Code multi-agent orchestration plugin.
+
+            Repository context:
+            - This is a Claude Code plugin with 19 specialized agents and 11 slash commands
+            - Key features: ultrawork mode, chillwork mode, deepinit, prometheus planning, ralph-loop
+            - Installation: /plugin marketplace add Yeachan-Heo/say-your-harmony
+
+            When responding to issues:
+            1. Be helpful and welcoming to new users
+            2. Recommend running /doctor for installation issues
+            3. Point users to the README for documentation
+            4. If it's a feature request, acknowledge and label appropriately
+            5. If it's a bug, ask for reproduction steps if not provided
+
+            When reviewing PRs:
+            1. Check for code quality and consistency
+            2. Verify tests are included for new features
+            3. Check that agent definitions follow existing patterns
+            4. Ensure documentation is updated if needed
+
+            When implementing changes:
+            1. Follow existing code patterns in the repo
+            2. Add tests for new functionality
+            3. Update version in .claude-plugin/plugin.json and marketplace.json if needed

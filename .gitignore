@@ -1,0 +1,26 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.harmony/
+
+# Accidentally created meta storage directory
+Users/
+
+# LaTeX build artifacts
+*.aux
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+
+# Generated PDFs (build from .tex source)
+docs/*.pdf
+# Exception: Keep single-author paper version
+!docs/me/*.pdf
+
+# Editor temporary files
+*~
+*.swp
+*.swo
