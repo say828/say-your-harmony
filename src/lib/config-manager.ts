@@ -6,10 +6,12 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+import os from 'os';
 import type { PatternConfig } from '../types/config.js';
 import { getDefaultConfig } from '../types/config.js';
 
-const CONFIG_PATH = 'docs/meta/config.json';
+// Global config path: shared across all projects
+const CONFIG_PATH = path.join(os.homedir(), '.claude', 'meta', 'config.json');
 
 export class ConfigManager {
   private static instance: ConfigManager;
@@ -17,7 +19,7 @@ export class ConfigManager {
   private configPath: string;
 
   private constructor() {
-    this.configPath = path.join(process.cwd(), CONFIG_PATH);
+    this.configPath = CONFIG_PATH;
   }
 
   /**

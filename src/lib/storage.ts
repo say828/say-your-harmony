@@ -6,9 +6,11 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+import os from 'os';
 import type { Pattern, Cluster, Phase } from '../types/pattern.js';
 
-const BASE_DIR = 'docs/meta';
+// Global meta directory: shared across all projects for cumulative learning
+const BASE_DIR = path.join(os.homedir(), '.claude', 'meta');
 
 /**
  * Ensure directory exists
@@ -34,7 +36,7 @@ async function atomicWrite(filePath: string, data: string): Promise<void> {
  * Load patterns for a given phase
  */
 export async function loadPatterns(phase: Phase): Promise<Pattern[]> {
-  const filePath = path.join(process.cwd(), BASE_DIR, phase, 'patterns.json');
+  const filePath = path.join(BASE_DIR, phase, 'patterns.json');
 
   try {
     const content = await fs.readFile(filePath, 'utf-8');
@@ -58,7 +60,7 @@ export async function loadPatterns(phase: Phase): Promise<Pattern[]> {
  * Save patterns for a given phase
  */
 export async function savePatterns(phase: Phase, patterns: Pattern[]): Promise<void> {
-  const dirPath = path.join(process.cwd(), BASE_DIR, phase);
+  const dirPath = path.join(BASE_DIR, phase);
   const filePath = path.join(dirPath, 'patterns.json');
 
   await ensureDir(dirPath);
@@ -77,7 +79,7 @@ export async function savePatterns(phase: Phase, patterns: Pattern[]): Promise<v
  * Load clusters for a given phase
  */
 export async function loadClusters(phase: Phase): Promise<Cluster[]> {
-  const filePath = path.join(process.cwd(), BASE_DIR, phase, 'clusters.json');
+  const filePath = path.join(BASE_DIR, phase, 'clusters.json');
 
   try {
     const content = await fs.readFile(filePath, 'utf-8');
@@ -91,7 +93,7 @@ export async function loadClusters(phase: Phase): Promise<Cluster[]> {
  * Save clusters for a given phase
  */
 export async function saveClusters(phase: Phase, clusters: Cluster[]): Promise<void> {
-  const dirPath = path.join(process.cwd(), BASE_DIR, phase);
+  const dirPath = path.join(BASE_DIR, phase);
   const filePath = path.join(dirPath, 'clusters.json');
 
   await ensureDir(dirPath);
@@ -104,7 +106,7 @@ export async function saveClusters(phase: Phase, clusters: Cluster[]): Promise<v
  * Load semantic hash index for a given phase
  */
 export async function loadIndex(phase: Phase): Promise<Map<string, string>> {
-  const filePath = path.join(process.cwd(), BASE_DIR, phase, 'index.json');
+  const filePath = path.join(BASE_DIR, phase, 'index.json');
 
   try {
     const content = await fs.readFile(filePath, 'utf-8');
@@ -119,7 +121,7 @@ export async function loadIndex(phase: Phase): Promise<Map<string, string>> {
  * Save semantic hash index for a given phase
  */
 export async function saveIndex(phase: Phase, index: Map<string, string>): Promise<void> {
-  const dirPath = path.join(process.cwd(), BASE_DIR, phase);
+  const dirPath = path.join(BASE_DIR, phase);
   const filePath = path.join(dirPath, 'index.json');
 
   await ensureDir(dirPath);
@@ -148,7 +150,7 @@ export async function loadAllPatterns(): Promise<Pattern[]> {
  * List all session meta files
  */
 export async function listSessionFiles(): Promise<string[]> {
-  const metaDir = path.join(process.cwd(), BASE_DIR);
+  const metaDir = path.join(BASE_DIR);
 
   try {
     const files = await fs.readdir(metaDir);

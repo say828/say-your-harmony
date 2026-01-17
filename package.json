@@ -1,7 +1,7 @@
 {
   "name": "say-your-harmony",
-  "version": "1.0.3",
-  "description": "4-Phase Development Orchestration System for Claude Code - Planning, Design, Implementation, Operation",
+  "version": "1.1.0",
+  "description": "Self-Improving 4-Phase Development Orchestration System for Claude Code - Evolves through meta-analysis learning loop with experimentally validated 20-44% efficiency gains",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

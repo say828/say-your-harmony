@@ -13,6 +13,7 @@
 import { randomUUID } from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
+import os from 'os';
 import type { Pattern, Phase, AggregationStats } from '../types/pattern.js';
 import { configManager } from './config-manager.js';
 import { semanticHasher } from './semantic-hasher.js';
@@ -313,7 +314,8 @@ export class PatternAggregator {
       }
     }
 
-    await fs.writeFile(path.join(process.cwd(), 'docs/meta/PATTERNS.md'), md, 'utf-8');
+    const patternsPath = path.join(os.homedir(), '.claude', 'meta', 'PATTERNS.md');
+    await fs.writeFile(patternsPath, md, 'utf-8');
   }
 
   /**
