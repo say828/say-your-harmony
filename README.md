@@ -306,36 +306,36 @@ Use `/aggregate` to consolidate patterns across sessions with automated pattern 
 
 **Workflow**:
 ```
-Meta-analysis 생성 → JSON 패턴 추출 → Phase별 저장 → 자동 진화 (클러스터링, 감쇠, 제거)
+Meta-analysis generation → JSON pattern extraction → Phase-specific storage → Automated evolution (clustering, decay, eviction)
 ```
 
 **Global Storage Structure** (`~/.claude/meta/`):
 ```
 ~/.claude/meta/
-├── session-2026-01-08.md       ← 최신 10개 세션만 유지 (FIFO)
+├── session-2026-01-08.md       ← Keep only latest 10 sessions (FIFO)
 ├── ...
 ├── session-2026-01-17.md
-├── PATTERNS.md                 ← 사람이 읽기 쉬운 마스터 요약
-├── config.json                 ← 시스템 구성
-├── planning/patterns.json      ← Phase 1 패턴 (자동 진화)
-├── design/patterns.json        ← Phase 2 패턴
-├── implementation/patterns.json ← Phase 3 패턴
-└── operation/patterns.json     ← Phase 4 패턴
+├── PATTERNS.md                 ← Human-readable master summary
+├── config.json                 ← System configuration
+├── planning/patterns.json      ← Phase 1 patterns (auto-evolved)
+├── design/patterns.json        ← Phase 2 patterns
+├── implementation/patterns.json ← Phase 3 patterns
+└── operation/patterns.json     ← Phase 4 patterns
 ```
 
 **Automated Pattern Evolution**:
 
 | Feature | Description |
 |---------|-------------|
-| **Clustering** | 유사도 0.75 임계값으로 응집형 클러스터링 |
-| **Deduplication** | TF-IDF 퍼지 매칭 (임계값 0.9) |
-| **Decay** | 90일 반감기 하이브리드 (최근성 40%, 빈도 40%, 성공률 20%) |
-| **Eviction** | 점수 기반 제거, 고빈도(5회+) 및 최근(7일) 패턴 보호 |
-| **Capacity** | Phase당 최대 100 패턴, 50 클러스터, 10 세션 파일 |
+| **Clustering** | Agglomerative clustering with 0.75 similarity threshold |
+| **Deduplication** | TF-IDF fuzzy matching (threshold 0.9) |
+| **Decay** | 90-day half-life hybrid (recency 40%, frequency 40%, success rate 20%) |
+| **Eviction** | Score-based removal, protecting high-frequency (5+) and recent (7 days) patterns |
+| **Capacity** | Max 100 patterns per phase, 50 clusters, 10 session files |
 
 **Storage Formats**:
-- **JSON** (`{phase}/patterns.json`): 자동화된 패턴 관리, 검색, 필터링, 진화
-- **Markdown** (`PATTERNS.md`): 사람이 읽기 쉬운 요약 및 빠른 참조
+- **JSON** (`{phase}/patterns.json`): Automated pattern management, search, filtering, evolution
+- **Markdown** (`PATTERNS.md`): Human-readable summary for quick reference
 
 ---
 
@@ -895,8 +895,8 @@ We stand on the shoulders of giants. Thank you, **oh-my-claude-sisyphus**, for s
 
 **Human Input** (< 5 minutes):
 ```bash
-하모니를 ultrathink 사용해
-유튜브 아키텍처 개발
+Use harmony with ultrathink
+Develop YouTube architecture
 ```
 
 **Harmony Output** (~3 hours wall-clock time):
@@ -914,12 +914,6 @@ We stand on the shoulders of giants. Thank you, **oh-my-claude-sisyphus**, for s
 **This entire 25+ microservice architecture was generated with just 2 lines of input:**
 
 ```bash
-하모니를 ultrathink 사용해
-유튜브 아키텍처 개발
-```
-
-**Translation**:
-```
 Use harmony with ultrathink
 Develop YouTube architecture
 ```
@@ -1012,8 +1006,8 @@ A production-ready video streaming platform demonstrating the autonomous capabil
 
 **Input** (2 lines):
 ```
-하모니를 ultrathink 사용해
-유튜브 아키텍처 개발
+Use harmony with ultrathink
+Develop YouTube architecture
 ```
 
 **What Harmony Did Automatically**:
