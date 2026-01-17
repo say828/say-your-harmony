@@ -853,9 +853,35 @@ Contributions are welcome! This project follows the 4-phase workflow:
 
 ---
 
+## 🔗 Citation
+
+If you use Say-Your-Harmony, the Meta-Analysis Learning Loop, or findings from this research in your work, **please cite our paper**:
+
+```bibtex
+@misc{kim_hong_2026_meta_analysis,
+  author = {Hyunwoo Kim and Seunghyeok Hong},
+  title = {Meta-Analysis Learning Loop: Experimental Validation of Self-Improving Agent Orchestration Systems},
+  year = {2026},
+  month = {January},
+  publisher = {OSF},
+  journal = {OSF Preprints},
+  howpublished = {\url{https://osf.io/zwtdx}},
+  doi = {10.17605/OSF.IO/ZWTDX},
+  note = {Version 1.0}
+}
+```
+
+**Paper**: [OSF Preprint](https://osf.io/zwtdx) • **DOI**: 10.17605/OSF.IO/ZWTDX
+
+---
+
 ## 📄 License
 
-MIT License - See [LICENSE](LICENSE)
+**Source Code**: MIT License - See [LICENSE](LICENSE)
+
+**Research Paper**: Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+The research paper, experimental data, meta-analysis methodology, and the concept of "Meta-Analysis Learning Loop" are the intellectual property of the authors (Hyunwoo Kim, Seunghyeok Hong) and are licensed under CC BY 4.0. Attribution required - see Citation section above.
 
 ---
 
