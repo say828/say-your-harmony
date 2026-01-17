@@ -1,0 +1,23 @@
+{
+  "name": "say-your-harmony",
+  "version": "1.1.0",
+  "description": "4-Phase Development Orchestration for Claude Code - Planning, Design, Implementation, Operation with 9 specialized agents",
+  "author": {
+    "name": "Say",
+    "url": "https://github.com/say"
+  },
+  "homepage": "https://github.com/say828/say-your-harmony#readme",
+  "repository": "https://github.com/say828/say-your-harmony",
+  "license": "MIT",
+  "keywords": [
+    "4-phase",
+    "orchestration",
+    "harmony",
+    "planning",
+    "design",
+    "implementation",
+    "operation",
+    "meta-analysis",
+    "parallel-execution"
+  ]
+}

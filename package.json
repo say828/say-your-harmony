@@ -1,0 +1,90 @@
+{
+  "name": "say-your-harmony",
+  "version": "1.1.0",
+  "description": "Self-Improving 4-Phase Development Orchestration System for Claude Code - Evolves through meta-analysis learning loop with experimentally validated 20-44% efficiency gains",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "bin": {
+    "say-your-harmony": "dist/cli/index.js",
+    "syh": "dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src",
+    "format": "prettier --write src/**/*.ts",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node dist/cli/index.js postinstall || true"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.0",
+    "@ast-grep/napi": "^0.31.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "jsonc-parser": "^3.3.1",
+    "vscode-languageserver-protocol": "^3.17.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vitest/ui": "^4.0.17",
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.53.0",
+    "vitest": "^4.0.17"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/say828/say-your-harmony.git"
+  },
+  "homepage": "https://github.com/say828/say-your-harmony#readme",
+  "bugs": {
+    "url": "https://github.com/say828/say-your-harmony/issues"
+  },
+  "author": "Yeachan Heo",
+  "license": "MIT",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "agent",
+    "multi-agent",
+    "orchestration",
+    "planning",
+    "design",
+    "implementation",
+    "operation",
+    "meta-analysis",
+    "anthropic",
+    "llm"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

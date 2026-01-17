@@ -1,0 +1,24 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.harmony/
+
+# Accidentally created meta storage directory
+Users/
+
+# LaTeX build artifacts
+*.aux
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+
+# Documentation folder
+docs/
+
+# Editor temporary files
+*~
+*.swp
+*.swo
