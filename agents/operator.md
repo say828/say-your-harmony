@@ -152,7 +152,7 @@ Include:
 })
 ```
 
-**Output**: `docs/meta/session-YYYY-MM-DD-meta-analysis.md`
+**Output**: `~/.claude/meta/session-YYYY-MM-DD-meta-analysis.md`
 
 ---
 

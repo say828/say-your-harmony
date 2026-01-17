@@ -95,7 +95,7 @@ The `operator` agent will:
 
 ### 4. Meta-Analysis
 ```
-Generated: docs/meta/session-2026-01-17-meta-analysis.md
+Generated: ~/.claude/meta/session-2026-01-17-meta-analysis.md
 
 Highlights:
 - 35 turns total
@@ -253,7 +253,7 @@ System is **production-ready**.
 
 ### Read Meta-Analysis
 ```bash
-cat docs/meta/session-YYYY-MM-DD-meta-analysis.md
+cat ~/.claude/meta/session-YYYY-MM-DD-meta-analysis.md
 ```
 
 Review learnings for next task.

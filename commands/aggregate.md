@@ -20,7 +20,7 @@ Analyzes all existing meta-analysis documents and consolidates them into a unifi
 
 ## What It Does
 
-1. **Scans** `docs/meta/session-*.md` for all meta-analyses
+1. **Scans** `~/.claude/meta/session-*.md` for all meta-analyses
 2. **Extracts** patterns, decisions, metrics from each
 3. **Deduplicates** similar patterns (merge with frequency count)
 4. **Incremental merge** - Only adds NEW unique patterns to PATTERNS.md

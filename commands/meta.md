@@ -74,12 +74,12 @@ Analyzes the current development session and generates a structured meta-analysi
 ## Output Location
 
 ```
-docs/meta/session-YYYY-MM-DD-HH-MM-meta-analysis.md
+~/.claude/meta/session-YYYY-MM-DD-HH-MM-meta-analysis.md
 ```
 
 Example:
 ```
-docs/meta/session-2026-01-17-14-30-meta-analysis.md
+~/.claude/meta/session-2026-01-17-14-30-meta-analysis.md
 ```
 
 ---
@@ -242,10 +242,10 @@ After generation:
 
 ```bash
 # View the meta-analysis
-cat docs/meta/session-2026-01-17-14-30-meta-analysis.md
+cat ~/.claude/meta/session-2026-01-17-14-30-meta-analysis.md
 
 # Or open in editor
-code docs/meta/session-2026-01-17-14-30-meta-analysis.md
+code ~/.claude/meta/session-2026-01-17-14-30-meta-analysis.md
 ```
 
 ### Focus Areas When Reading

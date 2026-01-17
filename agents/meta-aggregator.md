@@ -65,7 +65,7 @@ Individual session meta-analyses are valuable but scattered:
 
 ```bash
 # Find all meta-analysis files
-ls docs/meta/session-*.md
+ls ~/.claude/meta/session-*.md
 
 # Count available files
 find docs/meta -name "session-*.md" | wc -l

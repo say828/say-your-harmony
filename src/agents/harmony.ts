@@ -222,7 +222,7 @@ Task({
 })
 \`\`\`
 
-**Meta-analysis output**: \`docs/meta/session-YYYY-MM-DD-HH-mm.md\`
+**Meta-analysis output**: \`~/.claude/meta/session-YYYY-MM-DD-HH-mm.md\`
 
 **Use meta-analysis for**:
 - Improving future agent prompts

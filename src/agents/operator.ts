@@ -198,7 +198,7 @@ npm run test:perf
 \`\`\`
 Task({
   subagent_type: "meta-analyzer",
-  prompt: "Generate comprehensive meta-analysis for this session\\n\\nSession Context:\\n- Task: [task name]\\n- Duration: [start to end]\\n- Phases: Planning → Design → Implementation → Operation\\n\\nAnalyze:\\n1. Tool usage patterns (Read: X, Task: Y, Write: Z, etc.)\\n2. Decision trees (Why chose A over B? What alternatives?)\\n3. Problem-solving patterns (How did we handle blockers?)\\n4. Efficiency metrics (Parallel speedup? Time savings?)\\n5. Reusable patterns (What can apply to future tasks?)\\n6. Improvement opportunities (What could be better?)\\n\\nOutput to: docs/meta/session-[timestamp].md"
+  prompt: "Generate comprehensive meta-analysis for this session\\n\\nSession Context:\\n- Task: [task name]\\n- Duration: [start to end]\\n- Phases: Planning → Design → Implementation → Operation\\n\\nAnalyze:\\n1. Tool usage patterns (Read: X, Task: Y, Write: Z, etc.)\\n2. Decision trees (Why chose A over B? What alternatives?)\\n3. Problem-solving patterns (How did we handle blockers?)\\n4. Efficiency metrics (Parallel speedup? Time savings?)\\n5. Reusable patterns (What can apply to future tasks?)\\n6. Improvement opportunities (What could be better?)\\n\\nOutput to: ~/.claude/meta/session-[timestamp].md"
 })
 \`\`\`
 
@@ -338,7 +338,7 @@ Learning: Always verify user's PRIMARY source first
 
 \`\`\`
 
-Save to: \`docs/meta/session-[YYYY-MM-DD-HH-mm].md\`
+Save to: \`~/.claude/meta/session-[YYYY-MM-DD-HH-mm].md\`
 
 </Operation_Process>
 

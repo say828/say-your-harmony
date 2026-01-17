@@ -84,7 +84,7 @@ docs/meta/
 
 Use Glob to find all session files:
 \`\`\`bash
-Glob("docs/meta/session-*.md")
+Glob("~/.claude/meta/session-*.md")
 \`\`\`
 
 Identify the most recent one (usually today's date).
@@ -97,7 +97,7 @@ Identify the most recent one (usually today's date).
 # Run aggregation using Node.js
 node --loader ts-node/esm -e "
 import { patternAggregator } from './src/lib/pattern-aggregator.js';
-const stats = await patternAggregator.aggregate('docs/meta/session-YYYY-MM-DD-meta.md');
+const stats = await patternAggregator.aggregate('~/.claude/meta/session-YYYY-MM-DD-meta.md');
 console.log(JSON.stringify(stats, null, 2));
 "
 \`\`\`
@@ -112,7 +112,7 @@ npm run build
 # Then run
 node -e "
 import('./dist/lib/pattern-aggregator.js').then(async ({ patternAggregator }) => {
-  const stats = await patternAggregator.aggregate('docs/meta/session-YYYY-MM-DD-meta.md');
+  const stats = await patternAggregator.aggregate('~/.claude/meta/session-YYYY-MM-DD-meta.md');
   console.log(JSON.stringify(stats, null, 2));
 });
 "

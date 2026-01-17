@@ -125,12 +125,12 @@ After Phase 4 completion:
 ## Output Location
 
 ```
-docs/meta/session-YYYY-MM-DD-HH-MM-meta-analysis.md
+~/.claude/meta/session-YYYY-MM-DD-HH-MM-meta-analysis.md
 ```
 
 Example:
 ```
-docs/meta/session-2026-01-17-02-30-meta-analysis.md
+~/.claude/meta/session-2026-01-17-02-30-meta-analysis.md
 ```
 
 ---
@@ -267,7 +267,7 @@ Phase 4 (Operation)
 
 ### Step 5: Store for Future Reference
 ```
-Save to: docs/meta/session-[timestamp]-meta-analysis.md
+Save to: ~/.claude/meta/session-[timestamp]-meta-analysis.md
 ```
 
 ---

@@ -258,7 +258,7 @@ All efficiency gains have **traceable causes**:
 ## Meta-Analysis Files Generated
 
 ### Task 1
-**File**: `docs/meta/session-2026-01-17-14-56-calculator-meta-analysis.md`
+**File**: `~/.claude/meta/session-2026-01-17-14-56-calculator-meta-analysis.md`
 - Size: 45KB (1,100+ lines)
 - Sections: 8 (standard meta-analysis)
 - Patterns: 5 extracted
@@ -276,7 +276,7 @@ All efficiency gains have **traceable causes**:
 ---
 
 ### Task 2
-**File**: `docs/meta/session-2026-01-17-15-11-calculator-extension-meta-analysis.md`
+**File**: `~/.claude/meta/session-2026-01-17-15-11-calculator-extension-meta-analysis.md`
 - Size: 42KB (1,000+ lines)
 - Sections: 9 (standard 8 + comparative analysis)
 - Patterns: 4 reused, 1 new (error handling)
@@ -304,7 +304,7 @@ Task 1 (Baseline):
   └─ Meta-analysis generated
       ├─ 5 patterns extracted
       ├─ Decision rationale documented
-      └─ Saved to docs/meta/
+      └─ Saved to ~/.claude/meta/
 
         ↓ Meta stored
 
@@ -418,7 +418,7 @@ To reproduce this experiment:
    /harmony "implement calculator with add and subtract"
    ```
 
-2. **Verify Meta**: Check `docs/meta/` for generated meta-analysis
+2. **Verify Meta**: Check `~/.claude/meta/` for generated meta-analysis
 
 3. **Task 2**: Extend the feature
    ```bash
@@ -437,14 +437,14 @@ To reproduce this experiment:
 - Planning: `docs/planning/calculator-planning.md`
 - Design: `docs/design/calculator-design.md`
 - Implementation: `docs/implementation/calculator-implementation.md`
-- Meta: `docs/meta/session-2026-01-17-14-56-calculator-meta-analysis.md`
+- Meta: `~/.claude/meta/session-2026-01-17-14-56-calculator-meta-analysis.md`
 - Code: `test/calculator.ts`, `test/calculator.test.ts`
 
 **Task 2 Artifacts**:
 - Planning: `docs/planning/calculator-extension-planning.md`
 - Design: `docs/design/calculator-extension-design.md`
 - Implementation: `docs/implementation/calculator-extension-implementation.md`
-- Meta: `docs/meta/session-2026-01-17-15-11-calculator-extension-meta-analysis.md`
+- Meta: `~/.claude/meta/session-2026-01-17-15-11-calculator-extension-meta-analysis.md`
 - Code: `test/calculator.ts` (extended), `test/calculator.test.ts` (extended)
 
 ---

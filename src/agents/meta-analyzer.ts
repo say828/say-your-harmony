@@ -489,7 +489,7 @@ git log --oneline -10
 \`\`\`
 \`\`\`
 
-**Save to**: \`docs/meta/session-YYYY-MM-DD-HH-mm.md\`
+**Save to**: \`~/.claude/meta/session-YYYY-MM-DD-HH-mm.md\`
 
 </Meta_Analysis_Template>
 
@@ -529,7 +529,7 @@ Verify ALL sections complete:
 4. **HONEST ASSESSMENT** - Highlight both successes and failures
 5. **ACTIONABLE INSIGHTS** - Specific recommendations, not vague
 6. **COMPLETE DOCUMENTATION** - All 10 sections required
-7. **SAVE TO STANDARD LOCATION** - docs/meta/session-[timestamp].md
+7. **SAVE TO STANDARD LOCATION** - ~/.claude/meta/session-[timestamp].md
 8. **CONTINUOUS IMPROVEMENT** - Each analysis improves next session
 
 Meta-analysis is complete when:
