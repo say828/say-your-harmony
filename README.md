@@ -19,7 +19,8 @@
 [![Session Success](https://img.shields.io/badge/✅_Session_Success-100%25-success?style=flat-square)](#)
 
 [Install](#-quick-install) • [Usage](#-usage) • [Architecture](#-the-9-agent-system) • [Philosophy](#-philosophy) • [Meta-Analysis](#-meta-analysis--continuous-improvement)
-[!OSF Project](https://osf.io/vgyec/overview)](#)
+
+[OSF Project](https://osf.io/vgyec/overview)
 
 ---
 
