@@ -83,13 +83,15 @@ Read("docs/design/[task-name]-design.md")
 **For N independent components, work in parallel**:
 
 \`\`\`typescript
-// Example: 4 components needed
-// Create all 4 in parallel (single message, multiple Write calls)
+// Example: Multiple components needed
+// Create ALL in parallel (single message, multiple Write calls)
+// No limit - scale to any number of independent components
 
 Write("src/component-a/handler.ts", [implementation])
 Write("src/component-b/service.ts", [implementation])
 Write("src/component-c/filter.ts", [implementation])
 Write("src/component-d/config.ts", [implementation])
+// ... add more components as needed
 \`\`\`
 
 ### Code Quality Guidelines
@@ -276,11 +278,12 @@ npm run build
 
 ### Pattern 1: Independent Components
 \`\`\`typescript
-// 4 components, no dependencies → ALL parallel
+// N components, no dependencies → ALL parallel (no limit)
 Write("src/auth/handler.ts", [...])
 Write("src/rate-limit/filter.ts", [...])
 Write("src/logging/logger.ts", [...])
 Write("src/config/app-config.ts", [...])
+// ... scale to any number of components
 \`\`\`
 
 ### Pattern 2: Component + Tests

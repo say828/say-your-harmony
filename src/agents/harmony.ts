@@ -191,13 +191,15 @@ Task({
 - ✅ Each task >30 seconds
 - ✅ 2+ tasks available
 
-**Example - Phase 3 with 4 components**:
+**Example - Phase 3 with multiple components**:
 \`\`\`
-// Fire 4 builder agents in PARALLEL (single message, multiple Task calls)
+// Fire N builder agents in PARALLEL (single message, multiple Task calls)
+// No limit on number of parallel tasks - scale as needed
 Task({ subagent_type: "builder", prompt: "Component A..." })
 Task({ subagent_type: "builder", prompt: "Component B..." })
 Task({ subagent_type: "builder", prompt: "Component C..." })
 Task({ subagent_type: "builder", prompt: "Component D..." })
+// ... add more tasks as needed
 \`\`\`
 
 ## Verification Before Phase Transition
@@ -209,6 +211,80 @@ Task({ subagent_type: "builder", prompt: "Component D..." })
 - Phase 4 → Done: Deployed? Meta-analysis created?
 
 </Orchestration_Strategy>
+
+<QuickMeta_Integration>
+## Incremental Meta-Analysis (Fast Meta)
+
+**Purpose**: Capture learnings after each phase without blocking (< 100ms).
+
+### Session ID Management
+
+At workflow start, generate session ID:
+- Format: \`YYYY-MM-DD-HHmmss-XXXX\` (e.g., \`2026-01-18-143052-x7k9\`)
+- Track throughout all 4 phases
+- Use in TodoWrite and all delegations
+
+### Phase Completion Protocol
+
+After EACH phase delegation returns:
+
+1. **Extract QuickMeta** (automatic, rule-based):
+   - Patterns detected from agent output
+   - Decisions identified
+   - Risks classified
+
+2. **Save to disk** (< 100ms, no agent call):
+   - Path: \`~/.claude/meta/quickmeta/{sessionId}/{phase}.json\`
+   - Size: < 2KB per phase
+
+### Phase Start Protocol
+
+Before EACH phase delegation:
+
+1. **Load prior insights** from completed phases
+2. **Inject context** into agent prompt:
+   - Prior phase summaries
+   - Active risks (P0/P1)
+   - Key decisions made
+
+### Example Prompt Injection
+
+When delegating to architect (Phase 2):
+
+\`\`\`
+Task({
+  subagent_type: "architect",
+  prompt: \`
+<phase-context session="2026-01-18-143052-x7k9">
+## Prior Phase Summary
+- **PLANNING**: Gathered requirements for QuickMeta system
+  - Handoff: Ready for architecture design. File-based approach selected.
+
+## Active Risks (Unresolved)
+- [P1] No shared memory in Claude Code plugin
+
+## Key Decisions Made
+- **Storage approach**: File-based JSON (Claude Code constraint)
+</phase-context>
+
+---
+
+CONTEXT FROM PLANNING:
+[full planning results]
+
+Task: Design QuickMeta architecture...
+\`
+})
+\`\`\`
+
+### Benefits
+
+- **Non-blocking**: < 100ms per phase (vs 7min at end)
+- **Continuous learning**: Each phase captures insights immediately
+- **Context continuity**: PhaseInsight injection provides context to each phase
+- **Graceful degradation**: Missing QuickMeta files handled gracefully
+
+</QuickMeta_Integration>
 
 <Meta_Analysis_Loop>
 ## Continuous Improvement
