@@ -170,17 +170,39 @@ When adding new features:
 ### Global Storage Location
 All meta-analyses are stored in:
 ```
-~/.say-your-harmony/meta/
+~/.claude/meta/
 ```
 
-### Storage Structure
+### Storage Structure (Hybrid - v1.2.3+)
 ```
-~/.say-your-harmony/
-├── meta/
-│   ├── meta-analysis-YYYY-MM-DD-HH-mm-ss.json
-│   └── meta-analysis-YYYY-MM-DD-HH-mm-ss.json
-└── config.json
+~/.claude/meta/
+├── planning/
+│   ├── recent/
+│   │   └── {sessionId}.json  (max 10)
+│   └── patterns.json
+├── design/
+│   ├── recent/
+│   │   └── {sessionId}.json  (max 10)
+│   └── patterns.json
+├── implementation/
+│   ├── recent/
+│   │   └── {sessionId}.json  (max 10)
+│   └── patterns.json
+└── operation/
+    ├── recent/
+    │   └── {sessionId}.json  (max 10)
+    └── patterns.json
 ```
+
+**Storage Strategy**:
+- **Recent sessions**: Last 10 sessions per phase (FIFO cleanup)
+- **Cumulative patterns**: Learned patterns with confidence scoring
+  - `sequentialDeps`: Tasks that must run sequentially
+  - `parallelSuccesses`: Tasks that successfully ran in parallel
+  - `accomplishmentPatterns`: Categorized achievements
+  - `riskPatterns`: P0-P3 risk tracking
+- **Pattern merging**: Incremental updates with 60% overlap threshold
+- **Confidence scoring**: Frequency (70%) + recency (30%)
 
 ## Publishing Checklist
 
