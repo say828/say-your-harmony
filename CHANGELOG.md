@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-01-18
+
+### Added
+- **Meta-Learning Framework**: File-based meta-learning for self-improving orchestration
+- **Sequential Dependencies**: `sequentialDeps` field tracks tasks that must run sequentially
+- **Parallel Successes**: `parallelSuccesses` field records successful concurrent execution patterns
+- **Dependency Validator**: `validator.ts` with `validateDependencies()` for runtime checking
+- **Research Framework**: Comprehensive hypotheses document (`docs/research/meta-learning-hypotheses.md`)
+- **Experimental Design**: 5-step incremental experiment with 15 tasks
+- **Quick Reference**: Meta-learning summary (`examples/META_LEARNING_SUMMARY.md`)
+- **Conservative Learning**: Safe-by-default approach with incremental optimization
+
+### Changed
+- **SemanticPhaseMeta**: Enhanced with dependency tracking (v2 schema)
+- **Phase Meta Extractor**: Updated prompt to extract dependencies and parallel successes
+- **Background Analysis**: Now extracts actionable dependency information
+
+### Technical Details
+- Added `sequentialDeps: string[]` to `SemanticExtractions` (max 5 items, 60 chars each)
+- Added `parallelSuccesses: string[]` to `SemanticExtractions` (max 8 items, 60 chars each)
+- New file: `src/lib/quickmeta/validator.ts` (~220 LOC)
+- New file: `docs/design/sequential-dependencies.md` (design doc)
+- Enhanced examples with meta-learning experiments
+
+### Research Impact
+- Expected parallelization error reduction: 75% (20% → <5%)
+- Expected performance improvement: 2.5x through learned parallelization
+- Target venues: ICSE, FSE, ASE (Tier 1 conferences)
+
 ## [1.1.2] - 2026-01-18
 
 ### Added
