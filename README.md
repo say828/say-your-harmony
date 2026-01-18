@@ -890,7 +890,7 @@ If you use Say-Your-Harmony, the Meta-Analysis Learning Loop, or findings from t
 
 **Research Paper**: Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-The research paper, experimental data, meta-analysis methodology, and the concept of "Meta-Analysis Learning Loop" are the intellectual property of the authors (Hyunwoo Kim, Seunghyeok Hong) and are licensed under CC BY 4.0. Attribution required - see Citation section above.
+The research paper, experimental data, meta-analysis methodology, and the concept of "Meta-Analysis Learning Loop" are the intellectual property of the authors (Hyunwoo Kim) and are licensed under CC BY 4.0. Attribution required - see Citation section above.
 
 ---
 
