@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.4] - 2026-01-18
+
+### Fixed
+- **phase-meta-extractor Agent Registration**: Added `phase-meta-extractor` agent to `getAgentDefinitions()`
+  - Previously implemented in `src/agents/phase-meta-extractor.ts` but not registered
+  - Now accessible as `say-your-harmony:phase-meta-extractor` subagent
+  - Enables background LLM-based semantic meta extraction per phase
+  - Required for Harmony orchestrator's automatic meta extraction workflow
+
 ## [1.2.3] - 2026-01-18
 
 ### Changed

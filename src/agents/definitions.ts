@@ -26,11 +26,12 @@ import { explorerAgent } from './explorer.js';
 import { documenterAgent } from './documenter.js';
 import { metaAnalyzerAgent } from './meta-analyzer.js';
 import { metaAggregatorAgent } from './meta-aggregator.js';
+import { phaseMetaExtractorAgent } from './phase-meta-extractor.js';
 
 /**
  * Get all agent definitions as a record for use with Claude Agent SDK
  *
- * Say-Your-Harmony 9-Agent System:
+ * Say-Your-Harmony 10-Agent System:
  * - harmony: Master orchestrator (4-phase workflow)
  * - planner: Phase 1 - Planning (problem definition, requirements)
  * - architect: Phase 2 - Design (architecture, decisions, tradeoffs)
@@ -40,6 +41,7 @@ import { metaAggregatorAgent } from './meta-aggregator.js';
  * - documenter: Support - Technical documentation
  * - meta-analyzer: Support - Session meta-analysis
  * - meta-aggregator: Support - Cross-session pattern consolidation
+ * - phase-meta-extractor: Support - Per-phase semantic meta extraction (background)
  */
 export function getAgentDefinitions(overrides?: Partial<Record<string, Partial<{
   description: string;
@@ -65,6 +67,7 @@ export function getAgentDefinitions(overrides?: Partial<Record<string, Partial<{
     documenter: documenterAgent,
     'meta-analyzer': metaAnalyzerAgent,
     'meta-aggregator': metaAggregatorAgent,
+    'phase-meta-extractor': phaseMetaExtractorAgent,
   };
 
   const result: Record<string, { description: string; prompt: string; tools: string[]; model?: ModelType }> = {};
