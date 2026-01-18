@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive meta-analysis briefing with performance metrics
 - ROI visualization and tracking
 
+### Changed
+- Removed implicit 4-agent limit in parallel execution
+- Clarified no limit on number of parallel subagents in harmony and builder agents
+
 ## [1.1.1] - 2026-01-17
 
 ### Added
