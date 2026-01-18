@@ -12,7 +12,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green?style=flat-square&logo=node.js)](https://nodejs.org/)
 
 [![9 Agents](https://img.shields.io/badge/🤖_Agents-9-blue?style=flat-square)](./src/agents)
-[![4 Skills](https://img.shields.io/badge/⚡_Skills-4-purple?style=flat-square)](./skills)
+[![10 Skills](https://img.shields.io/badge/⚡_Skills-10-purple?style=flat-square)](./skills)
 [![9 Commands](https://img.shields.io/badge/📝_Commands-9-orange?style=flat-square)](./commands)
 [![4x Efficiency](https://img.shields.io/badge/⚡_Parallel_Speedup-4.25x-brightgreen?style=flat-square)](#)
 [![Meta-Analysis](https://img.shields.io/badge/🧠_Meta--Analysis-Enabled-ff69b4?style=flat-square)](./docs/meta)

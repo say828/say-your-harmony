@@ -31,10 +31,11 @@ export interface ModelRef {
 }
 
 /**
- * Message with optional model reference
+ * Message with optional model reference and dynamic thinking config
  */
 export interface MessageWithModel {
   model?: ModelRef;
+  [key: string]: unknown; // Allow dynamic properties like 'thinking', 'reasoning_effort', etc.
 }
 
 /**
