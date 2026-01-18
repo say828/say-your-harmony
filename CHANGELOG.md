@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-01-18
+
+### Added
+- `/metaclear` command for clearing meta-analysis artifacts
+  - Preview mode by default (shows what will be deleted)
+  - Optional backup with `--backup` flag
+  - Requires `--confirm` for actual deletion
+  - Preserves config.json automatically
+  - Comprehensive safety features
+
+### Fixed
+- Metaclear skill registration issue (removed interfering prompt.md file)
+
 ## [1.2.0] - 2026-01-18
 
 ### Added
