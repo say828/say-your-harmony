@@ -1,0 +1,593 @@
+# Incremental Meta-Accumulation Experiment Configuration
+#
+# This experiment tests the hypothesis that meta-learning benefits compound
+# as more meta-analysis sessions accumulate, and identifies saturation points.
+
+experimentId: incremental-meta-accumulation-001
+name: Incremental Meta-Accumulation Experiment
+version: 1.0.0
+
+# Research Hypothesis
+hypothesis: >
+  Meta-learning benefits compound with accumulated meta-analysis sessions,
+  showing measurable efficiency improvements up to a saturation point,
+  after which marginal gains diminish.
+
+# Research Questions
+researchQuestions:
+  - question: How do efficiency gains scale with accumulated meta sessions?
+    metric: efficiency_improvement_percentage
+    expectedPattern: logarithmic_growth
+
+  - question: At what point does meta-learning reach saturation?
+    metric: marginal_efficiency_gain
+    expectedPattern: diminishing_returns
+
+  - question: Do complex tasks benefit more from accumulated meta?
+    metric: complexity_correlation
+    expectedPattern: positive_correlation
+
+  - question: Which patterns transfer most effectively across domains?
+    metric: pattern_reuse_rate
+    expectedPattern: exponential_increase
+
+# Experimental Design
+design:
+  type: incremental_accumulation
+  totalSteps: 5
+  totalTasks: 15
+  metaSessionsRange: [0, 1, 3, 6, 10, 15]
+  parallelExecutionEnabled: true
+
+# Step-by-Step Configuration
+steps:
+  # ============================================================================
+  # Step 1: Baseline (0 meta → 1 task)
+  # ============================================================================
+  - stepId: 1
+    name: Baseline
+    description: Establish baseline without any meta-learning
+    metaSessionsBefore: 0
+    metaSessionsAfter: 1
+    clearMetaBefore: true
+    parallelExecution: false
+
+    tasks:
+      - taskId: shopping-cart
+        complexity: simple-medium
+        domain: e-commerce
+        expectedBaselineDuration: 45
+        expectedBaselineTurns: 11
+        primaryPatterns:
+          - crud-operations
+          - rule-engine
+          - session-management
+        successCriteria:
+          - Cart CRUD operations
+          - Coupon code application
+          - Session-based persistence
+          - 80%+ test coverage
+
+    expectedOutcomes:
+      - Pure baseline metrics (no meta-learning)
+      - Initial patterns discovered
+      - Foundation for future transfer
+
+    analysisGoals:
+      - Establish baseline efficiency metrics
+      - Identify patterns for future reuse
+      - Document initial decision patterns
+
+  # ============================================================================
+  # Step 2: Initial Transfer (1 meta → 2 tasks)
+  # ============================================================================
+  - stepId: 2
+    name: Initial Transfer
+    description: Test first meta-learning transfer with 1 accumulated session
+    metaSessionsBefore: 1
+    metaSessionsAfter: 3
+    clearMetaBefore: false
+    parallelExecution: true
+
+    tasks:
+      - taskId: stats-library
+        complexity: simple-medium
+        domain: scientific-computing
+        expectedBaselineDuration: 40
+        expectedWithMetaDuration: 25
+        expectedReduction: 37.5
+        primaryPatterns:
+          - pure-functions
+          - type-safety
+          - testing-strategy
+        transferablePatternsFrom:
+          shopping-cart:
+            - testing-strategy
+            - typescript-strict-mode
+            - api-design
+        successCriteria:
+          - Descriptive statistics functions
+          - Hypothesis testing (t-test)
+          - Linear regression
+          - 90%+ test coverage
+
+      - taskId: fraud-detection
+        complexity: medium
+        domain: fintech
+        expectedBaselineDuration: 57.5
+        expectedWithMetaDuration: 35
+        expectedReduction: 39.1
+        primaryPatterns:
+          - rule-engine
+          - scoring-system
+          - state-machine
+        transferablePatternsFrom:
+          shopping-cart:
+            - rule-engine
+            - state-management
+            - event-tracking
+        successCriteria:
+          - Rule definition and execution
+          - Transaction scoring
+          - Alert generation
+          - Case lifecycle management
+          - 80%+ test coverage
+
+    expectedOutcomes:
+      - First measurable meta-learning transfer
+      - 35-40% efficiency improvement
+      - Pattern reuse from Step 1
+      - Reduced web searches
+
+    analysisGoals:
+      - Measure first transfer effect
+      - Compare parallel vs sequential
+      - Identify which patterns transferred
+
+  # ============================================================================
+  # Step 3: Accumulation (3 meta → 3 tasks)
+  # ============================================================================
+  - stepId: 3
+    name: Accumulation
+    description: Test compound effects with 3 accumulated sessions
+    metaSessionsBefore: 3
+    metaSessionsAfter: 6
+    clearMetaBefore: false
+    parallelExecution: true
+
+    tasks:
+      - taskId: etl-data-pipeline
+        complexity: medium
+        domain: scientific-computing
+        expectedBaselineDuration: 52.5
+        expectedWithMetaDuration: 33
+        expectedReduction: 37.1
+        primaryPatterns:
+          - pipeline-pattern
+          - validation
+          - error-handling
+        transferablePatternsFrom:
+          shopping-cart: [validation, error-handling]
+          stats-library: [pure-functions, type-safety]
+          fraud-detection: [rule-engine]
+        successCriteria:
+          - Composable pipeline stages
+          - Data validation with schemas
+          - Error collection and recovery
+          - Incremental processing
+          - 80%+ test coverage
+
+      - taskId: twitter-timeline
+        complexity: medium
+        domain: big-tech
+        expectedBaselineDuration: 57.5
+        expectedWithMetaDuration: 36
+        expectedReduction: 37.4
+        primaryPatterns:
+          - fan-out-architecture
+          - caching-strategy
+          - rate-limiting
+        transferablePatternsFrom:
+          shopping-cart: [session-management, crud-operations]
+          fraud-detection: [rule-engine, event-processing]
+        successCriteria:
+          - Tweet creation and storage
+          - Timeline generation with caching
+          - Rate limiting implementation
+          - 80%+ test coverage
+
+      - taskId: inventory-sync
+        complexity: medium
+        domain: e-commerce
+        expectedBaselineDuration: 57.5
+        expectedWithMetaDuration: 35
+        expectedReduction: 39.1
+        primaryPatterns:
+          - concurrent-updates
+          - reservation-pattern
+          - alert-notification
+        transferablePatternsFrom:
+          shopping-cart: [multi-entity-management, state-management]
+          fraud-detection: [alert-system]
+          etl-data-pipeline: [validation, error-handling]
+        successCriteria:
+          - Multi-warehouse inventory tracking
+          - Stock reservation with expiration
+          - Low stock alerts
+          - 80%+ test coverage
+
+    expectedOutcomes:
+      - Compound meta-learning effects
+      - 37-40% efficiency improvement
+      - Cross-domain pattern transfer
+      - Accelerated pattern recognition
+
+    analysisGoals:
+      - Measure compound learning effects
+      - Track pattern transfer across domains
+      - Identify emerging meta-patterns
+
+  # ============================================================================
+  # Step 4: Saturation Test (6 meta → 4 tasks)
+  # ============================================================================
+  - stepId: 4
+    name: Saturation Test
+    description: Test for saturation effects with 6 accumulated sessions
+    metaSessionsBefore: 6
+    metaSessionsAfter: 10
+    clearMetaBefore: false
+    parallelExecution: true
+
+    tasks:
+      - taskId: airbnb-search
+        complexity: complex
+        domain: big-tech
+        expectedBaselineDuration: 77.5
+        expectedWithMetaDuration: 47
+        expectedReduction: 39.4
+        primaryPatterns:
+          - filter-composition
+          - geospatial-query
+          - dynamic-pricing
+        transferablePatternsFrom:
+          shopping-cart: [filter-composition, pricing-logic]
+          twitter-timeline: [caching-strategy, search-patterns]
+          inventory-sync: [multi-entity-management]
+        successCriteria:
+          - Multi-filter search
+          - Availability calendar
+          - Geospatial search
+          - 80%+ test coverage
+
+      - taskId: order-book
+        complexity: complex
+        domain: fintech
+        expectedBaselineDuration: 77.5
+        expectedWithMetaDuration: 47
+        expectedReduction: 39.4
+        primaryPatterns:
+          - priority-queue
+          - state-machine
+          - event-emission
+        transferablePatternsFrom:
+          fraud-detection: [state-machine, event-processing]
+          stats-library: [algorithm-implementation]
+        successCriteria:
+          - Order submission and matching
+          - Price-time priority
+          - Trade execution
+          - 85%+ test coverage
+
+      - taskId: risk-calculator
+        complexity: medium-high
+        domain: fintech
+        expectedBaselineDuration: 62.5
+        expectedWithMetaDuration: 40
+        expectedReduction: 36.0
+        primaryPatterns:
+          - statistical-computation
+          - scenario-configuration
+          - reporting
+        transferablePatternsFrom:
+          stats-library: [statistical-functions, type-safety]
+          fraud-detection: [scoring-system]
+        successCriteria:
+          - Portfolio position management
+          - Parametric and historical VaR
+          - Correlation analysis
+          - 85%+ test coverage
+
+      - taskId: monte-carlo-simulator
+        complexity: complex
+        domain: scientific-computing
+        expectedBaselineDuration: 72.5
+        expectedWithMetaDuration: 45
+        expectedReduction: 37.9
+        primaryPatterns:
+          - simulation-pattern
+          - parallel-execution
+          - convergence-detection
+        transferablePatternsFrom:
+          stats-library: [statistical-functions, pure-functions]
+          risk-calculator: [statistical-computation]
+          etl-data-pipeline: [pipeline-pattern]
+        successCriteria:
+          - Configurable simulation engine
+          - Reproducible RNG
+          - Convergence detection
+          - 80%+ test coverage
+
+    expectedOutcomes:
+      - Test for saturation (diminishing returns?)
+      - 36-40% efficiency improvement
+      - Complex task handling
+      - Possible marginal gain reduction
+
+    analysisGoals:
+      - Detect saturation point
+      - Measure marginal efficiency gains
+      - Analyze complexity correlation
+      - Identify optimal meta session count
+
+  # ============================================================================
+  # Step 5: Large Scale (10+ meta → 5 tasks)
+  # ============================================================================
+  - stepId: 5
+    name: Large Scale
+    description: Test peak meta-learning performance with 10+ sessions
+    metaSessionsBefore: 10
+    metaSessionsAfter: 15
+    clearMetaBefore: false
+    parallelExecution: true
+
+    tasks:
+      - taskId: uber-ride-matching
+        complexity: complex
+        domain: big-tech
+        expectedBaselineDuration: 82.5
+        expectedWithMetaDuration: 50
+        expectedReduction: 39.4
+        primaryPatterns:
+          - geospatial-indexing
+          - optimization-algorithm
+          - event-streaming
+        transferablePatternsFrom:
+          airbnb-search: [geospatial-query, filter-composition]
+          order-book: [matching-algorithm, priority-queue]
+          twitter-timeline: [real-time-streaming]
+        successCriteria:
+          - Geospatial proximity queries
+          - Ride matching with ETA
+          - Surge pricing
+          - Trip lifecycle management
+          - 80%+ test coverage
+
+      - taskId: stripe-payment-processor
+        complexity: complex
+        domain: big-tech
+        expectedBaselineDuration: 77.5
+        expectedWithMetaDuration: 45
+        expectedReduction: 41.9
+        primaryPatterns:
+          - idempotency
+          - retry-with-backoff
+          - webhook-system
+        transferablePatternsFrom:
+          fraud-detection: [state-machine, event-processing]
+          inventory-sync: [reservation-pattern, transaction-handling]
+        successCriteria:
+          - Payment intent processing
+          - Idempotency key handling
+          - Exponential backoff retry
+          - Webhook delivery with signatures
+          - 85%+ test coverage
+
+      - taskId: netflix-streaming
+        complexity: medium-high
+        domain: big-tech
+        expectedBaselineDuration: 62.5
+        expectedWithMetaDuration: 40
+        expectedReduction: 36.0
+        primaryPatterns:
+          - state-machine
+          - caching-strategy
+          - algorithm-selection
+        transferablePatternsFrom:
+          twitter-timeline: [caching-strategy, rate-limiting]
+          fraud-detection: [state-machine]
+          shopping-cart: [api-design]
+        successCriteria:
+          - Player state machine
+          - Adaptive bitrate selection
+          - CDN cache simulation
+          - Recommendation API
+          - 80%+ test coverage
+
+      - taskId: fulfillment-orchestrator
+        complexity: complex
+        domain: e-commerce
+        expectedBaselineDuration: 77.5
+        expectedWithMetaDuration: 47
+        expectedReduction: 39.4
+        primaryPatterns:
+          - saga-workflow
+          - strategy-pattern
+          - integration-pattern
+        transferablePatternsFrom:
+          inventory-sync: [multi-location-logic, reservation-pattern]
+          stripe-payment-processor: [state-machine, compensation-logic]
+          etl-data-pipeline: [pipeline-pattern]
+        successCriteria:
+          - Workflow orchestration
+          - Warehouse selection
+          - Carrier abstraction
+          - Order tracking
+          - Compensation logic
+          - 80%+ test coverage
+
+      - taskId: ml-experiment-tracker
+        complexity: medium
+        domain: scientific-computing
+        expectedBaselineDuration: 57.5
+        expectedWithMetaDuration: 35
+        expectedReduction: 39.1
+        primaryPatterns:
+          - versioning
+          - crud-api
+          - time-series-storage
+        transferablePatternsFrom:
+          shopping-cart: [crud-operations, api-design]
+          stats-library: [type-safety, testing-strategy]
+          etl-data-pipeline: [pipeline-pattern, validation]
+        successCriteria:
+          - Experiment CRUD
+          - Model versioning
+          - Metric logging
+          - Parameter tracking
+          - 80%+ test coverage
+
+    expectedOutcomes:
+      - Peak meta-learning efficiency
+      - 36-42% efficiency improvement
+      - Maximum pattern transfer
+      - Validation of compound effects
+
+    analysisGoals:
+      - Measure peak performance
+      - Validate meta-learning curve
+      - Identify optimal session count
+      - Generate publication-ready results
+
+# Success Criteria
+successCriteria:
+  # Minimum efficiency improvement at each step
+  minEfficiencyImprovement:
+    step2: 30  # At least 30% improvement with 1 meta
+    step3: 33  # At least 33% improvement with 3 meta
+    step4: 35  # At least 35% improvement with 6 meta
+    step5: 35  # At least 35% improvement with 10+ meta
+
+  # Quality must not degrade
+  maxQualityDegradation: 5
+
+  # Pattern transfer
+  minPatternReuseRate: 60
+
+  # Statistical significance
+  significanceThreshold: 0.05
+
+# Metrics Collection
+metricsConfig:
+  efficiencyMetrics:
+    - turns
+    - durationMinutes
+    - toolCalls
+    - webSearches
+    - patternReuseCount
+
+  qualityMetrics:
+    - testPassRate
+    - testCoverage
+    - typeErrors
+    - lintErrors
+    - p0RequirementsMet
+
+  learningMetrics:
+    - patternsDiscovered
+    - patternsReused
+    - decisionsInheritedFromMeta
+    - webSearchReduction
+
+  metaMetrics:
+    - metaSessionsAvailable
+    - metaPatternsExtracted
+    - crossDomainTransferCount
+
+# Analysis Configuration
+analysisConfig:
+  # Statistical tests
+  statisticalTests:
+    - paired-t-test
+    - effect-size-cohens-d
+    - confidence-interval-95
+    - trend-analysis
+    - saturation-detection
+
+  # Visualizations
+  visualizations:
+    - meta_accumulation_curve
+    - efficiency_by_step
+    - pattern_transfer_matrix
+    - complexity_correlation
+    - marginal_gains_analysis
+    - saturation_point_detection
+
+  # Comparison groups
+  comparisons:
+    - baseline_vs_step2
+    - baseline_vs_step3
+    - baseline_vs_step4
+    - baseline_vs_step5
+    - marginal_step2_to_step3
+    - marginal_step3_to_step4
+    - marginal_step4_to_step5
+
+# Publication Outputs
+publicationOutputs:
+  - type: chart
+    name: meta_learning_accumulation_curve
+    description: Efficiency improvement vs accumulated meta sessions
+    format: png
+    dpi: 300
+
+  - type: chart
+    name: pattern_transfer_heatmap
+    description: Pattern reuse across tasks and steps
+    format: png
+    dpi: 300
+
+  - type: chart
+    name: saturation_analysis
+    description: Marginal gains by step showing saturation point
+    format: png
+    dpi: 300
+
+  - type: table
+    name: efficiency_summary
+    description: Comprehensive efficiency metrics by step
+    format: markdown
+
+  - type: table
+    name: pattern_catalog
+    description: All patterns discovered and reused
+    format: markdown
+
+  - type: report
+    name: incremental_experiment_report
+    description: Full research report with findings
+    format: markdown
+
+# Environment Requirements
+environment:
+  nodeVersion: "20+"
+  claudeCLI: required
+  quickMetaEnabled: true
+  minDiskSpaceGB: 5
+  requiredTools:
+    - npm
+    - git
+    - bash
+    - jq
+
+# Metadata
+metadata:
+  author: Say-Your-Harmony Research Team
+  createdAt: 2026-01-18T00:00:00Z
+  version: 1.0.0
+  status: ready
+  estimatedTotalDuration: 480-720  # 8-12 hours with manual execution
+  notes: >
+    This experiment is designed to measure meta-learning accumulation effects
+    and identify saturation points. It follows a carefully designed task sequence
+    that maximizes pattern transfer opportunities while testing cross-domain
+    generalization.

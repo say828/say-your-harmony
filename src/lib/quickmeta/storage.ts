@@ -9,6 +9,7 @@ import path from 'path';
 import os from 'os';
 import type { Phase } from '../../types/pattern.js';
 import type { QuickMeta, PhaseInsight, QuickPattern, QuickRisk, QuickDecision } from '../../types/quickmeta.js';
+import type { SemanticPhaseMeta } from '../../types/semantic-meta.js';
 
 const BASE_DIR = path.join(os.homedir(), '.claude', 'meta', 'quickmeta');
 
@@ -309,4 +310,125 @@ export async function getStorageStats(): Promise<{
     oldestSession: sessions.length > 0 ? sessions[sessions.length - 1] : null,
     newestSession: sessions.length > 0 ? sessions[0] : null,
   };
+}
+
+// ============================================================================
+// SEMANTIC META STORAGE (Version 2)
+// ============================================================================
+
+/**
+ * Get file path for a phase's SemanticPhaseMeta
+ */
+function getSemanticMetaPath(sessionId: string, phase: Phase): string {
+  return path.join(BASE_DIR, sessionId, `${phase}-semantic.json`);
+}
+
+/**
+ * Save SemanticPhaseMeta for a completed phase
+ * Uses atomic write (write to temp, then rename) for safety
+ *
+ * @param sessionId - Session identifier
+ * @param phase - Phase that completed
+ * @param meta - Semantic meta data to save
+ */
+export async function saveSemanticMeta(
+  sessionId: string,
+  phase: Phase,
+  meta: SemanticPhaseMeta
+): Promise<void> {
+  const sessionDir = getSessionDir(sessionId);
+  const filePath = getSemanticMetaPath(sessionId, phase);
+
+  await ensureDir(sessionDir);
+
+  const content = JSON.stringify(meta, null, 2);
+
+  // Validate size budget (< 2KB recommended)
+  if (content.length > 2048) {
+    console.warn(`[SemanticMeta] Size ${content.length} exceeds 2KB budget for ${phase}`);
+  }
+
+  // Atomic write to prevent corruption
+  await atomicWrite(filePath, content);
+}
+
+/**
+ * Load SemanticPhaseMeta for a specific phase
+ * Returns null if not found or invalid (graceful degradation)
+ *
+ * @param sessionId - Session identifier
+ * @param phase - Phase to load meta for
+ * @returns SemanticPhaseMeta or null if not found/invalid
+ */
+export async function loadSemanticMeta(
+  sessionId: string,
+  phase: Phase
+): Promise<SemanticPhaseMeta | null> {
+  const filePath = getSemanticMetaPath(sessionId, phase);
+
+  try {
+    const content = await fs.readFile(filePath, 'utf-8');
+    const meta = JSON.parse(content) as SemanticPhaseMeta;
+
+    // Validate version and phase
+    if (meta.version !== 2 || meta.phase !== phase) {
+      console.warn(`[SemanticMeta] Invalid meta file: ${filePath} (version=${meta.version}, phase=${meta.phase})`);
+      return null;
+    }
+
+    return meta;
+  } catch (error) {
+    // File doesn't exist or is corrupted - graceful degradation
+    return null;
+  }
+}
+
+/**
+ * Load all SemanticPhaseMeta for a session
+ * Returns record with phase as key, meta or null as value
+ *
+ * @param sessionId - Session identifier
+ * @returns Record mapping each phase to its meta (or null if not found)
+ */
+export async function loadAllSemanticMetas(
+  sessionId: string
+): Promise<Record<Phase, SemanticPhaseMeta | null>> {
+  const phases: Phase[] = ['planning', 'design', 'implementation', 'operation'];
+
+  // Load all in parallel for efficiency
+  const metas = await Promise.all(
+    phases.map((phase) => loadSemanticMeta(sessionId, phase))
+  );
+
+  // Build record
+  const result: Record<Phase, SemanticPhaseMeta | null> = {
+    planning: metas[0],
+    design: metas[1],
+    implementation: metas[2],
+    operation: metas[3],
+  };
+
+  return result;
+}
+
+/**
+ * Check if SemanticPhaseMeta exists for a phase
+ * Quick non-blocking existence check
+ *
+ * @param sessionId - Session identifier
+ * @param phase - Phase to check
+ * @returns true if semantic meta file exists
+ */
+export async function semanticMetaExists(
+  sessionId: string,
+  phase: Phase
+): Promise<boolean> {
+  const filePath = getSemanticMetaPath(sessionId, phase);
+
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
 }

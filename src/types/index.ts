@@ -26,3 +26,33 @@ export type {
 } from './config.js';
 
 export { getDefaultConfig } from './config.js';
+
+export type {
+  DecisionImpact,
+  RiskSeverity,
+  RiskStatus,
+  SemanticDecision,
+  SemanticChallenge,
+  SemanticRisk,
+  SemanticExtractions,
+  PhaseHandoff,
+  PhaseMetrics,
+  SemanticPhaseMeta,
+  PhaseSummary,
+  CrossPhasePattern,
+  SessionInsights,
+  SessionAggregatedMeta,
+  BackgroundMetaContext,
+  MetaInjectionResult
+} from './semantic-meta.js';
+
+export {
+  isPhase,
+  isRiskSeverity,
+  isRiskStatus,
+  isDecisionImpact,
+  isSemanticPhaseMeta,
+  createEmptyMetrics,
+  createEmptySemantics,
+  createEmptyHandoff
+} from './semantic-meta.js';

@@ -1,0 +1,136 @@
+{
+  "taskId": "netflix-streaming",
+  "name": "Video Streaming Service with Adaptive Bitrate",
+  "complexity": "medium-high",
+  "domain": "big-tech",
+  "subdomain": "streaming",
+  "prompt": "Implement a video streaming service simulator with the following components:\n\n1. **Video Player State Machine**: States include loading, playing, buffering, paused, and error. Handle transitions between states based on events.\n\n2. **Adaptive Bitrate (ABR) Algorithm**: Implement buffer-based ABR that selects video quality based on current buffer level and estimated bandwidth. Support at least 3 quality levels (360p, 720p, 1080p).\n\n3. **CDN Cache Simulation**: Create an edge cache with configurable size (number of segments) and TTL. Track cache hits/misses and implement LRU eviction.\n\n4. **Recommendation API**: Build a basic recommendation endpoint that returns similar content based on genre and viewing history using simple collaborative filtering.\n\nRequirements:\n- TypeScript strict mode\n- Express.js for API endpoints\n- In-memory storage (no database required)\n- Comprehensive tests with Vitest (80%+ coverage)\n- Clean separation of concerns\n\nAPI Endpoints:\n- POST /player/start - Start playing a video\n- POST /player/state - Update player state\n- GET /player/quality - Get recommended quality based on conditions\n- GET /cdn/segment/:id - Get video segment (simulated)\n- GET /recommendations/:userId - Get personalized recommendations",
+  "expectedDeliverables": [
+    {
+      "type": "file",
+      "pathPattern": "src/player/state-machine.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Video player state machine implementation"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/streaming/abr.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Adaptive bitrate selection algorithm"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/cdn/cache.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "CDN cache simulation with LRU eviction"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/recommendations/engine.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Recommendation engine implementation"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/types/*.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "TypeScript type definitions"
+    },
+    {
+      "type": "test",
+      "pathPattern": "test/**/*.test.ts",
+      "required": true,
+      "validator": "vitest-pass",
+      "description": "Comprehensive test suite"
+    },
+    {
+      "type": "config",
+      "pathPattern": "package.json",
+      "required": true,
+      "description": "Package configuration with scripts"
+    }
+  ],
+  "qualityCriteria": {
+    "minTestPassRate": 100,
+    "requireTypeScriptStrict": true,
+    "minDocCoverage": 70,
+    "maxLintErrors": 0,
+    "customChecks": [
+      {
+        "name": "build-check",
+        "command": "npm run build",
+        "expectedExitCode": 0
+      },
+      {
+        "name": "type-check",
+        "command": "npm run type-check",
+        "expectedExitCode": 0
+      }
+    ]
+  },
+  "baselineEstimates": {
+    "expectedTurns": 20,
+    "expectedDurationMinutes": 62,
+    "expectedToolCalls": 67,
+    "expectedWebSearches": 7
+  },
+  "tags": [
+    "streaming",
+    "state-machine",
+    "caching",
+    "recommendations",
+    "big-tech",
+    "adaptive-bitrate",
+    "cdn"
+  ],
+  "patternsToMeasure": [
+    {
+      "pattern": "state-machine",
+      "category": "architecture",
+      "description": "Video player state transitions",
+      "transferPotential": "high"
+    },
+    {
+      "pattern": "caching-strategy",
+      "category": "performance",
+      "description": "LRU cache with TTL",
+      "transferPotential": "high"
+    },
+    {
+      "pattern": "algorithm-selection",
+      "category": "design",
+      "description": "ABR algorithm based on conditions",
+      "transferPotential": "medium"
+    },
+    {
+      "pattern": "rate-limiting",
+      "category": "infrastructure",
+      "description": "Bandwidth estimation and quality throttling",
+      "transferPotential": "high"
+    }
+  ],
+  "metaLearningOpportunities": [
+    "Caching patterns from REST API tasks (direct reuse)",
+    "State machine implementation from auth system (adaptation)",
+    "Algorithm abstraction from microservices task (pattern)",
+    "API design patterns accumulated from all previous tasks"
+  ],
+  "tips": [
+    "Start with the state machine - it's the core of the player",
+    "Use TypeScript enums for player states and quality levels",
+    "The ABR algorithm can be simple: if buffer > 10s use high quality, else lower",
+    "CDN cache should track access time for LRU eviction",
+    "Recommendations can use simple genre matching initially"
+  ],
+  "commonPitfalls": [
+    "Forgetting to handle edge cases in state transitions",
+    "Not implementing cache eviction properly",
+    "Over-engineering the recommendation algorithm",
+    "Missing error states in the player"
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "taskId": "fulfillment-orchestrator",
+  "name": "Order Fulfillment Workflow Orchestrator",
+  "complexity": "complex",
+  "domain": "ecommerce",
+  "subdomain": "fulfillment",
+  "prompt": "Implement an order fulfillment workflow orchestrator with the following components:\n\n1. **Fulfillment Workflow (Saga Pattern)**:\n   - Step 1: Validate Order (check inventory availability, validate address)\n   - Step 2: Allocate Inventory (reserve stock from selected warehouse)\n   - Step 3: Process Payment (charge customer)\n   - Step 4: Create Shipment (assign carrier, generate label)\n   - Step 5: Dispatch (update status, trigger notifications)\n   \n   Each step must have a compensation action for rollback on failure.\n\n2. **Warehouse Selection**:\n   - Select optimal warehouse based on:\n     - Stock availability\n     - Distance to delivery address\n     - Warehouse capacity/workload\n   - Support split shipments when single warehouse cannot fulfill\n\n3. **Carrier Integration (Abstract)**:\n   - Define carrier interface with methods: getRate(), createShipment(), getTracking()\n   - Implement mock carriers (FedEx, UPS, USPS simulation)\n   - Select carrier based on cost, speed, and destination\n\n4. **Order Tracking**:\n   - Track order through all fulfillment stages\n   - Maintain status history with timestamps\n   - Support status queries by order ID\n   - Estimated delivery date calculation\n\n5. **Compensation Logic**:\n   - On payment failure: release inventory reservation\n   - On shipment failure: refund payment, release inventory\n   - On validation failure: reject order with reason\n   - All compensations must be idempotent\n\nRequirements:\n- TypeScript strict mode\n- Express.js for API endpoints\n- In-memory storage\n- Comprehensive tests (80%+ coverage)\n- Event-driven architecture with typed events\n\nAPI Endpoints:\n- POST /orders/:id/fulfill - Start fulfillment workflow\n- GET /orders/:id/status - Get fulfillment status\n- GET /orders/:id/tracking - Get tracking information\n- POST /orders/:id/cancel - Cancel and compensate\n- GET /warehouses - List warehouses with availability",
+  "expectedDeliverables": [
+    {
+      "type": "file",
+      "pathPattern": "src/workflow/fulfillment-saga.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Main saga orchestrator"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/workflow/steps/*.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Individual workflow step implementations"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/workflow/compensation.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Compensation logic for rollbacks"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/warehouse/warehouse-selector.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Warehouse selection strategy"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/carriers/carrier-interface.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Abstract carrier interface"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/carriers/mock-carriers.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Mock carrier implementations"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/tracking/order-tracker.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Order tracking implementation"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/types/*.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Type definitions"
+    },
+    {
+      "type": "test",
+      "pathPattern": "test/**/*.test.ts",
+      "required": true,
+      "validator": "vitest-pass",
+      "description": "Comprehensive test suite including compensation tests"
+    }
+  ],
+  "qualityCriteria": {
+    "minTestPassRate": 100,
+    "requireTypeScriptStrict": true,
+    "minDocCoverage": 75,
+    "maxLintErrors": 0,
+    "customChecks": [
+      {
+        "name": "build-check",
+        "command": "npm run build",
+        "expectedExitCode": 0
+      },
+      {
+        "name": "saga-tests",
+        "command": "npm test -- --grep 'saga'",
+        "expectedExitCode": 0
+      },
+      {
+        "name": "compensation-tests",
+        "command": "npm test -- --grep 'compensation'",
+        "expectedExitCode": 0
+      }
+    ]
+  },
+  "baselineEstimates": {
+    "expectedTurns": 25,
+    "expectedDurationMinutes": 77,
+    "expectedToolCalls": 90,
+    "expectedWebSearches": 8
+  },
+  "tags": [
+    "ecommerce",
+    "saga",
+    "workflow",
+    "orchestration",
+    "fulfillment",
+    "compensation",
+    "distributed"
+  ],
+  "patternsToMeasure": [
+    {
+      "pattern": "saga-workflow",
+      "category": "architecture",
+      "description": "Multi-step workflow with compensation",
+      "transferPotential": "very-high"
+    },
+    {
+      "pattern": "strategy-pattern",
+      "category": "design",
+      "description": "Warehouse and carrier selection strategies",
+      "transferPotential": "high"
+    },
+    {
+      "pattern": "integration-pattern",
+      "category": "architecture",
+      "description": "External service abstraction",
+      "transferPotential": "high"
+    },
+    {
+      "pattern": "state-machine",
+      "category": "architecture",
+      "description": "Order fulfillment states",
+      "transferPotential": "very-high"
+    },
+    {
+      "pattern": "event-sourcing-lite",
+      "category": "architecture",
+      "description": "Status history tracking",
+      "transferPotential": "high"
+    }
+  ],
+  "metaLearningOpportunities": [
+    "Saga patterns directly from microservices task",
+    "State machine heavily reused from all previous tasks",
+    "Integration patterns accumulated from webhooks and carriers",
+    "Strategy patterns for selection logic transferable",
+    "Compensation logic from payment processing"
+  ],
+  "tips": [
+    "Design the saga as a state machine first - each step is a state",
+    "Every execute() must have a compensate() pair",
+    "Warehouse selection can use a simple scoring system",
+    "Keep track of completed steps for partial compensation",
+    "Use dependency injection for carriers to enable testing"
+  ],
+  "commonPitfalls": [
+    "Not making compensation actions idempotent",
+    "Forgetting to handle partial completion scenarios",
+    "Not tracking which steps completed before failure",
+    "Tight coupling to carrier implementations",
+    "Missing status updates during workflow"
+  ],
+  "testScenarios": [
+    {
+      "name": "Happy path fulfillment",
+      "description": "All steps succeed",
+      "steps": [
+        "Create order with valid items and address",
+        "Call fulfill endpoint",
+        "All steps execute successfully",
+        "Order status is 'shipped'"
+      ]
+    },
+    {
+      "name": "Payment failure compensation",
+      "description": "Payment fails after inventory allocated",
+      "steps": [
+        "Create order",
+        "Fulfillment starts, inventory allocated",
+        "Payment processing fails",
+        "Compensation releases inventory",
+        "Order status is 'failed'"
+      ]
+    },
+    {
+      "name": "Split shipment",
+      "description": "Single warehouse cannot fulfill",
+      "steps": [
+        "Create order for 10 units",
+        "Warehouse A has 6, Warehouse B has 4",
+        "Split into two shipments",
+        "Both shipments created successfully"
+      ]
+    }
+  ]
+}

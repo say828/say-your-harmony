@@ -13,7 +13,7 @@
 
 [![9 Agents](https://img.shields.io/badge/🤖_Agents-9-blue?style=flat-square)](./src/agents)
 [![10 Skills](https://img.shields.io/badge/⚡_Skills-10-purple?style=flat-square)](./skills)
-[![9 Commands](https://img.shields.io/badge/📝_Commands-9-orange?style=flat-square)](./commands)
+[![10 Commands](https://img.shields.io/badge/📝_Commands-10-orange?style=flat-square)](./commands)
 [![4x Efficiency](https://img.shields.io/badge/⚡_Parallel_Speedup-4.25x-brightgreen?style=flat-square)](#)
 [![Meta-Analysis](https://img.shields.io/badge/🧠_Meta--Analysis-Enabled-ff69b4?style=flat-square)](./docs/meta)
 
@@ -173,7 +173,7 @@ claude  # Start Claude Code
 
 The configuration enables:
 - **9-Agent System**: planner, architect, builder, operator, explorer, documenter, meta-analyzer, meta-aggregator, harmony
-- **9 Slash Commands**: /harmony, /plan, /design, /build, /operate, /meta, /ultrathink, /aggregate, /metaview
+- **10 Slash Commands**: /harmony, /plan, /design, /build, /operate, /meta, /metaclear, /ultrathink, /aggregate, /metaview
 - **4 Skills**: ultrathink, parallel, meta, phase
 - **Keyword Detection**: Automatic activation for "harmony", "4-phase", "ultrathink"
 

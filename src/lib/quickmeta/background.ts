@@ -2,11 +2,16 @@
  * QuickMeta Background - Optional detailed analysis in background
  *
  * Enables fire-and-forget meta-analysis that doesn't block the user.
+ * Now supports both QuickMeta (legacy) and SemanticPhaseMeta (LLM-based).
  */
 
 import type { Phase } from '../../types/pattern.js';
-import type { QuickMeta } from '../../types/quickmeta.js';
-import { loadSessionQuickMeta } from './storage.js';
+import type { QuickMeta, PhaseMetrics } from '../../types/quickmeta.js';
+import type { SemanticPhaseMeta } from '../../types/semantic-meta.js';
+import { loadSessionQuickMeta, loadSemanticMeta, loadAllSemanticMetas } from './storage.js';
+import path from 'path';
+import os from 'os';
+import fs from 'fs/promises';
 
 /**
  * Configuration for background meta-analysis
@@ -218,4 +223,348 @@ export async function formatQuickMetaAsMarkdown(sessionId: string): Promise<stri
   }
 
   return lines.join('\n');
+}
+
+// ============================================================================
+// LLM-Based Semantic Meta Extraction (New)
+// ============================================================================
+
+/**
+ * Build prompt for phase-meta-extractor agent
+ *
+ * Creates a detailed prompt for LLM-based semantic extraction of phase insights.
+ * The LLM analyzes the raw phase output and extracts structured metadata.
+ *
+ * @param phase - The phase being analyzed
+ * @param phaseOutput - Raw output from the phase (agent responses, tool calls, etc.)
+ * @param sessionId - Session identifier
+ * @param metrics - Phase execution metrics
+ * @returns Formatted prompt for the phase-meta-extractor agent
+ */
+export function buildPhaseMetaPrompt(
+  phase: Phase,
+  phaseOutput: string,
+  sessionId: string,
+  metrics: PhaseMetrics
+): string {
+  const outputPath = path.join(
+    os.homedir(),
+    '.claude',
+    'meta',
+    'semantic',
+    sessionId,
+    `${phase}.json`
+  );
+
+  const phaseGoals: Record<Phase, string[]> = {
+    planning: [
+      'Problem definition clarity',
+      'Requirement completeness',
+      'Information gathering effectiveness',
+      'Scope boundaries',
+    ],
+    design: [
+      'Architectural decisions and rationale',
+      'Design tradeoffs considered',
+      'Risk identification',
+      'Component boundaries',
+    ],
+    implementation: [
+      'Parallel execution patterns',
+      'Testing approach',
+      'Risk mitigation',
+      'Code quality',
+    ],
+    operation: [
+      'Deployment verification',
+      'Production readiness',
+      'Meta-analysis quality',
+      'Continuous improvement insights',
+    ],
+  };
+
+  const sections: string[] = [
+    `# Phase Meta-Extraction: ${phase.toUpperCase()}`,
+    '',
+    `Session: ${sessionId}`,
+    `Phase: ${phase}`,
+    '',
+    '## Phase Output',
+    '',
+    '```',
+    phaseOutput.trim(),
+    '```',
+    '',
+    '## Phase Metrics',
+    '',
+    `- Duration: ${metrics.durationMs}ms (${Math.round(metrics.durationMs / 1000)}s)`,
+    `- Tool Calls: ${metrics.toolCalls}`,
+    `- Delegations: ${metrics.delegations}`,
+    `- Parallel Tasks: ${metrics.parallelTasks}`,
+    '',
+    '## Extraction Instructions',
+    '',
+    'Analyze the phase output above and extract structured semantic metadata.',
+    '',
+    `### Focus Areas for ${phase.toUpperCase()}:`,
+    ...phaseGoals[phase].map((goal) => `- ${goal}`),
+    '',
+    '### Extract:',
+    '',
+    '1. **Accomplishment** (max 200 chars)',
+    '   - What was achieved in this phase?',
+    '',
+    '2. **Key Insight** (max 150 chars)',
+    '   - Most important learning or realization',
+    '',
+    '3. **Decisions** (max 3)',
+    '   - Strategic choices made',
+    '   - Format: { what, why, impact: high|medium|low }',
+    '',
+    '4. **Challenges** (max 2)',
+    '   - Problems encountered and how resolved',
+    '   - Format: { problem, resolution }',
+    '',
+    '5. **Risks** (max 3)',
+    '   - Identified risks or status changes',
+    '   - Format: { severity: P0|P1|P2|P3, description, status: new|mitigated|escalated|accepted }',
+    '',
+    '6. **Approaches** (max 3 keywords)',
+    '   - Problem-solving patterns used (e.g., "parallel", "iterative", "defensive")',
+    '',
+    '7. **Tools Used** (max 5)',
+    '   - Primary tools/techniques (e.g., "Task", "Read", "Edit", "Grep")',
+    '',
+    '8. **Handoff Context**',
+    '   - readyFor: What next phase can do now (max 100 chars)',
+    '   - blockers: What might block next phase (max 3 items)',
+    '   - context: Key context to carry forward (max 150 chars)',
+    '',
+    '## Output Format',
+    '',
+    'Generate a JSON file following the SemanticPhaseMeta schema:',
+    '',
+    '```typescript',
+    '{',
+    '  version: 2,',
+    `  sessionId: "${sessionId}",`,
+    `  phase: "${phase}",`,
+    '  completedAt: "<ISO-8601-timestamp>",',
+    '  semantics: {',
+    '    accomplishment: "...",',
+    '    keyInsight: "...",',
+    '    decisions: [{ what: "...", why: "...", impact: "high|medium|low" }],',
+    '    challenges: [{ problem: "...", resolution: "..." }],',
+    '    risks: [{ severity: "P0|P1|P2|P3", description: "...", status: "..." }],',
+    '    approaches: ["keyword1", "keyword2"],',
+    '    toolsUsed: ["Tool1", "Tool2"]',
+    '  },',
+    '  handoff: {',
+    '    readyFor: "...",',
+    '    blockers: ["..."],',
+    '    context: "..."',
+    '  },',
+    '  metrics: {',
+    `    durationMs: ${metrics.durationMs},`,
+    `    toolCalls: ${metrics.toolCalls},`,
+    `    delegations: ${metrics.delegations},`,
+    `    parallelTasks: ${metrics.parallelTasks}`,
+    '  }',
+    '}',
+    '```',
+    '',
+    `**Output Path**: ${outputPath}`,
+    '',
+    '**Important**:',
+    '- Extract semantic meaning, not just keywords',
+    '- Focus on insights useful for future phases',
+    '- Keep descriptions concise but meaningful',
+    '- Prioritize actionable information',
+  ];
+
+  return sections.join('\n');
+}
+
+/**
+ * Get phases that come before the target phase
+ *
+ * Used to determine which phase metas to load for injection into the current phase.
+ *
+ * @param targetPhase - The phase that will receive prior context
+ * @returns Array of phases that precede targetPhase
+ */
+export function getPriorPhases(targetPhase: Phase): Phase[] {
+  const phaseOrder: Phase[] = ['planning', 'design', 'implementation', 'operation'];
+  const targetIndex = phaseOrder.indexOf(targetPhase);
+
+  if (targetIndex === -1) {
+    return [];
+  }
+
+  return phaseOrder.slice(0, targetIndex);
+}
+
+/**
+ * Format prior phase metas for injection into next phase prompt
+ *
+ * Aggregates semantic metadata from completed phases and formats it for injection
+ * into the next phase's agent prompt. This provides cross-phase context.
+ *
+ * @param metas - Array of semantic phase metas from prior phases
+ * @param targetPhase - The phase that will receive this context
+ * @returns Formatted XML-like string for injection
+ */
+export function formatMetaInjection(
+  metas: SemanticPhaseMeta[],
+  targetPhase: Phase
+): string {
+  if (metas.length === 0) {
+    return '';
+  }
+
+  const sessionId = metas[0]?.sessionId || 'unknown';
+
+  const sections: string[] = [
+    `<prior-phase-insights session="${sessionId}" target="${targetPhase}">`,
+    '',
+  ];
+
+  // Add each prior phase's insights
+  for (const meta of metas) {
+    sections.push(`## ${meta.phase.toUpperCase()} Phase`);
+    sections.push('');
+
+    // Accomplishment
+    if (meta.semantics.accomplishment) {
+      sections.push(`**Accomplishment**: ${meta.semantics.accomplishment}`);
+    }
+
+    // Key Insight
+    if (meta.semantics.keyInsight) {
+      sections.push(`**Key Insight**: ${meta.semantics.keyInsight}`);
+    }
+
+    // Active Risks (P0/P1 that aren't mitigated)
+    const activeRisks = meta.semantics.risks.filter(
+      (r) => (r.severity === 'P0' || r.severity === 'P1') && r.status !== 'mitigated'
+    );
+
+    if (activeRisks.length > 0) {
+      sections.push('');
+      sections.push('**Active Risks**:');
+      for (const risk of activeRisks) {
+        sections.push(`- [${risk.severity}] ${risk.description} (${risk.status})`);
+      }
+    }
+
+    // Key Decisions
+    const highImpactDecisions = meta.semantics.decisions.filter(
+      (d) => d.impact === 'high'
+    );
+
+    if (highImpactDecisions.length > 0) {
+      sections.push('');
+      sections.push('**Key Decisions**:');
+      for (const decision of highImpactDecisions) {
+        sections.push(`- ${decision.what}: ${decision.why}`);
+      }
+    }
+
+    // Handoff Notes
+    if (meta.handoff.readyFor || meta.handoff.context) {
+      sections.push('');
+      if (meta.handoff.readyFor) {
+        sections.push(`**Ready For**: ${meta.handoff.readyFor}`);
+      }
+      if (meta.handoff.context) {
+        sections.push(`**Context**: ${meta.handoff.context}`);
+      }
+      if (meta.handoff.blockers.length > 0) {
+        sections.push(`**Blockers**: ${meta.handoff.blockers.join(', ')}`);
+      }
+    }
+
+    sections.push('');
+    sections.push('---');
+    sections.push('');
+  }
+
+  sections.push('</prior-phase-insights>');
+
+  return sections.join('\n');
+}
+
+/**
+ * Wait for background semantic metas to be generated with timeout
+ *
+ * Polls the filesystem for semantic phase meta files until all expected phases
+ * have their metas generated, or timeout is reached. Used in Phase 4 to wait
+ * for all background meta extraction to complete before aggregation.
+ *
+ * @param sessionId - Session identifier
+ * @param timeout - Maximum time to wait in milliseconds (default: 30000ms)
+ * @returns Promise resolving to phase metas (null if not found)
+ */
+export async function waitForBackgroundMetas(
+  sessionId: string,
+  timeout: number = 30000
+): Promise<Record<Phase, SemanticPhaseMeta | null>> {
+  const semanticDir = path.join(
+    os.homedir(),
+    '.claude',
+    'meta',
+    'semantic',
+    sessionId
+  );
+
+  const phases: Phase[] = ['planning', 'design', 'implementation', 'operation'];
+  const result: Record<Phase, SemanticPhaseMeta | null> = {
+    planning: null,
+    design: null,
+    implementation: null,
+    operation: null,
+  };
+
+  const pollInterval = 2000; // 2 seconds
+  const maxAttempts = Math.ceil(timeout / pollInterval);
+  let attempts = 0;
+
+  while (attempts < maxAttempts) {
+    let allFound = true;
+
+    for (const phase of phases) {
+      if (result[phase]) {
+        // Already loaded
+        continue;
+      }
+
+      const metaPath = path.join(semanticDir, `${phase}.json`);
+
+      try {
+        const content = await fs.readFile(metaPath, 'utf-8');
+        const meta = JSON.parse(content) as SemanticPhaseMeta;
+
+        // Validate basic structure
+        if (meta.version === 2 && meta.phase === phase && meta.sessionId === sessionId) {
+          result[phase] = meta;
+        } else {
+          allFound = false;
+        }
+      } catch {
+        // File doesn't exist or is corrupted
+        allFound = false;
+      }
+    }
+
+    if (allFound) {
+      // All phase metas found
+      break;
+    }
+
+    // Wait before next poll
+    await new Promise((resolve) => setTimeout(resolve, pollInterval));
+    attempts++;
+  }
+
+  return result;
 }

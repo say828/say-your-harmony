@@ -1,0 +1,180 @@
+{
+  "taskId": "order-book",
+  "name": "Order Book Matching Engine",
+  "complexity": "complex",
+  "domain": "fintech",
+  "subdomain": "trading",
+  "prompt": "Implement an order book matching engine for a trading system with the following components:\n\n1. **Order Book Data Structure**:\n   - Maintain bid (buy) and ask (sell) sides\n   - Organize orders by price levels\n   - Support efficient insertion, deletion, and matching\n   - Track order timestamps for price-time priority\n\n2. **Order Types**:\n   - Limit Order: Execute at specified price or better\n   - Market Order: Execute immediately at best available price\n   - Stop-Loss Order: Becomes market order when price reaches trigger\n   - Stop-Limit Order: Becomes limit order when price reaches trigger\n\n3. **Matching Algorithm**:\n   - Price-time priority (FIFO at each price level)\n   - Match incoming orders against resting orders\n   - Support partial fills\n   - Generate trade execution reports\n\n4. **Order Lifecycle**:\n   - States: new, open, partial, filled, canceled, rejected\n   - Support order modification (price/quantity changes)\n   - Support order cancellation\n\n5. **Market Data**:\n   - Best bid/ask (top of book)\n   - Order book depth (multiple levels)\n   - Last trade price and volume\n   - Trade history\n\nRequirements:\n- TypeScript strict mode\n- No external dependencies for core logic\n- In-memory order storage\n- Comprehensive tests (85%+ coverage for financial accuracy)\n- Event emission for trades and order updates\n\nAPI:\n```typescript\ninterface OrderBook {\n  submitOrder(order: Order): OrderResult;\n  cancelOrder(orderId: string): CancelResult;\n  modifyOrder(orderId: string, changes: OrderModification): ModifyResult;\n  getOrderBook(depth?: number): BookSnapshot;\n  getOrder(orderId: string): Order | null;\n  getTrades(since?: Date): Trade[];\n}\n```",
+  "expectedDeliverables": [
+    {
+      "type": "file",
+      "pathPattern": "src/order-book/order-book.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Main order book implementation"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/order-book/price-level.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Price level data structure"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/matching/matching-engine.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Order matching algorithm"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/orders/order.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Order types and lifecycle"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/orders/stop-order-handler.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Stop order triggering logic"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/market-data/market-data.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Market data aggregation"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/types/*.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Type definitions for trading"
+    },
+    {
+      "type": "test",
+      "pathPattern": "test/**/*.test.ts",
+      "required": true,
+      "validator": "vitest-pass",
+      "description": "Comprehensive test suite"
+    }
+  ],
+  "qualityCriteria": {
+    "minTestPassRate": 100,
+    "requireTypeScriptStrict": true,
+    "minDocCoverage": 85,
+    "maxLintErrors": 0,
+    "customChecks": [
+      {
+        "name": "build-check",
+        "command": "npm run build",
+        "expectedExitCode": 0
+      },
+      {
+        "name": "matching-tests",
+        "command": "npm test -- --grep 'matching'",
+        "expectedExitCode": 0
+      },
+      {
+        "name": "priority-tests",
+        "command": "npm test -- --grep 'priority'",
+        "expectedExitCode": 0
+      }
+    ]
+  },
+  "baselineEstimates": {
+    "expectedTurns": 25,
+    "expectedDurationMinutes": 77,
+    "expectedToolCalls": 90,
+    "expectedWebSearches": 8
+  },
+  "tags": [
+    "trading",
+    "fintech",
+    "matching-engine",
+    "order-book",
+    "data-structure",
+    "algorithms",
+    "financial"
+  ],
+  "patternsToMeasure": [
+    {
+      "pattern": "priority-queue",
+      "category": "data-structure",
+      "description": "Price-time priority ordering",
+      "transferPotential": "high"
+    },
+    {
+      "pattern": "state-machine",
+      "category": "architecture",
+      "description": "Order lifecycle states",
+      "transferPotential": "very-high"
+    },
+    {
+      "pattern": "event-emission",
+      "category": "architecture",
+      "description": "Trade and update events",
+      "transferPotential": "very-high"
+    },
+    {
+      "pattern": "algorithm-optimization",
+      "category": "performance",
+      "description": "Efficient matching algorithm",
+      "transferPotential": "high"
+    }
+  ],
+  "metaLearningOpportunities": [
+    "State machine patterns from payment processor",
+    "Event patterns from microservices task",
+    "Priority handling concepts from various tasks",
+    "Testing strategies for financial systems"
+  ],
+  "tips": [
+    "Use a sorted map or tree structure for price levels",
+    "Each price level maintains a FIFO queue of orders",
+    "Market orders match against the opposite side immediately",
+    "Stop orders need a separate collection that watches market price",
+    "Emit events for every state change for auditability"
+  ],
+  "commonPitfalls": [
+    "Not maintaining price-time priority correctly",
+    "Forgetting to handle partial fills properly",
+    "Stop order triggering at wrong price",
+    "Race conditions in order submission",
+    "Not updating market data after trades"
+  ],
+  "testScenarios": [
+    {
+      "name": "Basic limit order matching",
+      "description": "Buy limit at 100 matches sell limit at 100",
+      "steps": [
+        "Submit sell limit order: 10 units at $100",
+        "Submit buy limit order: 5 units at $100",
+        "Expect: Trade of 5 units at $100, sell order partially filled"
+      ]
+    },
+    {
+      "name": "Price-time priority",
+      "description": "Earlier order at same price gets filled first",
+      "steps": [
+        "Submit sell limit order A: 10 units at $100 at T1",
+        "Submit sell limit order B: 10 units at $100 at T2",
+        "Submit buy market order: 5 units",
+        "Expect: Order A partially filled, Order B untouched"
+      ]
+    },
+    {
+      "name": "Stop-loss triggering",
+      "description": "Stop-loss becomes market order when price drops",
+      "steps": [
+        "Set stop-loss sell at trigger price $95",
+        "Execute trade that moves last price to $94",
+        "Expect: Stop-loss triggers and executes as market order"
+      ]
+    }
+  ]
+}

@@ -35,6 +35,7 @@ export { explorerAgent, EXPLORER_PROMPT_METADATA } from './explorer.js';
 export { documenterAgent, DOCUMENTER_PROMPT_METADATA } from './documenter.js';
 export { metaAnalyzerAgent, META_ANALYZER_PROMPT_METADATA } from './meta-analyzer.js';
 export { metaAggregatorAgent, META_AGGREGATOR_PROMPT_METADATA } from './meta-aggregator.js';
+export { phaseMetaExtractorAgent, PHASE_META_EXTRACTOR_PROMPT_METADATA } from './phase-meta-extractor.js';
 
 // Legacy exports (backward compatibility - getAgentDefinitions and harmonySystemPrompt)
 export {

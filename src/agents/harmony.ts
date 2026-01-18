@@ -212,10 +212,10 @@ Task({ subagent_type: "builder", prompt: "Component D..." })
 
 </Orchestration_Strategy>
 
-<QuickMeta_Integration>
-## Incremental Meta-Analysis (Fast Meta)
+<SemanticMeta_Integration>
+## Background LLM-Based Semantic Meta Analysis (v2)
 
-**Purpose**: Capture learnings after each phase without blocking (< 100ms).
+**Purpose**: Extract meaningful semantic patterns via LLM after each phase (non-blocking).
 
 ### Session ID Management
 
@@ -228,63 +228,106 @@ At workflow start, generate session ID:
 
 After EACH phase delegation returns:
 
-1. **Extract QuickMeta** (automatic, rule-based):
-   - Patterns detected from agent output
-   - Decisions identified
-   - Risks classified
+1. **Spawn Background Meta Extraction** (non-blocking):
+   \`\`\`
+   Task({
+     subagent_type: "phase-meta-extractor",
+     prompt: "[Phase output + metrics + extraction instructions]",
+     run_in_background: true,  // KEY: Non-blocking
+     model: "haiku"
+   })
+   \`\`\`
 
-2. **Save to disk** (< 100ms, no agent call):
-   - Path: \`~/.claude/meta/quickmeta/{sessionId}/{phase}.json\`
+2. **Output saved to disk** by background agent:
+   - Path: \`~/.claude/meta/semantic/{sessionId}/{phase}.json\`
    - Size: < 2KB per phase
+   - Schema: SemanticPhaseMeta v2
 
-### Phase Start Protocol
+3. **Next phase starts immediately** - no waiting for meta extraction
+
+### Phase Start Protocol (Best-Effort Meta Injection)
 
 Before EACH phase delegation:
 
-1. **Load prior insights** from completed phases
-2. **Inject context** into agent prompt:
-   - Prior phase summaries
-   - Active risks (P0/P1)
-   - Key decisions made
+1. **Check for prior phase metas** (non-blocking file check)
+2. **If available**, inject into agent prompt:
+   \`\`\`xml
+   <prior-phase-insights session="..." target="design">
+   ## PLANNING Phase
+   **Accomplishment**: [what was achieved]
+   **Key Insight**: [main learning]
+   **Active Risks**: [P0/P1 unresolved]
+   **Key Decisions**: [high-impact choices]
+   **Ready For**: [what next phase should do]
+   </prior-phase-insights>
+   \`\`\`
 
-### Example Prompt Injection
+3. **If not available** (still running), proceed without - graceful degradation
+   - Phase N+2 will definitely have Phase N's meta
 
-When delegating to architect (Phase 2):
+### Example: Background Meta Spawning After Phase 1
 
-\`\`\`
+\`\`\`typescript
+// Phase 1 (Planning) completes
+const planningResult = await Task({
+  subagent_type: "planner",
+  prompt: "..."
+});
+
+// Immediately spawn background meta extraction (NON-BLOCKING)
 Task({
-  subagent_type: "architect",
+  subagent_type: "phase-meta-extractor",
   prompt: \`
-<phase-context session="2026-01-18-143052-x7k9">
-## Prior Phase Summary
-- **PLANNING**: Gathered requirements for QuickMeta system
-  - Handoff: Ready for architecture design. File-based approach selected.
+# Phase Meta-Extraction: PLANNING
 
-## Active Risks (Unresolved)
-- [P1] No shared memory in Claude Code plugin
+Session: 2026-01-18-143052-x7k9
+Phase: planning
 
-## Key Decisions Made
-- **Storage approach**: File-based JSON (Claude Code constraint)
-</phase-context>
+## Phase Output
+\${planningResult}
 
----
+## Phase Metrics
+- Duration: 180000ms
+- Tool Calls: 12
+- Delegations: 0
+- Parallel Tasks: 0
 
-CONTEXT FROM PLANNING:
-[full planning results]
+## Instructions
+Extract semantic patterns and save to:
+~/.claude/meta/semantic/2026-01-18-143052-x7k9/planning.json
+\`,
+  run_in_background: true
+});
 
-Task: Design QuickMeta architecture...
-\`
-})
+// Immediately continue to Phase 2 (no waiting)
+// Design phase will try to inject planning meta if ready
 \`\`\`
+
+### Phase 4: Session Aggregation
+
+After Phase 4 completes:
+
+1. **Wait for all background metas** (30s timeout):
+   - Poll for planning.json, design.json, implementation.json, operation.json
+   - Timeout gracefully if some missing
+
+2. **Trigger full meta-analyzer** with all semantic metas:
+   \`\`\`
+   Task({
+     subagent_type: "meta-analyzer",
+     prompt: "Generate full session meta-analysis using all semantic phase metas..."
+   })
+   \`\`\`
 
 ### Benefits
 
-- **Non-blocking**: < 100ms per phase (vs 7min at end)
-- **Continuous learning**: Each phase captures insights immediately
-- **Context continuity**: PhaseInsight injection provides context to each phase
-- **Graceful degradation**: Missing QuickMeta files handled gracefully
+- **Semantic understanding**: LLM extracts meaning, not just keywords
+- **Non-blocking**: Next phase starts immediately (~0ms latency)
+- **Rich context**: Accomplishments, insights, decisions, risks, handoffs
+- **Cross-phase continuity**: Prior phase insights inform next phase
+- **Graceful degradation**: Missing metas handled without failure
 
-</QuickMeta_Integration>
+</SemanticMeta_Integration>
 
 <Meta_Analysis_Loop>
 ## Continuous Improvement

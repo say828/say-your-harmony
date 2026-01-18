@@ -1,0 +1,160 @@
+{
+  "taskId": "stripe-payment-processor",
+  "name": "Payment Processing Pipeline with Idempotency",
+  "complexity": "complex",
+  "domain": "big-tech",
+  "subdomain": "payments",
+  "prompt": "Implement a payment processing pipeline inspired by Stripe's architecture with the following components:\n\n1. **Payment Intent Management**:\n   - Create payment intents with amount, currency, customer ID\n   - Process payment (simulate card charging)\n   - Handle payment states: created, processing, succeeded, failed, canceled\n\n2. **Idempotency Handling**:\n   - Accept idempotency keys on all mutating operations\n   - Store and check idempotency keys to prevent duplicate charges\n   - Return cached response for duplicate requests\n\n3. **Retry Logic with Exponential Backoff**:\n   - Implement retry mechanism for external service calls (simulated)\n   - Use exponential backoff with jitter\n   - Configurable max retries and base delay\n\n4. **Webhook System**:\n   - Register webhook endpoints for events\n   - Deliver webhooks with signature verification (HMAC)\n   - Implement retry queue for failed deliveries\n   - At-least-once delivery guarantee\n\n5. **Transaction Audit Logging**:\n   - Log all state changes with timestamps\n   - Immutable audit trail\n   - Query audit logs by payment ID or time range\n\nRequirements:\n- TypeScript strict mode\n- Express.js for API\n- In-memory storage\n- Comprehensive tests (85%+ coverage due to financial nature)\n- Proper error handling with typed errors\n\nAPI Endpoints:\n- POST /payment-intents - Create a payment intent\n- POST /payment-intents/:id/confirm - Confirm and process payment\n- POST /payment-intents/:id/cancel - Cancel a payment\n- POST /refunds - Create a refund\n- POST /webhooks/register - Register webhook endpoint\n- GET /webhooks/deliveries/:paymentId - Get delivery status\n- GET /audit/:paymentId - Get audit log",
+  "expectedDeliverables": [
+    {
+      "type": "file",
+      "pathPattern": "src/payments/payment-intent.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Payment intent creation and management"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/payments/processor.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Payment processing logic"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/idempotency/idempotency-store.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Idempotency key storage and checking"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/retry/exponential-backoff.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Retry logic implementation"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/webhooks/webhook-service.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Webhook delivery and retry"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/webhooks/signature.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "HMAC signature generation and verification"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/audit/audit-log.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Immutable audit logging"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/types/*.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Type definitions for payments"
+    },
+    {
+      "type": "test",
+      "pathPattern": "test/**/*.test.ts",
+      "required": true,
+      "validator": "vitest-pass",
+      "description": "Comprehensive test suite"
+    }
+  ],
+  "qualityCriteria": {
+    "minTestPassRate": 100,
+    "requireTypeScriptStrict": true,
+    "minDocCoverage": 80,
+    "maxLintErrors": 0,
+    "customChecks": [
+      {
+        "name": "build-check",
+        "command": "npm run build",
+        "expectedExitCode": 0
+      },
+      {
+        "name": "idempotency-test",
+        "command": "npm test -- --grep 'idempotency'",
+        "expectedExitCode": 0
+      }
+    ]
+  },
+  "baselineEstimates": {
+    "expectedTurns": 23,
+    "expectedDurationMinutes": 77,
+    "expectedToolCalls": 85,
+    "expectedWebSearches": 8
+  },
+  "tags": [
+    "payments",
+    "idempotency",
+    "retry",
+    "webhooks",
+    "fintech",
+    "big-tech",
+    "audit",
+    "reliability"
+  ],
+  "patternsToMeasure": [
+    {
+      "pattern": "idempotency",
+      "category": "reliability",
+      "description": "Prevent duplicate operations",
+      "transferPotential": "very-high"
+    },
+    {
+      "pattern": "retry-with-backoff",
+      "category": "reliability",
+      "description": "Exponential backoff with jitter",
+      "transferPotential": "very-high"
+    },
+    {
+      "pattern": "webhook-system",
+      "category": "integration",
+      "description": "Event delivery with retries",
+      "transferPotential": "high"
+    },
+    {
+      "pattern": "state-machine",
+      "category": "architecture",
+      "description": "Payment state transitions",
+      "transferPotential": "very-high"
+    },
+    {
+      "pattern": "audit-logging",
+      "category": "compliance",
+      "description": "Immutable transaction history",
+      "transferPotential": "high"
+    }
+  ],
+  "metaLearningOpportunities": [
+    "State machine patterns heavily reused from auth system",
+    "Error handling patterns from auth system",
+    "Event-driven architecture from microservices",
+    "Webhook patterns new but buildable from REST knowledge",
+    "Retry patterns universally applicable"
+  ],
+  "tips": [
+    "Design the payment state machine first - it governs everything",
+    "Idempotency keys should include operation type + key hash",
+    "Use crypto.createHmac for webhook signatures",
+    "The retry mechanism should be a separate utility class",
+    "Audit logs should be append-only with no updates/deletes"
+  ],
+  "commonPitfalls": [
+    "Not handling concurrent idempotency key requests",
+    "Forgetting to add jitter to exponential backoff",
+    "Webhook signature timing attacks (use constant-time comparison)",
+    "Allowing audit log modifications",
+    "Not testing failure paths thoroughly"
+  ]
+}

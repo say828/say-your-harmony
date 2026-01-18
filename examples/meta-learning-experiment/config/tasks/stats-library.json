@@ -1,0 +1,156 @@
+{
+  "taskId": "stats-library",
+  "name": "Statistical Functions Library",
+  "complexity": "simple-medium",
+  "domain": "scientific-computing",
+  "subdomain": "statistics",
+  "prompt": "Implement a statistical functions library in TypeScript with the following capabilities:\n\n1. **Descriptive Statistics**:\n   - mean(data: number[]): number\n   - median(data: number[]): number\n   - mode(data: number[]): number[]\n   - variance(data: number[], sample?: boolean): number\n   - standardDeviation(data: number[], sample?: boolean): number\n   - percentile(data: number[], p: number): number\n\n2. **Hypothesis Testing**:\n   - tTestOneSample(data: number[], mu: number): { t: number, pValue: number }\n   - tTestTwoSample(data1: number[], data2: number[], paired?: boolean): { t: number, pValue: number }\n   - chiSquareTest(observed: number[], expected: number[]): { chiSquare: number, pValue: number }\n\n3. **Regression Analysis**:\n   - linearRegression(x: number[], y: number[]): { slope: number, intercept: number, rSquared: number }\n   - correlation(x: number[], y: number[]): { pearson: number, spearman: number }\n\n4. **Confidence Intervals**:\n   - confidenceInterval(data: number[], confidence?: number): { lower: number, upper: number, mean: number }\n   - proportionConfidenceInterval(successes: number, trials: number, confidence?: number): { lower: number, upper: number }\n\nRequirements:\n- TypeScript strict mode with no external math libraries (implement from scratch)\n- Pure functions with no side effects\n- Handle edge cases (empty arrays, single values, etc.)\n- Comprehensive tests (90%+ coverage for mathematical correctness)\n- JSDoc comments with mathematical formulas\n\nThe library should be usable as:\n```typescript\nimport { mean, tTestTwoSample, linearRegression } from './stats';\n\nconst avg = mean([1, 2, 3, 4, 5]);\nconst testResult = tTestTwoSample(groupA, groupB);\nconst regression = linearRegression(xValues, yValues);\n```",
+  "expectedDeliverables": [
+    {
+      "type": "file",
+      "pathPattern": "src/descriptive.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Descriptive statistics functions"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/hypothesis.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Hypothesis testing functions"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/regression.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Regression analysis functions"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/confidence.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Confidence interval calculations"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/utils/distributions.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Statistical distribution utilities (t-distribution, normal CDF)"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/index.ts",
+      "required": true,
+      "validator": "typescript-strict",
+      "description": "Library entry point with exports"
+    },
+    {
+      "type": "test",
+      "pathPattern": "test/**/*.test.ts",
+      "required": true,
+      "validator": "vitest-pass",
+      "description": "Comprehensive test suite with known values"
+    }
+  ],
+  "qualityCriteria": {
+    "minTestPassRate": 100,
+    "requireTypeScriptStrict": true,
+    "minDocCoverage": 90,
+    "maxLintErrors": 0,
+    "customChecks": [
+      {
+        "name": "build-check",
+        "command": "npm run build",
+        "expectedExitCode": 0
+      },
+      {
+        "name": "numerical-precision",
+        "command": "npm test -- --grep 'precision'",
+        "expectedExitCode": 0
+      }
+    ]
+  },
+  "baselineEstimates": {
+    "expectedTurns": 9,
+    "expectedDurationMinutes": 40,
+    "expectedToolCalls": 35,
+    "expectedWebSearches": 4
+  },
+  "tags": [
+    "statistics",
+    "math",
+    "pure-functions",
+    "scientific-computing",
+    "library",
+    "numerical"
+  ],
+  "patternsToMeasure": [
+    {
+      "pattern": "pure-functions",
+      "category": "code-quality",
+      "description": "Stateless function implementation",
+      "transferPotential": "very-high"
+    },
+    {
+      "pattern": "type-safety",
+      "category": "code-quality",
+      "description": "Strict typing for numerical precision",
+      "transferPotential": "very-high"
+    },
+    {
+      "pattern": "testing-strategy",
+      "category": "quality",
+      "description": "Testing numerical functions with known values",
+      "transferPotential": "high"
+    },
+    {
+      "pattern": "algorithm-implementation",
+      "category": "algorithm",
+      "description": "Implementing mathematical formulas",
+      "transferPotential": "medium"
+    }
+  ],
+  "metaLearningOpportunities": [
+    "Pure function patterns reusable in any functional context",
+    "Type safety patterns for numerical precision",
+    "Testing strategies including edge cases and known values",
+    "Documentation patterns for API clarity"
+  ],
+  "tips": [
+    "Start with descriptive statistics - they're foundational",
+    "Use the sample variance formula: sum((x - mean)^2) / (n - 1)",
+    "For t-distribution p-values, approximate using normal distribution for large n",
+    "Linear regression uses least squares: slope = cov(x,y) / var(x)",
+    "Test against known statistical tables or calculators"
+  ],
+  "commonPitfalls": [
+    "Using population variance instead of sample variance",
+    "Not handling empty arrays gracefully",
+    "Floating point precision issues in comparisons",
+    "Forgetting to sort data for median/percentile calculations",
+    "Off-by-one errors in degrees of freedom"
+  ],
+  "testCases": [
+    {
+      "function": "mean",
+      "input": [[1, 2, 3, 4, 5]],
+      "expected": 3
+    },
+    {
+      "function": "standardDeviation",
+      "input": [[2, 4, 4, 4, 5, 5, 7, 9], true],
+      "expected": 2.0,
+      "tolerance": 0.001
+    },
+    {
+      "function": "linearRegression",
+      "input": [[1, 2, 3, 4, 5], [2, 4, 5, 4, 5]],
+      "expected": { "slope": 0.6, "intercept": 2.2, "rSquared": 0.5 },
+      "tolerance": 0.01
+    }
+  ]
+}
