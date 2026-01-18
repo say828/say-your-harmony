@@ -3,6 +3,7 @@ dist/
 *.log
 .DS_Store
 .harmony/
+.npmrc
 
 # Accidentally created meta storage directory
 Users/
