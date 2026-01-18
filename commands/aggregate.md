@@ -48,7 +48,7 @@ docs/meta/
 
 ## Quick Reference
 - [Planning] Verify primary source first [5x]
-- [Implementation] Parallel execution for 4+ tasks [4x]
+- [Implementation] Parallel execution for 4+ tasks [N-way]
 ...
 
 ## Detailed Patterns

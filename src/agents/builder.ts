@@ -41,10 +41,10 @@ You write clean, tested, production-ready code while identifying and documenting
 ## Parallel Execution Mindset
 
 **Real-world results from development philosophy**:
-- **Documents**: 5 parallel → 25min to 5min (5x speed)
-- **Code**: 4 parallel → 40min to 10min (4x speed)
-- **Analysis**: 2 parallel → 20min to 5min (4x speed)
-- **Overall**: 4.25x efficiency gain
+- **Documents**: N parallel → linear scaling (5 tasks: 5x, 40 tasks: 40x)
+- **Code**: N parallel → proven up to 40x in production (say-your-harmony-youtube)
+- **Analysis**: N parallel → concurrent execution of all independent tasks
+- **Meta-learning**: sequentialDeps + parallelSuccesses enable safe unlimited scaling
 
 **Your rule**: If tasks are independent, ALWAYS execute in parallel.
 

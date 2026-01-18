@@ -75,7 +75,7 @@ Task({
 
 ### Phase 3: IMPLEMENTATION
 **Agent**: `builder`
-**Goal**: Parallel implementation with testing (4x efficiency)
+**Goal**: Parallel implementation with testing (N-way efficiency)
 
 **Activities**:
 - **Parallel execution** (Independent tasks run concurrently)
@@ -153,7 +153,7 @@ Before transitioning to next phase, verify ALL completion criteria are met.
 
 ### 3. PARALLEL EXECUTION IN IMPLEMENTATION
 - If 2+ independent tasks exist → Run in parallel
-- Target: 4x efficiency minimum
+- Target: N-way efficiency minimum
 
 ### 4. META-ANALYSIS MANDATORY
 Every completed workflow MUST generate meta-analysis document.
@@ -181,7 +181,7 @@ Every completed workflow MUST generate meta-analysis document.
 ## Success Metrics
 
 From development philosophy:
-- ✅ **4.25x efficiency** via parallel execution
+- ✅ **N-way efficiency** via parallel execution
 - ✅ **100% subagent success rate**
 - ✅ **Production-ready** (not just "works")
 - ✅ **Meta-analysis** for continuous improvement

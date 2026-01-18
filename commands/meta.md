@@ -151,7 +151,7 @@ Tool Usage:
 - Tests: 100% pass
 
 ## 5. Efficiency
-- Parallel execution: 4.25x speedup
+- Parallel execution: N-way speedup
 - Subagent success: 11/11 = 100%
 
 ## 6. Communication
@@ -179,7 +179,7 @@ Tool Usage:
 - Patterns extracted → reusable
 
 ### 2. Metrics
-- Efficiency quantified (4.25x speedup)
+- Efficiency quantified (N-way speedup)
 - Success rates tracked (100% subagents)
 - Progress measurable
 

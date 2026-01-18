@@ -215,7 +215,7 @@ Output ONLY valid JSON (no markdown, no code fences):
   "handoff": {
     "readyFor": "Operation: deploy, verify P0 fix, validate rate limits under load",
     "blockers": ["P1 monitoring gap - needs metric collection before prod"],
-    "context": "4 parallel tasks completed. P0 risk mitigated. P1 monitoring required for production."
+    "context": "N parallel tasks completed. P0 risk mitigated. P1 monitoring required for production."
   }
 }
 </Examples>
@@ -245,7 +245,7 @@ Output ONLY valid JSON (no markdown, no code fences):
    - Empty array = no parallel execution, or first time running
    - Use same identifiers as sequentialDeps for consistency
    - Examples:
-     * Implementation with 4 parallel components: ["validator-impl", "auth-impl", "sanitizer-impl"]
+     * Implementation with N parallel components: ["validator-impl", "auth-impl", "sanitizer-impl", ...]
      * Operation with parallel deployments: ["staging-deploy", "docs-deploy"]
    - Learning effect: Future tasks can safely parallelize with similar patterns
    - Complements sequentialDeps: negative examples (must be sequential) vs positive (can be parallel)

@@ -56,7 +56,7 @@ The `architect` agent will:
 
 ### Phase 3: IMPLEMENTATION (Automatic)
 The `builder` agent will:
-1. Implement code in parallel (4x efficiency)
+1. Implement code in parallel (N-way efficiency)
 2. Write tests alongside implementation
 3. Run build verification
 4. Identify implementation risks
@@ -131,7 +131,7 @@ The workflow completes successfully when:
 
 **Real Results**:
 - 50% success from correct problem definition (Phase 1)
-- 4x efficiency from parallel execution (Phase 3)
+- N-way efficiency from parallel execution (Phase 3)
 - Continuous improvement from meta-analysis (Phase 4)
 
 ---

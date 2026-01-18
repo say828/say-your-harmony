@@ -99,7 +99,7 @@ Generated: ~/.claude/meta/session-2026-01-17-meta-analysis.md
 
 Highlights:
 - 35 turns total
-- 4.25x efficiency (parallel execution)
+- N-way efficiency (parallel execution)
 - 100% subagent success rate
 - 8 patterns extracted
 - 5 improvements suggested
@@ -191,7 +191,7 @@ Result: Production-ready, continuous improvement
 1. Tool usage patterns
 2. Decision trees
 3. Problem-solving patterns
-4. Efficiency metrics (4.25x speedup)
+4. Efficiency metrics (N-way speedup)
 5. Subagent success rates
 6. Best practices
 7. Improvement suggestions

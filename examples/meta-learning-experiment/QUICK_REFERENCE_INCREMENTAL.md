@@ -17,8 +17,8 @@ cd examples/meta-learning-experiment/scripts
 | 1 | 0→1 | 1 task | 1-2h | Baseline |
 | 2 | 1→3 | 2 parallel | 1-2h | Initial Transfer |
 | 3 | 3→6 | 3 parallel | 2-3h | Accumulation |
-| 4 | 6→10 | 4 parallel | 2-4h | Saturation Test |
-| 5 | 10→15 | 5 parallel | 2-4h | Large Scale |
+| 4 | 6→10 | N parallel (8+) | 2-4h | Scaling Test |
+| 5 | 10→15 | N parallel (15+) | 2-4h | Large Scale Validation |
 
 **Total:** 8-15 hours
 

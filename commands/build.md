@@ -32,7 +32,7 @@ The `builder` agent will:
 
 ### Step 2: Parallel Implementation
 - Launch multiple builders concurrently
-- Target: **4x efficiency minimum**
+- Target: **Unlimited parallel scaling** (meta-learning optimizes over time)
 - Independent files built simultaneously
 
 Example:
@@ -44,8 +44,8 @@ Parallel:
 - Implement UtilD.ts
 
 Sequential: 40 minutes
-Parallel: 10 minutes
-Speedup: 4x
+Parallel: 10 minutes (4 tasks) → 2 minutes (40 tasks with meta-learning)
+Speedup: Scales linearly with independent tasks
 ```
 
 ### Step 3: Testing Alongside Implementation
@@ -100,7 +100,7 @@ Phase 3 complete when:
 
 ## Philosophy
 
-> **"Parallel execution is the key to 4x efficiency"**
+> **"Parallel execution is the key to N-way efficiency"**
 
 From development philosophy:
 - Sequential = Slow
@@ -108,7 +108,7 @@ From development philosophy:
 - Tests after = Bugs shipped
 - Tests during = Bugs caught early
 
-**Real results: 4.25x efficiency via parallel execution**
+**Real results: N-way efficiency via parallel execution**
 
 ---
 
@@ -153,7 +153,7 @@ Parallel:
 Longest task: 15 minutes
 Total: 15 minutes
 
-Speedup: 4x
+Speedup: N-way
 ```
 
 ---

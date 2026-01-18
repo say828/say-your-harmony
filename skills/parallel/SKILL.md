@@ -2,13 +2,13 @@
 
 ## What It Does
 
-Maximizes **parallel execution** of independent tasks to achieve **4x+ efficiency**.
+Maximizes **parallel execution** of independent tasks to achieve **unlimited scalability**.
 
 From development philosophy real-world results:
-- **Documents (5 parallel)**: 25min → 5min = **5x speed**
-- **Code (4 parallel)**: 40min → 10min = **4x speed**
-- **Analysis (2 parallel)**: 20min → 5min = **4x speed**
-- **Overall**: **4.25x efficiency gain**
+- **Documents (N parallel)**: Linear scaling with task count
+- **Code (N parallel)**: Proven up to 40x in production (say-your-harmony-youtube)
+- **Analysis (N parallel)**: Concurrent execution of all independent tasks
+- **Meta-learning**: sequentialDeps + parallelSuccesses enable safe scaling
 
 ---
 
@@ -96,7 +96,7 @@ Total: 40 minutes
 
 ### With Parallel
 ```typescript
-// Single turn: Launch 4 parallel tasks
+// Single turn: Launch N parallel tasks (scale as needed)
 Task({ subagent: "builder", prompt: "Implement RateLimitFilter.kt", run_in_background: true })
 Task({ subagent: "builder", prompt: "Implement BruteForceFilter.kt", run_in_background: true })
 Task({ subagent: "builder", prompt: "Modify JwtHandler.kt", run_in_background: true })

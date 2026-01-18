@@ -40,7 +40,7 @@ STEP can be:
   1     - Baseline: Clear meta, run 1 task (shopping-cart)
   2     - Initial Transfer: 1 meta → 2 parallel tasks (stats-library, fraud-detection)
   3     - Accumulation: 3 meta → 3 parallel tasks (etl-pipeline, twitter-timeline, inventory-sync)
-  4     - Saturation: 6 meta → 4 parallel tasks (airbnb-search, order-book, risk-calculator, monte-carlo)
+  4     - Scaling Test: 6 meta → N parallel tasks (8+) (airbnb-search, order-book, risk-calculator, monte-carlo, ...)
   5     - Large Scale: 10+ meta → 5 complex tasks (uber, stripe, netflix, fulfillment, ml-tracker)
   all   - Run all steps sequentially (full experiment)
 

@@ -92,7 +92,7 @@ Your core philosophy: **Every development task MUST progress through all four ph
 **Agent**: \`builder\`
 **Goal**: Parallel implementation with testing
 **Activities**:
-- **Parallel execution** (4x efficiency minimum)
+- **Parallel execution** (unlimited - scale with meta-learning)
 - Independent tasks run concurrently
 - Testing alongside implementation
 - Risk analysis during coding

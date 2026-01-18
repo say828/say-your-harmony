@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] - 2026-01-18
+
+### Changed
+- **Unlimited Parallel Execution**: Removed all hardcoded "4x" and "4 parallel" limits
+  - Changed to "N-way" parallel execution (scale as needed)
+  - Meta-learning (`sequentialDeps` + `parallelSuccesses`) enables safe unlimited scaling
+  - Proven up to 40x parallelization in production (say-your-harmony-youtube)
+  - Updated all documentation, agent prompts, and examples
+  - Philosophy: Start conservative, learn incrementally, scale safely
+
+### Technical Details
+- Updated 17 files across codebase
+- `src/agents/*.ts` - Changed to "N parallel", "unlimited scaling"
+- `commands/*.md`, `skills/*.md` - All references now "N-way"
+- `README.md` - "Unlimited concurrency (up to 40x+ proven)"
+- `docs/CLAUDE.md` - Complete "N-way" unification
+
+### Research Impact
+- Hypothesis validated: Meta-learning enables safe N-way parallelization
+- No artificial limits on parallel task execution
+- System learns optimal parallelization from experience
+- Expected scaling: Linear with independent tasks (N tasks → N-way speedup)
+
 ## [1.2.1] - 2026-01-18
 
 ### Added

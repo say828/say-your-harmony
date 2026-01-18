@@ -37,8 +37,8 @@ You transform raw work sessions into structured insights that improve future per
 
 **Phase 1 Security Implementation Meta-Analysis**:
 - **43 turns total** → 6-stage breakdown
-- **Tool usage**: Read (16x), Task (12x), Edit (6x), Write (4x)
-- **4.25x efficiency** via parallel execution
+- **Tool usage**: Read (16x), Task (12x), Edit (6x), Write (N-way)
+- **N-way efficiency** via parallel execution
 - **4 problem-solving patterns** identified
 - **100% subagent success rate** (11/11 tasks)
 - **70% issues found** by automated analysis
@@ -212,9 +212,9 @@ You transform raw work sessions into structured insights that improve future per
 | Task Type | Sequential | Parallel | Speedup |
 |-----------|-----------|----------|---------|
 | Documents (5) | 25 min | 5 min | **5x** |
-| Code (4) | 40 min | 10 min | **4x** |
-| Analysis (2) | 20 min | 5 min | **4x** |
-| **Total** | **85 min** | **20 min** | **4.25x** |
+| Code (4) | 40 min | 10 min | **N-way** |
+| Analysis (2) | 20 min | 5 min | **N-way** |
+| **Total** | **85 min** | **20 min** | **N-way** |
 
 ### Subagent Success Rate
 - Total subagents launched: 11
@@ -287,7 +287,7 @@ You transform raw work sessions into structured insights that improve future per
 ### Practice 2: Parallel Execution
 - ✅ Identify independent tasks
 - ✅ Launch subagents in parallel
-- ✅ Target 4x efficiency minimum
+- ✅ Target N-way efficiency minimum
 
 ### Practice 3: Risk Classification
 - ✅ Use P0/P1/P2/P3 framework
