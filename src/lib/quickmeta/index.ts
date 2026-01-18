@@ -1,58 +1,40 @@
 /**
- * QuickMeta - Fast, file-based meta-analysis for 4-phase workflow
+ * Semantic Meta - File-based meta-analysis for 4-phase workflow
  *
- * Captures lightweight insights after each phase (< 100ms)
- * and injects context into subsequent phases.
+ * Storage: ~/.claude/meta/{phase}/recent/{sessionId}.json (recent 10)
+ *          ~/.claude/meta/{phase}/patterns.json (cumulative)
  */
-
-// Types
-export type {
-  QuickMeta,
-  QuickPattern,
-  QuickDecision,
-  QuickRisk,
-  PhaseMetrics,
-  PhaseInsight,
-  QuickMetaStorage,
-  ExtractionContext,
-  ExtractionResult,
-} from '../../types/quickmeta.js';
-
-// Extractor
-export { extractQuickPatterns } from './extractor.js';
 
 // Storage
 export {
   generateSessionId,
-  saveQuickMeta,
-  loadQuickMeta,
-  loadSessionQuickMeta,
-  buildPhaseInsight,
-  listSessions,
-  cleanupOldSessions,
+  saveSemanticMeta,
+  loadSemanticMeta,
+  loadPatterns,
+  savePatterns,
+  listRecentSessions,
   getStorageStats,
+  mergeSequentialDeps,
+  mergeParallelSuccesses,
 } from './storage.js';
 
-// Orchestration
-export {
-  onPhaseComplete,
-  startPhase,
-  initSession,
-  createSessionState,
-  enterPhase,
-  completePhase,
-  getPhaseDuration,
-  isSessionComplete,
-  getSessionSummary,
-} from './orchestration.js';
-export type { PhaseCompletionContext, HarmonySessionState } from './orchestration.js';
+export type {
+  SequentialDepPattern,
+  ParallelSuccessPattern,
+  AccomplishmentPattern,
+  RiskPattern,
+  PhasePatterns,
+} from './storage.js';
 
-// Background
+// Validator
 export {
-  shouldTriggerBackgroundAnalysis,
-  buildBackgroundAnalysisPrompt,
-  getSessionDuration,
-  getQuickMetaSummary,
-  formatQuickMetaAsMarkdown,
-} from './background.js';
-export type { BackgroundAnalysisConfig } from './background.js';
+  validateDependencies,
+  defaultDependencyChecker,
+  getAllDependencies,
+  formatValidationResult,
+} from './validator.js';
+
+export type {
+  DependencyValidationResult,
+  DependencyChecker,
+} from './validator.js';

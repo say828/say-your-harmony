@@ -1,17 +1,19 @@
 /**
- * QuickMeta Storage - File-based persistence for phase meta-analysis
+ * Semantic Meta Storage - File-based persistence for phase meta-analysis
  *
- * Storage location: ~/.claude/meta/quickmeta/{sessionId}/{phase}.json
+ * Storage structure (Hybrid):
+ * ~/.claude/meta/{phase}/recent/{sessionId}.json  - Recent 10 sessions
+ * ~/.claude/meta/{phase}/patterns.json            - Cumulative patterns
  */
 
 import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
 import type { Phase } from '../../types/pattern.js';
-import type { QuickMeta, PhaseInsight, QuickPattern, QuickRisk, QuickDecision } from '../../types/quickmeta.js';
 import type { SemanticPhaseMeta } from '../../types/semantic-meta.js';
 
-const BASE_DIR = path.join(os.homedir(), '.claude', 'meta', 'quickmeta');
+const BASE_DIR = path.join(os.homedir(), '.claude', 'meta');
+const MAX_RECENT_SESSIONS = 10;
 
 /**
  * Generate a new session ID
@@ -31,18 +33,38 @@ export function generateSessionId(): string {
   return `${datePart}-${randomPart}`;
 }
 
+// ============================================================================
+// PATH UTILITIES
+// ============================================================================
+
 /**
- * Get file path for a phase's QuickMeta
+ * Get directory for a phase
  */
-function getQuickMetaPath(sessionId: string, phase: Phase): string {
-  return path.join(BASE_DIR, sessionId, `${phase}.json`);
+function getPhaseDir(phase: Phase): string {
+  return path.join(BASE_DIR, phase);
 }
 
 /**
- * Get directory path for a session
+ * Get recent sessions directory for a phase
  */
-function getSessionDir(sessionId: string): string {
-  return path.join(BASE_DIR, sessionId);
+function getRecentDir(phase: Phase): string {
+  return path.join(BASE_DIR, phase, 'recent');
+}
+
+/**
+ * Get file path for a recent session meta
+ * Pattern: ~/.claude/meta/{phase}/recent/{sessionId}.json
+ */
+function getRecentSessionPath(sessionId: string, phase: Phase): string {
+  return path.join(getRecentDir(phase), `${sessionId}.json`);
+}
+
+/**
+ * Get file path for cumulative patterns
+ * Pattern: ~/.claude/meta/{phase}/patterns.json
+ */
+function getPatternsPath(phase: Phase): string {
+  return path.join(getPhaseDir(phase), 'patterns.json');
 }
 
 /**
@@ -65,202 +87,78 @@ async function atomicWrite(filePath: string, data: string): Promise<void> {
   await fs.rename(tempPath, filePath);
 }
 
-/**
- * Save QuickMeta for a completed phase
- * Called by Harmony after each phase delegation returns
- */
-export async function saveQuickMeta(meta: QuickMeta): Promise<void> {
-  const sessionDir = getSessionDir(meta.sessionId);
-  const filePath = getQuickMetaPath(meta.sessionId, meta.phase);
+// ============================================================================
+// SESSION STORAGE (Recent 10)
+// ============================================================================
 
-  await ensureDir(sessionDir);
+/**
+ * Save recent session meta
+ * Automatically cleans up old sessions if > 10
+ *
+ * @param sessionId - Session identifier
+ * @param phase - Phase that completed
+ * @param meta - Semantic meta data to save
+ */
+export async function saveRecentSession(
+  sessionId: string,
+  phase: Phase,
+  meta: SemanticPhaseMeta
+): Promise<void> {
+  const recentDir = getRecentDir(phase);
+  const filePath = getRecentSessionPath(sessionId, phase);
+
+  await ensureDir(recentDir);
 
   const content = JSON.stringify(meta, null, 2);
-
-  // Validate size budget
-  if (content.length > 2048) {
-    console.warn(`[QuickMeta] Size ${content.length} exceeds 2KB budget`);
-  }
-
   await atomicWrite(filePath, content);
+
+  // Cleanup old sessions (keep only 10)
+  await cleanupOldSessions(phase);
 }
 
 /**
- * Load QuickMeta for a specific phase
- * Returns null if not found or corrupted
+ * Load recent session meta
+ *
+ * @param sessionId - Session identifier
+ * @param phase - Phase to load
+ * @returns SemanticPhaseMeta or null if not found
  */
-export async function loadQuickMeta(sessionId: string, phase: Phase): Promise<QuickMeta | null> {
-  const filePath = getQuickMetaPath(sessionId, phase);
+export async function loadRecentSession(
+  sessionId: string,
+  phase: Phase
+): Promise<SemanticPhaseMeta | null> {
+  const filePath = getRecentSessionPath(sessionId, phase);
 
   try {
     const content = await fs.readFile(filePath, 'utf-8');
-    const meta = JSON.parse(content) as QuickMeta;
+    const meta = JSON.parse(content) as SemanticPhaseMeta;
 
-    // Basic validation
-    if (meta.version !== 1 || meta.phase !== phase) {
-      console.warn(`[QuickMeta] Invalid meta file: ${filePath}`);
+    if (meta.version !== 2 || meta.phase !== phase) {
+      console.warn(`[SemanticMeta] Invalid recent session: ${filePath}`);
       return null;
     }
 
     return meta;
   } catch {
-    // File doesn't exist or is corrupted
     return null;
   }
 }
 
 /**
- * Load all QuickMeta for a session
+ * List recent session IDs for a phase
+ * Returns sorted newest first
+ *
+ * @param phase - Phase to list sessions for
+ * @returns Array of session IDs
  */
-export async function loadSessionQuickMeta(
-  sessionId: string
-): Promise<Partial<Record<Phase, QuickMeta>>> {
-  const phases: Phase[] = ['planning', 'design', 'implementation', 'operation'];
-  const result: Partial<Record<Phase, QuickMeta>> = {};
+export async function listRecentSessions(phase: Phase): Promise<string[]> {
+  const recentDir = getRecentDir(phase);
 
-  // Load in parallel
-  const metas = await Promise.all(phases.map((phase) => loadQuickMeta(sessionId, phase)));
-
-  phases.forEach((phase, index) => {
-    if (metas[index]) {
-      result[phase] = metas[index]!;
-    }
-  });
-
-  return result;
-}
-
-/**
- * Build PhaseInsight for injection into next phase
- * Called by Harmony before each phase delegation
- */
-export async function buildPhaseInsight(
-  sessionId: string,
-  targetPhase: Phase
-): Promise<PhaseInsight | null> {
-  const phases: Phase[] = ['planning', 'design', 'implementation', 'operation'];
-  const targetIndex = phases.indexOf(targetPhase);
-
-  if (targetIndex === 0) {
-    // Planning is first phase, no prior context
-    return null;
-  }
-
-  const priorPhases = phases.slice(0, targetIndex);
-  const metas = await Promise.all(priorPhases.map((phase) => loadQuickMeta(sessionId, phase)));
-
-  // Filter out null values
-  const validMetas = metas.filter((m): m is QuickMeta => m !== null);
-
-  if (validMetas.length === 0) {
-    return null;
-  }
-
-  // Aggregate patterns (deduplicate by category)
-  const seenCategories = new Set<string>();
-  const accumulatedPatterns: QuickPattern[] = [];
-
-  for (const meta of validMetas) {
-    for (const pattern of meta.patterns) {
-      if (!seenCategories.has(pattern.category)) {
-        seenCategories.add(pattern.category);
-        accumulatedPatterns.push(pattern);
-      }
-    }
-  }
-
-  // Collect active risks (P0/P1 that aren't mitigated)
-  const activeRisks: QuickRisk[] = [];
-
-  for (const meta of validMetas) {
-    for (const risk of meta.risks) {
-      if ((risk.severity === 'P0' || risk.severity === 'P1') && risk.status !== 'mitigated') {
-        activeRisks.push(risk);
-      }
-    }
-  }
-
-  // Collect key decisions
-  const keyDecisions: QuickDecision[] = validMetas.flatMap((m) => m.decisions).slice(0, 5);
-
-  // Build completed phases summary
-  const completedPhases = validMetas.map((m) => ({
-    phase: m.phase,
-    summary: m.summary,
-    handoffNote: m.handoffNote,
-  }));
-
-  // Format for injection
-  const formatted = formatPhaseInsight({
-    sessionId,
-    targetPhase,
-    completedPhases,
-    accumulatedPatterns: accumulatedPatterns.slice(0, 10),
-    activeRisks: activeRisks.slice(0, 5),
-    keyDecisions,
-    formatted: '', // Will be set below
-  });
-
-  return {
-    sessionId,
-    targetPhase,
-    completedPhases,
-    accumulatedPatterns: accumulatedPatterns.slice(0, 10),
-    activeRisks: activeRisks.slice(0, 5),
-    keyDecisions,
-    formatted,
-  };
-}
-
-/**
- * Format PhaseInsight as injectable string
- */
-function formatPhaseInsight(insight: PhaseInsight): string {
-  const sections: string[] = [];
-
-  sections.push(`<phase-context session="${insight.sessionId}">`);
-
-  // Completed phases
-  if (insight.completedPhases.length > 0) {
-    sections.push('## Prior Phase Summary');
-    for (const cp of insight.completedPhases) {
-      sections.push(`- **${cp.phase.toUpperCase()}**: ${cp.summary}`);
-      if (cp.handoffNote) {
-        sections.push(`  - Handoff: ${cp.handoffNote}`);
-      }
-    }
-  }
-
-  // Active risks
-  if (insight.activeRisks.length > 0) {
-    sections.push('\n## Active Risks (Unresolved)');
-    for (const risk of insight.activeRisks) {
-      sections.push(`- [${risk.severity}] ${risk.description}`);
-    }
-  }
-
-  // Key decisions
-  if (insight.keyDecisions.length > 0) {
-    sections.push('\n## Key Decisions Made');
-    for (const dec of insight.keyDecisions.slice(0, 3)) {
-      sections.push(`- **${dec.topic}**: ${dec.choice} (${dec.rationale})`);
-    }
-  }
-
-  sections.push('</phase-context>');
-
-  return sections.join('\n');
-}
-
-/**
- * List all session IDs in storage
- */
-export async function listSessions(): Promise<string[]> {
   try {
-    const entries = await fs.readdir(BASE_DIR, { withFileTypes: true });
-    return entries
-      .filter((e) => e.isDirectory())
-      .map((e) => e.name)
+    const files = await fs.readdir(recentDir);
+    return files
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => f.replace('.json', ''))
       .sort()
       .reverse(); // Most recent first
   } catch {
@@ -269,21 +167,25 @@ export async function listSessions(): Promise<string[]> {
 }
 
 /**
- * Clean up old sessions (keep last N)
+ * Clean up old sessions (keep only MAX_RECENT_SESSIONS)
+ *
+ * @param phase - Phase to cleanup
+ * @returns Number of sessions deleted
  */
-export async function cleanupOldSessions(keepCount: number = 50): Promise<number> {
-  const sessions = await listSessions();
+async function cleanupOldSessions(phase: Phase): Promise<number> {
+  const sessions = await listRecentSessions(phase);
 
-  if (sessions.length <= keepCount) {
+  if (sessions.length <= MAX_RECENT_SESSIONS) {
     return 0;
   }
 
-  const toDelete = sessions.slice(keepCount);
+  const toDelete = sessions.slice(MAX_RECENT_SESSIONS);
   let deleted = 0;
 
   for (const sessionId of toDelete) {
     try {
-      await fs.rm(getSessionDir(sessionId), { recursive: true });
+      const filePath = getRecentSessionPath(sessionId, phase);
+      await fs.unlink(filePath);
       deleted++;
     } catch {
       // Ignore deletion errors
@@ -293,142 +195,339 @@ export async function cleanupOldSessions(keepCount: number = 50): Promise<number
   return deleted;
 }
 
-/**
- * Get storage statistics
- */
-export async function getStorageStats(): Promise<{
-  totalSessions: number;
-  totalFiles: number;
-  oldestSession: string | null;
-  newestSession: string | null;
-}> {
-  const sessions = await listSessions();
+// ============================================================================
+// PATTERN STORAGE (Cumulative)
+// ============================================================================
 
-  return {
-    totalSessions: sessions.length,
-    totalFiles: sessions.length * 4, // Max 4 phases per session
-    oldestSession: sessions.length > 0 ? sessions[sessions.length - 1] : null,
-    newestSession: sessions.length > 0 ? sessions[0] : null,
+/**
+ * Pattern metadata types
+ */
+export interface SequentialDepPattern {
+  id: string;
+  frequency: number;
+  confidence: number;
+  firstSeen: string;
+  lastSeen: string;
+  examples: string[]; // sessionIds
+}
+
+export interface ParallelSuccessPattern {
+  group: string[];
+  frequency: number;
+  confidence: number;
+  cooccurringTasks: number;
+  examples: string[];
+}
+
+export interface AccomplishmentPattern {
+  category: string;
+  keywords: string[];
+  frequency: number;
+}
+
+export interface RiskPattern {
+  severity: 'P0' | 'P1' | 'P2' | 'P3';
+  description: string;
+  frequency: number;
+  mitigation?: string;
+}
+
+export interface PhasePatterns {
+  version: number;
+  phase: Phase;
+  lastUpdated: string;
+  totalSessions: number;
+
+  sequentialDeps: SequentialDepPattern[];
+  parallelSuccesses: ParallelSuccessPattern[];
+  accomplishmentPatterns: AccomplishmentPattern[];
+  riskPatterns: RiskPattern[];
+
+  metadata: {
+    avgSessionsPerDay: number;
+    successRate: number;
   };
 }
 
-// ============================================================================
-// SEMANTIC META STORAGE (Version 2)
-// ============================================================================
-
 /**
- * Get file path for a phase's SemanticPhaseMeta
+ * Create empty patterns structure
  */
-function getSemanticMetaPath(sessionId: string, phase: Phase): string {
-  return path.join(BASE_DIR, sessionId, `${phase}-semantic.json`);
+function createEmptyPatterns(phase: Phase): PhasePatterns {
+  return {
+    version: 1,
+    phase,
+    lastUpdated: new Date().toISOString(),
+    totalSessions: 0,
+    sequentialDeps: [],
+    parallelSuccesses: [],
+    accomplishmentPatterns: [],
+    riskPatterns: [],
+    metadata: {
+      avgSessionsPerDay: 0,
+      successRate: 1.0,
+    },
+  };
 }
 
 /**
- * Save SemanticPhaseMeta for a completed phase
- * Uses atomic write (write to temp, then rename) for safety
+ * Load cumulative patterns for a phase
+ * Returns empty patterns if not found
+ *
+ * @param phase - Phase to load patterns for
+ * @returns PhasePatterns
+ */
+export async function loadPatterns(phase: Phase): Promise<PhasePatterns> {
+  const filePath = getPatternsPath(phase);
+
+  try {
+    const content = await fs.readFile(filePath, 'utf-8');
+    const patterns = JSON.parse(content) as PhasePatterns;
+
+    if (patterns.version !== 1 || patterns.phase !== phase) {
+      console.warn(`[Patterns] Invalid patterns file: ${filePath}`);
+      return createEmptyPatterns(phase);
+    }
+
+    return patterns;
+  } catch {
+    // File doesn't exist, return empty
+    return createEmptyPatterns(phase);
+  }
+}
+
+/**
+ * Save cumulative patterns for a phase
+ *
+ * @param phase - Phase to save patterns for
+ * @param patterns - Pattern data to save
+ */
+export async function savePatterns(phase: Phase, patterns: PhasePatterns): Promise<void> {
+  const phaseDir = getPhaseDir(phase);
+  const filePath = getPatternsPath(phase);
+
+  await ensureDir(phaseDir);
+
+  patterns.lastUpdated = new Date().toISOString();
+  const content = JSON.stringify(patterns, null, 2);
+
+  await atomicWrite(filePath, content);
+}
+
+// ============================================================================
+// PATTERN MERGING LOGIC
+// ============================================================================
+
+/**
+ * Calculate confidence score for a pattern
+ * Based on frequency, age, and recency
+ *
+ * @param frequency - Number of occurrences
+ * @param firstSeen - First occurrence timestamp
+ * @param lastSeen - Last occurrence timestamp
+ * @returns Confidence score [0, 1]
+ */
+function calculateConfidence(frequency: number, firstSeen: string, lastSeen: string): number {
+  // Frequency score (saturates at 10)
+  const freqScore = Math.min(frequency / 10.0, 1.0);
+
+  // Recency bonus (within 7 days = 1.0, older = 0.8)
+  const now = new Date();
+  const lastDate = new Date(lastSeen);
+  const daysSinceLastSeen = (now.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24);
+  const recencyScore = daysSinceLastSeen < 7 ? 1.0 : 0.8;
+
+  // Weighted average
+  return freqScore * 0.7 + recencyScore * 0.3;
+}
+
+/**
+ * Merge sequential dependencies into patterns
+ *
+ * @param patterns - Existing patterns
+ * @param newDeps - New dependencies from session
+ * @param sessionId - Session identifier
+ */
+export function mergeSequentialDeps(
+  patterns: PhasePatterns,
+  newDeps: string[],
+  sessionId: string
+): void {
+  const now = new Date().toISOString();
+
+  for (const depId of newDeps) {
+    // Find exact match
+    const existing = patterns.sequentialDeps.find((p) => p.id === depId);
+
+    if (existing) {
+      // Update existing pattern
+      existing.frequency += 1;
+      existing.lastSeen = now;
+      existing.confidence = calculateConfidence(
+        existing.frequency,
+        existing.firstSeen,
+        existing.lastSeen
+      );
+      if (!existing.examples.includes(sessionId)) {
+        existing.examples.push(sessionId);
+        if (existing.examples.length > 5) {
+          existing.examples.shift(); // Keep only 5 examples
+        }
+      }
+    } else {
+      // Add new pattern
+      patterns.sequentialDeps.push({
+        id: depId,
+        frequency: 1,
+        confidence: 0.5, // Initial low confidence
+        firstSeen: now,
+        lastSeen: now,
+        examples: [sessionId],
+      });
+    }
+  }
+
+  // Sort by frequency desc
+  patterns.sequentialDeps.sort((a, b) => b.frequency - a.frequency);
+}
+
+/**
+ * Merge parallel successes into patterns
+ *
+ * @param patterns - Existing patterns
+ * @param newSuccesses - New parallel tasks from session
+ * @param sessionId - Session identifier
+ */
+export function mergeParallelSuccesses(
+  patterns: PhasePatterns,
+  newSuccesses: string[],
+  sessionId: string
+): void {
+  if (newSuccesses.length === 0) return;
+
+  const newSet = new Set(newSuccesses);
+  const now = new Date().toISOString();
+
+  // Find overlapping group (60% overlap threshold)
+  let merged = false;
+  for (const group of patterns.parallelSuccesses) {
+    const groupSet = new Set(group.group);
+    const intersection = new Set([...newSet].filter((x) => groupSet.has(x)));
+    const overlap = intersection.size / Math.min(newSet.size, groupSet.size);
+
+    if (overlap >= 0.6) {
+      // Merge into existing group
+      group.group = Array.from(new Set([...group.group, ...newSuccesses]));
+      group.frequency += 1;
+      group.cooccurringTasks = group.group.length;
+      group.confidence = calculateConfidence(group.frequency, now, now);
+      if (!group.examples.includes(sessionId)) {
+        group.examples.push(sessionId);
+        if (group.examples.length > 5) {
+          group.examples.shift();
+        }
+      }
+      merged = true;
+      break;
+    }
+  }
+
+  if (!merged) {
+    // Add new group
+    patterns.parallelSuccesses.push({
+      group: newSuccesses,
+      frequency: 1,
+      confidence: 0.5,
+      cooccurringTasks: newSuccesses.length,
+      examples: [sessionId],
+    });
+  }
+
+  // Sort by frequency desc
+  patterns.parallelSuccesses.sort((a, b) => b.frequency - a.frequency);
+}
+
+// ============================================================================
+// HIGH-LEVEL API
+// ============================================================================
+
+/**
+ * Save session and update patterns (main entry point)
  *
  * @param sessionId - Session identifier
  * @param phase - Phase that completed
- * @param meta - Semantic meta data to save
+ * @param meta - Semantic meta from phase
  */
 export async function saveSemanticMeta(
   sessionId: string,
   phase: Phase,
   meta: SemanticPhaseMeta
 ): Promise<void> {
-  const sessionDir = getSessionDir(sessionId);
-  const filePath = getSemanticMetaPath(sessionId, phase);
+  // 1. Save to recent/
+  await saveRecentSession(sessionId, phase, meta);
 
-  await ensureDir(sessionDir);
+  // 2. Load patterns
+  const patterns = await loadPatterns(phase);
 
-  const content = JSON.stringify(meta, null, 2);
+  // 3. Merge new data
+  mergeSequentialDeps(patterns, meta.semantics.sequentialDeps, sessionId);
+  mergeParallelSuccesses(patterns, meta.semantics.parallelSuccesses, sessionId);
 
-  // Validate size budget (< 2KB recommended)
-  if (content.length > 2048) {
-    console.warn(`[SemanticMeta] Size ${content.length} exceeds 2KB budget for ${phase}`);
-  }
+  // 4. Update metadata
+  patterns.totalSessions += 1;
 
-  // Atomic write to prevent corruption
-  await atomicWrite(filePath, content);
+  // 5. Save patterns
+  await savePatterns(phase, patterns);
 }
 
 /**
- * Load SemanticPhaseMeta for a specific phase
- * Returns null if not found or invalid (graceful degradation)
+ * Load semantic meta (tries recent, falls back to patterns)
  *
  * @param sessionId - Session identifier
- * @param phase - Phase to load meta for
- * @returns SemanticPhaseMeta or null if not found/invalid
+ * @param phase - Phase to load
+ * @returns SemanticPhaseMeta or null
  */
 export async function loadSemanticMeta(
   sessionId: string,
   phase: Phase
 ): Promise<SemanticPhaseMeta | null> {
-  const filePath = getSemanticMetaPath(sessionId, phase);
-
-  try {
-    const content = await fs.readFile(filePath, 'utf-8');
-    const meta = JSON.parse(content) as SemanticPhaseMeta;
-
-    // Validate version and phase
-    if (meta.version !== 2 || meta.phase !== phase) {
-      console.warn(`[SemanticMeta] Invalid meta file: ${filePath} (version=${meta.version}, phase=${meta.phase})`);
-      return null;
-    }
-
-    return meta;
-  } catch (error) {
-    // File doesn't exist or is corrupted - graceful degradation
-    return null;
-  }
+  return await loadRecentSession(sessionId, phase);
 }
 
 /**
- * Load all SemanticPhaseMeta for a session
- * Returns record with phase as key, meta or null as value
- *
- * @param sessionId - Session identifier
- * @returns Record mapping each phase to its meta (or null if not found)
+ * Get storage statistics
  */
-export async function loadAllSemanticMetas(
-  sessionId: string
-): Promise<Record<Phase, SemanticPhaseMeta | null>> {
+export async function getStorageStats(): Promise<{
+  totalSessions: number;
+  recentByPhase: Record<Phase, number>;
+  totalPatterns: number;
+}> {
   const phases: Phase[] = ['planning', 'design', 'implementation', 'operation'];
-
-  // Load all in parallel for efficiency
-  const metas = await Promise.all(
-    phases.map((phase) => loadSemanticMeta(sessionId, phase))
-  );
-
-  // Build record
-  const result: Record<Phase, SemanticPhaseMeta | null> = {
-    planning: metas[0],
-    design: metas[1],
-    implementation: metas[2],
-    operation: metas[3],
+  const recentByPhase: Record<Phase, number> = {
+    planning: 0,
+    design: 0,
+    implementation: 0,
+    operation: 0,
   };
 
-  return result;
-}
+  let totalPatterns = 0;
 
-/**
- * Check if SemanticPhaseMeta exists for a phase
- * Quick non-blocking existence check
- *
- * @param sessionId - Session identifier
- * @param phase - Phase to check
- * @returns true if semantic meta file exists
- */
-export async function semanticMetaExists(
-  sessionId: string,
-  phase: Phase
-): Promise<boolean> {
-  const filePath = getSemanticMetaPath(sessionId, phase);
+  for (const phase of phases) {
+    const recent = await listRecentSessions(phase);
+    recentByPhase[phase] = recent.length;
 
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
+    const patterns = await loadPatterns(phase);
+    totalPatterns +=
+      patterns.sequentialDeps.length +
+      patterns.parallelSuccesses.length +
+      patterns.accomplishmentPatterns.length +
+      patterns.riskPatterns.length;
   }
+
+  const allRecent = Object.values(recentByPhase).reduce((a, b) => a + b, 0);
+
+  return {
+    totalSessions: allRecent,
+    recentByPhase,
+    totalPatterns,
+  };
 }
