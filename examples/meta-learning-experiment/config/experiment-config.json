@@ -1,0 +1,47 @@
+{
+  "experimentId": "meta-learning-exp-001",
+  "name": "Meta-Learning Validation Experiment",
+  "hypothesis": "Meta-analysis from previous tasks improves efficiency on subsequent similar tasks, with effects compounding across multiple domains",
+  "successCriteria": {
+    "minEfficiencyImprovement": 15,
+    "maxQualityDegradation": 5,
+    "minSuccessfulIterations": 3,
+    "significanceThreshold": 0.05
+  },
+  "scenarios": [
+    {
+      "scenarioId": "baseline-simple-api",
+      "type": "baseline",
+      "taskId": "simple-rest-api",
+      "metaAnalysisAvailable": false,
+      "executionOrder": 1
+    },
+    {
+      "scenarioId": "repetition-simple-api",
+      "type": "repetition",
+      "taskId": "simple-rest-api",
+      "metaAnalysisAvailable": true,
+      "metaAnalysisSource": "baseline-simple-api",
+      "executionOrder": 2
+    },
+    {
+      "scenarioId": "transfer-medium-auth",
+      "type": "transfer",
+      "taskId": "medium-auth-system",
+      "metaAnalysisAvailable": true,
+      "metaAnalysisSource": "baseline-simple-api",
+      "executionOrder": 3
+    }
+  ],
+  "iterationsPerScenario": 3,
+  "randomSeed": 42,
+  "isolateSessions": true,
+  "taskTimeoutMinutes": 30,
+  "metadata": {
+    "author": "Say-Your-Harmony Team",
+    "createdAt": "2026-01-18T00:00:00Z",
+    "modifiedAt": "2026-01-18T00:00:00Z",
+    "frameworkVersion": "1.0.0",
+    "notes": "Initial validation experiment for meta-learning hypothesis"
+  }
+}

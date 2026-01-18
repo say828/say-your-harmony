@@ -1,0 +1,37 @@
+{
+  "name": "meta-learning-experiment",
+  "version": "1.0.0",
+  "description": "Experiment framework for validating meta-learning hypothesis in AI-assisted development",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "run-experiment": "./scripts/run-experiment.sh",
+    "collect": "tsx scripts/collect-metrics.ts",
+    "analyze": "tsx scripts/analyze-results.ts",
+    "visualize": "tsx scripts/visualize.ts",
+    "validate": "tsx scripts/validate-setup.ts",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "canvas": "^2.11.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.7.0",
+    "vitest": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "meta-learning",
+    "experiment",
+    "ai-assisted-development",
+    "say-your-harmony",
+    "claude"
+  ],
+  "author": "Say-Your-Harmony Team",
+  "license": "MIT"
+}

@@ -1,0 +1,350 @@
+EXPECTED FILE STRUCTURE
+======================
+
+Root Level
+----------
+package.json                    (workspace configuration)
+tsconfig.json                   (base TypeScript config)
+.eslintrc.json                  (ESLint configuration)
+vitest.config.ts                (Vitest workspace config)
+README.md                       (system overview)
+ARCHITECTURE.md                 (architecture documentation)
+API.md                          (API documentation)
+
+packages/
+--------
+
+packages/shared/
+  package.json
+  tsconfig.json
+  src/
+    index.ts
+    types/
+      events.ts                 (Event type definitions)
+      order.ts                  (Order domain types)
+      inventory.ts              (Inventory domain types)
+      payment.ts                (Payment domain types)
+      notification.ts           (Notification domain types)
+      common.ts                 (Shared utility types)
+    event-store/
+      event-store.ts            (EventStore interface)
+      in-memory-event-store.ts  (In-memory implementation)
+    event-bus/
+      event-bus.ts              (EventBus interface)
+      in-memory-event-bus.ts    (In-memory implementation)
+    utils/
+      id-generator.ts           (UUID generation)
+      logger.ts                 (Simple logger)
+  tests/
+    event-store.test.ts         (Event store unit tests)
+    event-bus.test.ts           (Event bus unit tests)
+
+packages/order-service/
+  package.json
+  tsconfig.json
+  src/
+    index.ts                    (Service entry point)
+    order-service.ts            (Core service logic)
+    order-saga.ts               (Saga orchestration)
+    projections/
+      order-projection.ts       (Order state projection)
+    api/
+      order-routes.ts           (Express routes)
+      order-controller.ts       (Request handlers)
+    domain/
+      order.ts                  (Order entity/aggregate)
+      order-commands.ts         (Command definitions)
+  tests/
+    order-service.test.ts       (Service unit tests)
+    order-saga.test.ts          (Saga unit tests)
+    order-projection.test.ts    (Projection tests)
+    order-integration.test.ts   (Integration tests)
+
+packages/inventory-service/
+  package.json
+  tsconfig.json
+  src/
+    index.ts                    (Service entry point)
+    inventory-service.ts        (Core service logic)
+    projections/
+      inventory-projection.ts   (Inventory state projection)
+    api/
+      inventory-routes.ts       (Express routes)
+      inventory-controller.ts   (Request handlers)
+    domain/
+      inventory.ts              (Inventory entity/aggregate)
+      reservation.ts            (Reservation logic)
+  tests/
+    inventory-service.test.ts   (Service unit tests)
+    inventory-projection.test.ts (Projection tests)
+    reservation.test.ts         (Reservation logic tests)
+
+packages/payment-service/
+  package.json
+  tsconfig.json
+  src/
+    index.ts                    (Service entry point)
+    payment-service.ts          (Core service logic)
+    payment-gateway.ts          (Mock payment gateway)
+    projections/
+      payment-projection.ts     (Payment state projection)
+    api/
+      payment-routes.ts         (Express routes)
+      payment-controller.ts     (Request handlers)
+    domain/
+      payment.ts                (Payment entity)
+      transaction.ts            (Transaction logic)
+  tests/
+    payment-service.test.ts     (Service unit tests)
+    payment-gateway.test.ts     (Gateway mock tests)
+    payment-projection.test.ts  (Projection tests)
+
+packages/notification-service/
+  package.json
+  tsconfig.json
+  src/
+    index.ts                    (Service entry point)
+    notification-service.ts     (Core service logic)
+    email-sender.ts             (Mock email sender)
+    api/
+      notification-routes.ts    (Express routes)
+      notification-controller.ts (Request handlers)
+    domain/
+      notification.ts           (Notification entity)
+  tests/
+    notification-service.test.ts (Service unit tests)
+    email-sender.test.ts        (Email sender tests)
+
+tests/
+------
+tests/integration/
+  order-flow.test.ts            (End-to-end happy path)
+  inventory-failure.test.ts     (Compensation test)
+  payment-failure.test.ts       (Compensation test)
+  event-replay.test.ts          (Event sourcing test)
+
+
+EXPECTED CODE ARTIFACTS
+=======================
+
+Core Implementations
+--------------------
+1. EventStore interface and implementation (in-memory)
+2. EventBus interface and implementation (in-memory)
+3. Event type definitions for all domain events
+4. Order aggregate with event sourcing
+5. Inventory aggregate with reservation logic
+6. Payment aggregate with transaction handling
+7. Notification aggregate (simple)
+8. Order fulfillment saga with compensation
+9. Projections for each service (event replay)
+10. REST API endpoints for all services
+
+Supporting Code
+---------------
+11. Shared TypeScript types across all services
+12. ID generation utility (UUIDs)
+13. Simple logger utility
+14. Express route handlers for each service
+15. Mock payment gateway
+16. Mock email sender
+
+Test Suites
+-----------
+17. Unit tests for event store (>80% coverage)
+18. Unit tests for event bus (>80% coverage)
+19. Unit tests for order service (>80% coverage)
+20. Unit tests for saga orchestration (>80% coverage)
+21. Unit tests for inventory service (>80% coverage)
+22. Unit tests for payment service (>80% coverage)
+23. Unit tests for notification service (>80% coverage)
+24. Integration test: Happy path order flow
+25. Integration test: Inventory failure compensation
+26. Integration test: Payment failure compensation
+27. Integration test: Event replay and projection rebuild
+
+Documentation
+-------------
+28. README.md with setup and running instructions
+29. ARCHITECTURE.md with event flow diagrams and decisions
+30. API.md with complete endpoint documentation
+31. JSDoc comments on all public methods
+
+Configuration
+-------------
+32. Root package.json with workspace configuration
+33. Root tsconfig.json with strict mode
+34. ESLint configuration
+35. Vitest configuration for workspace
+36. Individual package.json for each service
+37. Individual tsconfig.json for each service
+
+
+KEY INTERFACES TO IMPLEMENT
+============================
+
+Event Store
+-----------
+interface Event {
+  eventId: string;
+  aggregateId: string;
+  aggregateType: 'Order' | 'Inventory' | 'Payment' | 'Notification';
+  eventType: string;
+  payload: unknown;
+  timestamp: Date;
+  version: number;
+}
+
+interface EventStore {
+  append(event: Event): Promise<void>;
+  getEvents(aggregateId: string): Promise<Event[]>;
+  getAllEvents(): Promise<Event[]>;
+  getEventsByType(eventType: string): Promise<Event[]>;
+}
+
+Event Bus
+---------
+interface EventHandler {
+  handle(event: Event): Promise<void>;
+}
+
+interface EventBus {
+  publish(event: Event): Promise<void>;
+  subscribe(eventType: string, handler: EventHandler): void;
+  unsubscribe(eventType: string, handler: EventHandler): void;
+}
+
+Order Saga
+----------
+interface SagaStep {
+  execute(): Promise<void>;
+  compensate(): Promise<void>;
+}
+
+interface SagaResult {
+  success: boolean;
+  completedSteps: string[];
+  failedStep?: string;
+  error?: Error;
+}
+
+interface OrderFulfillmentSaga {
+  execute(orderId: string): Promise<SagaResult>;
+  compensate(orderId: string, failedStep: string): Promise<void>;
+}
+
+Projection
+----------
+interface Projection<T> {
+  getCurrentState(aggregateId: string): T | null;
+  rebuild(events: Event[]): void;
+  handleEvent(event: Event): void;
+}
+
+
+EXPECTED EVENTS
+===============
+
+Order Events
+------------
+- OrderCreated { orderId, customerId, items, totalAmount }
+- OrderConfirmed { orderId }
+- OrderCancelled { orderId, reason }
+- OrderCompleted { orderId }
+
+Inventory Events
+----------------
+- InventoryReserved { reservationId, orderId, items }
+- InventoryReservationFailed { reservationId, orderId, reason }
+- InventoryReleased { reservationId, orderId }
+
+Payment Events
+--------------
+- PaymentProcessed { transactionId, orderId, amount }
+- PaymentFailed { paymentId, orderId, reason }
+- PaymentRefunded { transactionId, refundId, amount }
+
+Notification Events
+-------------------
+- NotificationSent { notificationId, customerId, type, message }
+
+
+EXPECTED API ENDPOINTS
+======================
+
+Order Service (Port 3001)
+--------------------------
+POST   /orders
+GET    /orders/:orderId
+GET    /orders/:orderId/events
+
+Inventory Service (Port 3002)
+------------------------------
+GET    /inventory/:productId
+POST   /inventory/reserve
+POST   /inventory/release
+
+Payment Service (Port 3003)
+----------------------------
+POST   /payments/charge
+POST   /payments/refund
+GET    /payments/:transactionId
+
+Notification Service (Port 3004)
+---------------------------------
+POST   /notifications/send
+GET    /notifications/:customerId
+
+
+EXPECTED TEST SCENARIOS
+=======================
+
+1. Happy Path
+   - Create order
+   - Reserve inventory (success)
+   - Process payment (success)
+   - Confirm order
+   - Send notification
+   - Verify final state: order completed
+
+2. Inventory Failure
+   - Create order
+   - Reserve inventory (fail - insufficient stock)
+   - Compensation: Cancel order
+   - Send cancellation notification
+   - Verify final state: order cancelled
+
+3. Payment Failure
+   - Create order
+   - Reserve inventory (success)
+   - Process payment (fail - declined)
+   - Compensation: Release inventory, cancel order
+   - Send cancellation notification
+   - Verify final state: order cancelled, inventory released
+
+4. Event Replay
+   - Execute happy path (generate events)
+   - Clear all projections
+   - Replay all events
+   - Verify state matches original
+
+
+MINIMUM VIABLE DELIVERABLES
+============================
+
+To pass validation, the implementation MUST include:
+
+✓ All 4 microservices (order, inventory, payment, notification)
+✓ Event store with in-memory implementation
+✓ Event bus with publish/subscribe
+✓ Order fulfillment saga with all 5 steps
+✓ Compensation logic for inventory and payment failures
+✓ Projections for each service (state from events)
+✓ REST API endpoints for all services
+✓ Unit tests with >= 80% coverage
+✓ Integration tests for happy path and 2 failure scenarios
+✓ Event replay test
+✓ TypeScript strict mode enabled
+✓ All tests passing
+✓ Documentation (README, ARCHITECTURE, API)
+✓ JSDoc on all public APIs

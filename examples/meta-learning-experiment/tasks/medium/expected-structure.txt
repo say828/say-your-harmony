@@ -1,0 +1,342 @@
+Medium Auth System - Expected Project Structure
+================================================
+
+Root Directory Structure:
+-------------------------
+
+jwt-auth-system/
+├── package.json                      # Dependencies and scripts
+├── tsconfig.json                     # TypeScript configuration (strict mode)
+├── .eslintrc.json                    # ESLint configuration
+├── .gitignore                        # Git ignore patterns
+├── README.md                         # Project documentation
+├── .env.example                      # Environment variable template
+│
+├── src/
+│   ├── types/
+│   │   └── user.ts                   # User types and interfaces
+│   │
+│   ├── models/
+│   │   └── user.ts                   # User model and in-memory storage
+│   │
+│   ├── auth/
+│   │   ├── jwt.ts                    # JWT token operations
+│   │   └── password.ts               # Password hashing and reset
+│   │
+│   ├── middleware/
+│   │   ├── auth.ts                   # Authentication middleware
+│   │   ├── authorize.ts              # Role-based authorization
+│   │   ├── rateLimit.ts              # Rate limiting middleware
+│   │   └── validation.ts             # Input validation middleware
+│   │
+│   ├── routes/
+│   │   ├── auth.ts                   # Authentication routes
+│   │   └── admin.ts                  # Admin-only routes
+│   │
+│   ├── utils/
+│   │   ├── errors.ts                 # Custom error classes
+│   │   └── validators.ts             # Validation helpers
+│   │
+│   └── server.ts                     # Main application entry point
+│
+├── test/
+│   ├── setup.ts                      # Test configuration
+│   │
+│   ├── auth/
+│   │   ├── registration.test.ts      # Registration flow tests
+│   │   ├── login.test.ts             # Login flow tests
+│   │   ├── token.test.ts             # Token generation/refresh tests
+│   │   └── password-reset.test.ts    # Password reset flow tests
+│   │
+│   ├── middleware/
+│   │   ├── auth.test.ts              # Auth middleware tests
+│   │   └── authorize.test.ts         # Authorization tests
+│   │
+│   ├── integration/
+│   │   └── auth-flow.test.ts         # End-to-end integration tests
+│   │
+│   └── helpers/
+│       └── testUtils.ts              # Test utilities and mocks
+│
+├── docs/                             # Optional documentation
+│   └── auth-flow.md                  # Authentication flow documentation
+│
+└── dist/                             # Compiled JavaScript output (git-ignored)
+
+
+File Contents Overview:
+------------------------
+
+1. CONFIGURATION FILES
+   -------------------
+
+   package.json:
+   - Dependencies: express, bcrypt, jsonwebtoken, dotenv
+   - Dev Dependencies: typescript, vitest, @types/*, eslint, tsx
+   - Scripts:
+     * "dev": "tsx watch src/server.ts"
+     * "build": "tsc"
+     * "test": "vitest run"
+     * "test:watch": "vitest"
+     * "lint": "eslint src test --ext .ts"
+     * "start": "node dist/server.js"
+
+   tsconfig.json:
+   - target: "ES2022"
+   - module: "commonjs"
+   - strict: true (REQUIRED)
+   - esModuleInterop: true
+   - outDir: "./dist"
+   - rootDir: "./src"
+
+   .eslintrc.json:
+   - extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"]
+   - parser: "@typescript-eslint/parser"
+   - rules: no-any enforced
+
+
+2. TYPE DEFINITIONS
+   ----------------
+
+   src/types/user.ts:
+   - Role enum: Admin, User
+   - User interface
+   - UserCreateDTO
+   - UserResponseDTO
+   - LoginRequest
+   - LoginResponse
+   - TokenPair
+   - PasswordResetRequest
+   - JWTPayload
+
+
+3. CORE MODULES
+   ------------
+
+   src/models/user.ts:
+   - In-memory user array
+   - findByEmail(email: string): User | undefined
+   - findById(id: string): User | undefined
+   - create(userData: UserCreateDTO): User
+   - update(id: string, data: Partial<User>): User | undefined
+   - delete(id: string): boolean
+   - getAll(): User[]
+
+   src/auth/jwt.ts:
+   - generateAccessToken(userId: string, role: Role): string
+   - generateRefreshToken(userId: string): string
+   - verifyAccessToken(token: string): JWTPayload
+   - verifyRefreshToken(token: string): JWTPayload
+   - extractTokenFromHeader(header: string): string | null
+
+   src/auth/password.ts:
+   - hashPassword(password: string): Promise<string>
+   - comparePassword(plain: string, hashed: string): Promise<boolean>
+   - validatePasswordStrength(password: string): boolean
+   - generateResetToken(): string
+   - hashResetToken(token: string): string
+
+
+4. MIDDLEWARE
+   ----------
+
+   src/middleware/auth.ts:
+   - authenticateToken(req, res, next): void
+     * Extracts JWT from Authorization header
+     * Verifies token
+     * Attaches user to req.user
+
+   src/middleware/authorize.ts:
+   - requireRole(role: Role | Role[]): RequestHandler
+     * Checks if req.user has required role
+     * Returns 403 if unauthorized
+
+   src/middleware/rateLimit.ts:
+   - authRateLimiter: RateLimitMiddleware
+     * 5 requests per minute per IP
+     * Applied to /auth/login and /auth/register
+
+   src/middleware/validation.ts:
+   - validateEmail(email: string): boolean
+   - validateRegistration(req, res, next): void
+   - validateLogin(req, res, next): void
+   - validatePasswordReset(req, res, next): void
+
+
+5. ROUTES
+   ------
+
+   src/routes/auth.ts:
+   Endpoints:
+   - POST /auth/register → registerHandler
+   - POST /auth/login → loginHandler
+   - POST /auth/refresh → refreshHandler
+   - POST /auth/password-reset-request → resetRequestHandler
+   - POST /auth/password-reset → resetPasswordHandler
+   - GET /auth/me → getCurrentUserHandler (protected)
+
+   src/routes/admin.ts:
+   Endpoints:
+   - GET /admin/users → getAllUsersHandler (admin only)
+   - DELETE /admin/users/:id → deleteUserHandler (admin only)
+
+
+6. MAIN SERVER
+   -----------
+
+   src/server.ts:
+   - Express app setup
+   - Middleware: json(), cors(), rate limiting
+   - Route mounting: /auth, /admin
+   - Global error handler
+   - 404 handler
+   - Server start on port from env
+
+
+7. TESTS
+   -----
+
+   test/auth/registration.test.ts:
+   - Should register user with valid data
+   - Should reject invalid email
+   - Should reject weak password
+   - Should reject duplicate email
+   - Should hash password
+   - Should assign default role
+
+   test/auth/login.test.ts:
+   - Should login with valid credentials
+   - Should return access and refresh tokens
+   - Should reject invalid password
+   - Should reject non-existent email
+   - Should apply rate limiting
+
+   test/auth/token.test.ts:
+   - Should generate valid access token
+   - Should generate valid refresh token
+   - Should verify valid tokens
+   - Should reject expired tokens
+   - Should reject invalid tokens
+   - Should refresh access token with valid refresh token
+   - Should rotate refresh token
+
+   test/auth/password-reset.test.ts:
+   - Should generate reset token
+   - Should validate reset token
+   - Should reset password with valid token
+   - Should reject invalid token
+   - Should reject expired token
+
+   test/middleware/auth.test.ts:
+   - Should authenticate valid token
+   - Should reject missing token
+   - Should reject invalid token
+   - Should attach user to request
+
+   test/middleware/authorize.test.ts:
+   - Should allow admin to access admin route
+   - Should deny user access to admin route
+   - Should handle missing user
+
+   test/integration/auth-flow.test.ts:
+   - Complete registration → login → access protected route flow
+   - Token refresh flow
+   - Password reset flow
+   - Admin access flow
+
+
+Expected Metrics:
+-----------------
+
+Code Statistics:
+- Total Files: ~20 TypeScript files
+- Lines of Code: ~1200-1500
+- Test Files: 7+
+- Test Cases: 30+
+- Test Coverage: >= 80%
+
+Dependencies:
+- Production: 5-7 packages
+- Development: 12-15 packages
+
+Build Output:
+- TypeScript compilation: 0 errors
+- ESLint: 0 errors, 0 warnings
+- Tests: 100% pass rate
+- Security audit: 0 high vulnerabilities
+
+Quality Metrics:
+- Cyclomatic complexity: < 10 per function
+- No use of 'any' type
+- All public functions documented
+- Error handling coverage: 100%
+
+
+Directory Size Estimates:
+--------------------------
+
+src/          : ~12-15 files, ~1000 LOC
+test/         : ~8-10 files, ~800 LOC
+docs/         : 1-2 files (optional)
+config files  : 5 files
+node_modules/ : ~200-300 MB (git-ignored)
+dist/         : mirrors src/ structure (git-ignored)
+
+
+Key Implementation Notes:
+--------------------------
+
+1. All passwords MUST be hashed with bcrypt (salt rounds: 10)
+2. JWT secrets MUST be loaded from environment variables
+3. TypeScript strict mode MUST be enabled
+4. All endpoints MUST have input validation
+5. Auth endpoints MUST have rate limiting (5 req/min)
+6. Admin routes MUST check for admin role
+7. Tokens MUST have expiration times
+8. Error responses MUST not leak sensitive information
+9. Test coverage MUST be >= 80%
+10. No hardcoded credentials or secrets
+
+
+Environment Variables (.env):
+------------------------------
+
+JWT_SECRET=<32+ character random string>
+JWT_ACCESS_EXPIRY=15m
+JWT_REFRESH_EXPIRY=7d
+PORT=3000
+NODE_ENV=development
+BCRYPT_ROUNDS=10
+RATE_LIMIT_WINDOW_MS=60000
+RATE_LIMIT_MAX_REQUESTS=5
+
+
+Sample .gitignore:
+------------------
+
+node_modules/
+dist/
+.env
+*.log
+coverage/
+.DS_Store
+
+
+Validation Checklist:
+---------------------
+
+✓ All TypeScript files compile without errors
+✓ All tests pass (100% pass rate)
+✓ Test coverage >= 80%
+✓ ESLint reports 0 errors
+✓ npm audit shows 0 high vulnerabilities
+✓ All endpoints respond correctly
+✓ Authentication protects routes
+✓ Authorization enforces role restrictions
+✓ Rate limiting works on auth endpoints
+✓ Passwords are hashed
+✓ JWT tokens expire correctly
+✓ Token refresh mechanism works
+✓ Password reset flow completes
+✓ Error handling is comprehensive
+✓ No secrets in code (environment variables used)

@@ -1,0 +1,52 @@
+{
+  "taskId": "simple-rest-api",
+  "name": "Simple REST API with CRUD Operations",
+  "complexity": "simple",
+  "domain": "rest-api",
+  "prompt": "Implement a simple REST API for a TODO list with the following endpoints: GET /todos (list all), POST /todos (create), GET /todos/:id (get one), PUT /todos/:id (update), DELETE /todos/:id (delete). Use TypeScript with Express.js. Include input validation, error handling, and comprehensive tests using Vitest.",
+  "expectedDeliverables": [
+    {
+      "type": "file",
+      "pathPattern": "src/routes/todos.ts",
+      "required": true,
+      "validator": "typescript-strict"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/types/todo.ts",
+      "required": true,
+      "validator": "typescript-strict"
+    },
+    {
+      "type": "test",
+      "pathPattern": "test/**/*.test.ts",
+      "required": true,
+      "validator": "vitest-pass"
+    },
+    {
+      "type": "documentation",
+      "pathPattern": "README.md",
+      "required": false
+    }
+  ],
+  "qualityCriteria": {
+    "minTestPassRate": 100,
+    "requireTypeScriptStrict": true,
+    "minDocCoverage": 50,
+    "maxLintErrors": 0,
+    "customChecks": [
+      {
+        "name": "build-check",
+        "command": "npm run build",
+        "expectedExitCode": 0
+      }
+    ]
+  },
+  "baselineEstimates": {
+    "expectedTurns": 9,
+    "expectedDurationMinutes": 45,
+    "expectedToolCalls": 33,
+    "expectedWebSearches": 5
+  },
+  "tags": ["rest-api", "crud", "typescript", "express", "simple"]
+}

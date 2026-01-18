@@ -1,0 +1,63 @@
+{
+  "taskId": "medium-auth-system",
+  "name": "Medium Complexity Authentication System",
+  "complexity": "medium",
+  "domain": "auth",
+  "prompt": "Implement a JWT-based authentication system with the following features: user registration with email/password, login with JWT token generation, token refresh mechanism, password reset via email token, and role-based access control (admin/user roles). Use TypeScript with Express.js. Include secure password hashing (bcrypt), input validation, rate limiting, and comprehensive tests using Vitest.",
+  "expectedDeliverables": [
+    {
+      "type": "file",
+      "pathPattern": "src/auth/**/*.ts",
+      "required": true,
+      "validator": "typescript-strict"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/middleware/auth.ts",
+      "required": true,
+      "validator": "typescript-strict"
+    },
+    {
+      "type": "file",
+      "pathPattern": "src/types/user.ts",
+      "required": true,
+      "validator": "typescript-strict"
+    },
+    {
+      "type": "test",
+      "pathPattern": "test/**/*.test.ts",
+      "required": true,
+      "validator": "vitest-pass"
+    },
+    {
+      "type": "documentation",
+      "pathPattern": "docs/auth-flow.md",
+      "required": false
+    }
+  ],
+  "qualityCriteria": {
+    "minTestPassRate": 100,
+    "requireTypeScriptStrict": true,
+    "minDocCoverage": 60,
+    "maxLintErrors": 0,
+    "customChecks": [
+      {
+        "name": "build-check",
+        "command": "npm run build",
+        "expectedExitCode": 0
+      },
+      {
+        "name": "security-check",
+        "command": "npm audit --audit-level=high",
+        "expectedExitCode": 0
+      }
+    ]
+  },
+  "baselineEstimates": {
+    "expectedTurns": 15,
+    "expectedDurationMinutes": 75,
+    "expectedToolCalls": 55,
+    "expectedWebSearches": 8
+  },
+  "tags": ["auth", "jwt", "security", "typescript", "express", "medium"]
+}

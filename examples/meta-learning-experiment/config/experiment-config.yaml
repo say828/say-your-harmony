@@ -1,0 +1,142 @@
+# Meta-Learning Experiment Configuration
+# This file defines the experimental setup for validating the meta-learning hypothesis
+
+experimentId: meta-learning-exp-001
+name: Meta-Learning Validation Experiment
+
+hypothesis: >
+  Meta-analysis from previous tasks improves efficiency on subsequent similar tasks,
+  with effects compounding across multiple domains
+
+# Success criteria for the experiment
+successCriteria:
+  # Minimum efficiency improvement percentage required
+  minEfficiencyImprovement: 15
+
+  # Maximum allowed quality degradation percentage
+  maxQualityDegradation: 5
+
+  # Minimum number of successful iterations needed
+  minSuccessfulIterations: 3
+
+  # Statistical significance threshold (p-value)
+  significanceThreshold: 0.05
+
+# Experiment scenarios to execute
+scenarios:
+  # Scenario 1: Baseline (no meta-analysis available)
+  - scenarioId: baseline-simple-api
+    type: baseline
+    taskId: simple-rest-api
+    metaAnalysisAvailable: false
+    executionOrder: 1
+    description: >
+      Baseline scenario executing a simple REST API task without any
+      meta-analysis context. This establishes the baseline metrics.
+
+  # Scenario 2: Repetition (same task with meta-analysis)
+  - scenarioId: repetition-simple-api
+    type: repetition
+    taskId: simple-rest-api
+    metaAnalysisAvailable: true
+    metaAnalysisSource: baseline-simple-api
+    executionOrder: 2
+    description: >
+      Repetition scenario executing the same REST API task but with
+      meta-analysis from the baseline run. Tests same-task learning.
+
+  # Scenario 3: Transfer (different task with meta-analysis)
+  - scenarioId: transfer-medium-auth
+    type: transfer
+    taskId: medium-auth-system
+    metaAnalysisAvailable: true
+    metaAnalysisSource: baseline-simple-api
+    executionOrder: 3
+    description: >
+      Transfer scenario executing a different (auth system) task with
+      meta-analysis from the REST API task. Tests cross-domain transfer.
+
+# Experiment parameters
+iterationsPerScenario: 3
+randomSeed: 42
+isolateSessions: true
+taskTimeoutMinutes: 30
+
+# Metadata
+metadata:
+  author: Say-Your-Harmony Team
+  createdAt: 2026-01-18T00:00:00Z
+  modifiedAt: 2026-01-18T00:00:00Z
+  frameworkVersion: 1.0.0
+  notes: Initial validation experiment for meta-learning hypothesis
+
+# Configuration parameters for metrics collection
+metricsConfig:
+  # Metrics to collect
+  enabledMetrics:
+    - efficiency
+    - quality
+    - learning
+    - resources
+
+  # Efficiency thresholds
+  efficiencyThresholds:
+    maxTurns: 50
+    maxDurationMinutes: 30
+    maxToolCalls: 100
+    maxWebSearches: 5
+
+  # Quality thresholds
+  qualityThresholds:
+    minTestPassRate: 95
+    maxTypeErrors: 0
+    maxLintErrors: 0
+    minDocCoverage: 80
+
+# Analysis configuration
+analysisConfig:
+  # Statistical tests to run
+  statisticalTests:
+    - paired-t-test
+    - effect-size
+    - confidence-interval
+
+  # Comparison types
+  comparisons:
+    - baseline-vs-repetition
+    - baseline-vs-transfer
+    - repetition-vs-transfer
+
+  # Pattern extraction settings
+  patternExtraction:
+    minFrequency: 2
+    minConfidence: 0.7
+
+# Visualization configuration
+visualizationConfig:
+  # Charts to generate
+  charts:
+    - efficiency
+    - quality
+    - learning-curve
+
+  # Chart settings
+  chartSettings:
+    width: 800
+    height: 500
+    format: png
+    dpi: 150
+
+# Environment settings
+environment:
+  nodeVersion: "20+"
+  claudeCLI: required
+  requiredTools:
+    - npm
+    - git
+    - bash
+
+  # Optional tools
+  optionalTools:
+    - docker
+    - jq
