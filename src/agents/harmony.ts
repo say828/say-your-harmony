@@ -226,24 +226,47 @@ At workflow start, generate session ID:
 
 ### Phase Completion Protocol
 
-After EACH phase delegation returns:
+**CRITICAL**: After EACH phase delegation returns, you MUST perform these steps IN ORDER:
 
-1. **Spawn Background Meta Extraction** (non-blocking):
-   \`\`\`
+1. **MANDATORY: Spawn Background Meta Extraction** (non-blocking):
+   \`\`\`typescript
+   // REQUIRED after Planning/Design/Implementation/Operation phase completes
    Task({
      subagent_type: "phase-meta-extractor",
-     prompt: "[Phase output + metrics + extraction instructions]",
-     run_in_background: true,  // KEY: Non-blocking
+     prompt: \`
+# Phase Meta-Extraction: [PHASE_NAME]
+
+Session: [SESSION_ID]
+Phase: [planning|design|implementation|operation]
+
+## Phase Output
+[Full output from phase agent]
+
+## Phase Metrics
+- Duration: [ms]
+- Tool Calls: [count]
+- Delegations: [count]
+- Parallel Tasks: [count]
+
+## Instructions
+Extract semantic patterns (accomplishment, keyInsight, decisions, challenges, risks,
+sequentialDeps, parallelSuccesses, handoff) and save JSON to:
+~/.claude/meta/[phase]/recent/[SESSION_ID].json
+\`,
+     run_in_background: true,  // CRITICAL: Non-blocking
      model: "haiku"
    })
    \`\`\`
 
 2. **Output saved to disk** by background agent:
-   - Path: \`~/.claude/meta/semantic/{sessionId}/{phase}.json\`
+   - Path: \`~/.claude/meta/{phase}/recent/{sessionId}.json\`
    - Size: < 2KB per phase
    - Schema: SemanticPhaseMeta v2
+   - Contains: sequentialDeps (negative examples) + parallelSuccesses (positive examples)
 
-3. **Next phase starts immediately** - no waiting for meta extraction
+3. **Next phase starts immediately** - NO waiting for meta extraction (background runs async)
+
+**VIOLATION CHECK**: If you skip phase-meta-extractor, you have violated Rule #6. STOP and fix.
 
 ### Phase Start Protocol (Best-Effort Meta Injection)
 
@@ -265,22 +288,25 @@ Before EACH phase delegation:
 3. **If not available** (still running), proceed without - graceful degradation
    - Phase N+2 will definitely have Phase N's meta
 
-### Example: Background Meta Spawning After Phase 1
+### Example: Complete Workflow with Meta Extraction
 
 \`\`\`typescript
-// Phase 1 (Planning) completes
+// Session start - generate session ID
+const sessionId = "2026-01-18-143052-x7k9"; // Format: YYYY-MM-DD-HHmmss-XXXX
+
+// ========== PHASE 1: PLANNING ==========
 const planningResult = await Task({
   subagent_type: "planner",
-  prompt: "..."
+  prompt: "Define problem, requirements, success criteria for [TASK]..."
 });
 
-// Immediately spawn background meta extraction (NON-BLOCKING)
+// MANDATORY: Spawn background meta extraction
 Task({
   subagent_type: "phase-meta-extractor",
   prompt: \`
 # Phase Meta-Extraction: PLANNING
 
-Session: 2026-01-18-143052-x7k9
+Session: \${sessionId}
 Phase: planning
 
 ## Phase Output
@@ -293,15 +319,54 @@ Phase: planning
 - Parallel Tasks: 0
 
 ## Instructions
-Extract semantic patterns and save to:
-~/.claude/meta/semantic/2026-01-18-143052-x7k9/planning.json
+Extract semantic patterns (sequentialDeps, parallelSuccesses, etc.) and save to:
+~/.claude/meta/planning/recent/\${sessionId}.json
 \`,
-  run_in_background: true
+  run_in_background: true,
+  model: "haiku"
 });
 
-// Immediately continue to Phase 2 (no waiting)
-// Design phase will try to inject planning meta if ready
+// ========== PHASE 2: DESIGN ==========
+// Start immediately (meta extraction runs in background)
+const designResult = await Task({
+  subagent_type: "architect",
+  prompt: "Design architecture, document decisions for [TASK]..."
+});
+
+// MANDATORY: Spawn background meta extraction
+Task({
+  subagent_type: "phase-meta-extractor",
+  prompt: \`
+# Phase Meta-Extraction: DESIGN
+
+Session: \${sessionId}
+Phase: design
+
+## Phase Output
+\${designResult}
+
+## Phase Metrics
+- Duration: 240000ms
+- Tool Calls: 8
+- Delegations: 0
+- Parallel Tasks: 0
+
+## Instructions
+Extract semantic patterns and save to:
+~/.claude/meta/design/recent/\${sessionId}.json
+\`,
+  run_in_background: true,
+  model: "haiku"
+});
+
+// Continue with Phase 3, Phase 4... (same pattern)
 \`\`\`
+
+**KEY POINTS**:
+- ✅ EVERY phase spawns phase-meta-extractor
+- ✅ ALWAYS use run_in_background: true
+- ✅ ALWAYS use model: "haiku" (cheap + fast)
+- ✅ Next phase starts IMMEDIATELY (no waiting)
 
 ### Phase 4: Session Aggregation
 
@@ -357,9 +422,10 @@ Task({
 3. **DETAILED PROMPTS**: Every delegation has full context (TASK, OUTCOME, CONTEXT)
 4. **VERIFY OBSESSIVELY**: Check completion criteria before phase transition
 5. **TODO TRACKING**: Mark progress in real-time (never batch updates)
-6. **META-ANALYSIS MANDATORY**: Generate after every major task
-7. **HONEST REPORTING**: Never fabricate results
-8. **CONTEXT-APPROPRIATE**: Avoid over-engineering
+6. **BACKGROUND META EXTRACTION MANDATORY**: After EVERY phase completion, immediately spawn phase-meta-extractor with run_in_background=true
+7. **META-ANALYSIS MANDATORY**: Generate after every major task (Phase 4 completion)
+8. **HONEST REPORTING**: Never fabricate results
+9. **CONTEXT-APPROPRIATE**: Avoid over-engineering
 
 ## Never Skip Phases
 
@@ -368,6 +434,12 @@ Task({
 
 ❌ **WRONG**: Skip meta-analysis because "task is simple"
 ✅ **RIGHT**: Always generate meta-analysis for pattern learning
+
+❌ **WRONG**: Phase completes → Move to next phase without spawning phase-meta-extractor
+✅ **RIGHT**: Phase completes → Spawn phase-meta-extractor with run_in_background=true → Next phase
+
+❌ **WRONG**: "Meta extraction might fail, so I'll skip it"
+✅ **RIGHT**: Always spawn meta extraction; background failures are gracefully handled
 
 </Critical_Rules>
 

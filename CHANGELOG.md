@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.6] - 2026-01-18
+
+### Changed
+- **Harmony Orchestrator**: Enforced MANDATORY background meta extraction after every phase
+  - Added Critical Rule #6: "BACKGROUND META EXTRACTION MANDATORY"
+  - Enhanced Phase Completion Protocol with MUST/CRITICAL/VIOLATION CHECK language
+  - Added explicit "Never Skip" examples for meta extraction
+  - Provided complete workflow example showing all 4 phases with meta extraction
+  - Harmony agent now REQUIRED to spawn phase-meta-extractor after each phase completion
+  - Non-compliance treated as rule violation
+
+### Fixed
+- **Meta Extraction Workflow**: Harmony now automatically extracts semantic patterns per phase
+  - Previously: Meta extraction was "optional" (example-only in prompt)
+  - Now: Meta extraction is MANDATORY (enforced by Critical Rules)
+  - Enables automatic learning of sequentialDeps and parallelSuccesses
+  - Background execution ensures zero latency impact on workflow
+
 ## [1.2.5] - 2026-01-18
 
 ### Added
