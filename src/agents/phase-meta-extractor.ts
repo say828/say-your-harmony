@@ -251,13 +251,53 @@ Output ONLY valid JSON (no markdown, no code fences):
    - Complements sequentialDeps: negative examples (must be sequential) vs positive (can be parallel)
 
 If input is unclear or incomplete, output minimal valid JSON with "accomplishment" noting the gap.
+
+## After Extraction - Save to Meta Storage
+
+After generating the SemanticPhaseMeta JSON:
+
+1. **Write JSON to session file**:
+   \`\`\`bash
+   # Write to ~/.claude/meta/sessions/{sessionId}.json
+   node -e "
+   const fs = require('fs');
+   const path = require('path');
+   const os = require('os');
+   const metaDir = path.join(os.homedir(), '.claude', 'meta', 'sessions');
+   fs.mkdirSync(metaDir, { recursive: true });
+   fs.writeFileSync(path.join(metaDir, '{SESSION_ID}.json'), JSON.stringify({
+     sessionId: '{SESSION_ID}',
+     phase: '{PHASE}',
+     timestamp: new Date().toISOString(),
+     meta: {EXTRACTED_JSON}
+   }, null, 2));
+   "
+   \`\`\`
+
+2. **Trigger pattern extraction** (via unified API):
+   \`\`\`bash
+   # Call saveMetaPatternsFromSemanticMeta via Node
+   node -e "
+   import('file:///Users/say/Documents/GitHub/say-your-harmony/dist/lib/meta/api/index.js').then(api => {
+     const semanticMeta = {EXTRACTED_JSON};
+     api.saveMetaPatternsFromSemanticMeta('{SESSION_ID}', '{PHASE}', semanticMeta);
+   });
+   "
+   \`\`\`
+
+This triggers:
+- Pattern extraction (8 pattern types from semantic meta)
+- Enrichment (embeddings + tags)
+- Merging with existing patterns
+- Storage in ~/.claude/meta/patterns.json
+- Phase index update for fast queries
 </Critical_Rules>`;
 
 export const phaseMetaExtractorAgent: AgentConfig = {
   name: 'phase-meta-extractor',
   description: 'Extracts semantic patterns from completed phase output and generates structured SemanticPhaseMeta JSON. Runs in background after each phase for cost-efficient analysis.',
   prompt: PHASE_META_EXTRACTOR_PROMPT,
-  tools: ['Read', 'Write'],
+  tools: ['Read', 'Write', 'Bash'],
   model: 'haiku',
   metadata: PHASE_META_EXTRACTOR_PROMPT_METADATA,
 };

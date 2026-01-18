@@ -191,14 +191,43 @@ npm run test:perf
 
 ---
 
-## Step 5: Meta-Analysis Generation
+## Step 5: Session Aggregation & Meta-Analysis
 
-**THE MOST CRITICAL STEP**: Generate session meta-analysis
+**THE MOST CRITICAL STEP**: Aggregate session and generate meta-analysis
+
+### 5.1: Session Aggregation (Unified Meta API)
+
+After Phase 4 completes, trigger session aggregation:
+
+\`\`\`bash
+# Call aggregateSession via unified API
+node -e "
+import('file:///Users/say/Documents/GitHub/say-your-harmony/dist/lib/meta/api/index.js').then(api => {
+  api.aggregateSession(
+    '{SESSION_ID}',
+    ['planning', 'design', 'implementation', 'operation'],
+    '{START_TIME}',
+    '{END_TIME}'
+  ).then(() => console.log('✅ Session aggregated successfully'));
+});
+"
+\`\`\`
+
+This triggers:
+1. **Session Summary Creation** - Links all 4 phase patterns
+2. **Pattern Linking** - Connects patterns to session ID
+3. **Session Storage** - Saves to ~/.claude/meta/sessions/{sessionId}.json
+4. **Global Evolution** - Runs evolution pipeline (confidence → decay → deduplicate → cluster → evict)
+5. **PATTERNS.md Generation** - Creates human-readable pattern library at ~/.claude/meta/PATTERNS.md
+
+### 5.2: Full Meta-Analysis (Comprehensive Review)
+
+Generate comprehensive session meta-analysis:
 
 \`\`\`
 Task({
   subagent_type: "meta-analyzer",
-  prompt: "Generate comprehensive meta-analysis for this session\\n\\nSession Context:\\n- Task: [task name]\\n- Duration: [start to end]\\n- Phases: Planning → Design → Implementation → Operation\\n\\nAnalyze:\\n1. Tool usage patterns (Read: X, Task: Y, Write: Z, etc.)\\n2. Decision trees (Why chose A over B? What alternatives?)\\n3. Problem-solving patterns (How did we handle blockers?)\\n4. Efficiency metrics (Parallel speedup? Time savings?)\\n5. Reusable patterns (What can apply to future tasks?)\\n6. Improvement opportunities (What could be better?)\\n\\nOutput to: ~/.claude/meta/session-[timestamp].md"
+  prompt: "Generate comprehensive meta-analysis for this session\\n\\nSession Context:\\n- Task: [task name]\\n- Duration: [start to end]\\n- Phases: Planning → Design → Implementation → Operation\\n\\nAnalyze:\\n1. Tool usage patterns (Read: X, Task: Y, Write: Z, etc.)\\n2. Decision trees (Why chose A over B? What alternatives?)\\n3. Problem-solving patterns (How did we handle blockers?)\\n4. Efficiency metrics (N-way parallel speedup? Time savings?)\\n5. Reusable patterns (What can apply to future tasks?)\\n6. Improvement opportunities (What could be better?)\\n\\nOutput to: ~/.claude/meta/session-[timestamp].md"
 })
 \`\`\`
 
@@ -370,7 +399,10 @@ Verify ALL criteria met:
 - [ ] Alerts configured (P0/P1 conditions)
 
 ### Meta-Analysis
-- [ ] Session meta-analysis generated
+- [ ] Session aggregation completed (aggregateSession called)
+- [ ] Evolution pipeline executed (patterns deduplicated, clustered, evicted)
+- [ ] PATTERNS.md generated (human-readable library)
+- [ ] Session meta-analysis generated (comprehensive review)
 - [ ] Tool usage documented
 - [ ] Patterns extracted
 - [ ] Improvements identified

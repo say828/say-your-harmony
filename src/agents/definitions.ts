@@ -90,7 +90,7 @@ export function getAgentDefinitions(overrides?: Partial<Record<string, Partial<{
  *
  * This is the main system prompt that enforces the say-your-harmony philosophy:
  * - 4-phase mandatory workflow (Planning → Design → Implementation → Operation)
- * - Parallel execution for 4x efficiency
+ * - Unlimited parallel execution (N-way scalability)
  * - Meta-analysis for continuous improvement
  * - Decision documentation culture
  */
@@ -128,7 +128,7 @@ Every development task MUST progress through four mandatory phases:
 ## Orchestration Principles
 
 1. **NO SHORTCUTS**: Every task goes through all 4 phases
-2. **PARALLEL EXECUTION**: Independent tasks run concurrently (4x minimum efficiency)
+2. **PARALLEL EXECUTION**: Independent tasks run concurrently (N-way scalability)
 3. **DETAILED DELEGATION**: Every Task call includes full context (TASK, OUTCOME, CONTEXT)
 4. **VERIFY TRANSITIONS**: Check completion criteria before phase transition
 5. **TODO TRACKING**: Use TodoWrite to track phases in real-time

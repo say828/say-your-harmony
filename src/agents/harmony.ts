@@ -251,7 +251,9 @@ Phase: [planning|design|implementation|operation]
 ## Instructions
 Extract semantic patterns (accomplishment, keyInsight, decisions, challenges, risks,
 sequentialDeps, parallelSuccesses, handoff) and save JSON to:
-~/.claude/meta/[phase]/recent/[SESSION_ID].json
+~/.claude/meta/sessions/{SESSION_ID}.json
+
+Then trigger pattern extraction via unified API to convert semantic meta to MetaPatterns.
 \`,
      run_in_background: true,  // CRITICAL: Non-blocking
      model: "haiku"
@@ -259,10 +261,11 @@ sequentialDeps, parallelSuccesses, handoff) and save JSON to:
    \`\`\`
 
 2. **Output saved to disk** by background agent:
-   - Path: \`~/.claude/meta/{phase}/recent/{sessionId}.json\`
+   - Path: \`~/.claude/meta/sessions/{sessionId}.json\`
    - Size: < 2KB per phase
    - Schema: SemanticPhaseMeta v2
    - Contains: sequentialDeps (negative examples) + parallelSuccesses (positive examples)
+   - Triggers: Pattern extraction → Enrichment → Merging → Storage in patterns.json
 
 3. **Next phase starts immediately** - NO waiting for meta extraction (background runs async)
 
@@ -320,7 +323,9 @@ Phase: planning
 
 ## Instructions
 Extract semantic patterns (sequentialDeps, parallelSuccesses, etc.) and save to:
-~/.claude/meta/planning/recent/\${sessionId}.json
+~/.claude/meta/sessions/\${sessionId}.json
+
+Then trigger pattern extraction via unified API.
 \`,
   run_in_background: true,
   model: "haiku"
@@ -353,7 +358,9 @@ Phase: design
 
 ## Instructions
 Extract semantic patterns and save to:
-~/.claude/meta/design/recent/\${sessionId}.json
+~/.claude/meta/sessions/\${sessionId}.json
+
+Then trigger pattern extraction via unified API.
 \`,
   run_in_background: true,
   model: "haiku"
@@ -372,9 +379,14 @@ Extract semantic patterns and save to:
 
 After Phase 4 completes:
 
-1. **Wait for all background metas** (30s timeout):
-   - Poll for planning.json, design.json, implementation.json, operation.json
-   - Timeout gracefully if some missing
+1. **Session aggregation** (via unified API):
+   - operator agent calls aggregateSession() via Bash + Node
+   - Automatically triggers:
+     * Session summary creation
+     * Pattern linking to session
+     * Global evolution pipeline (confidence → decay → deduplicate → cluster → evict)
+     * PATTERNS.md generation (human-readable library)
+   - Output: ~/.claude/meta/PATTERNS.md + updated patterns.json
 
 2. **Trigger full meta-analyzer** with all semantic metas:
    \`\`\`
@@ -406,19 +418,23 @@ Task({
 })
 \`\`\`
 
-**Meta-analysis output**: \`~/.claude/meta/session-YYYY-MM-DD-HH-mm.md\`
+**Meta-analysis outputs**:
+- Pattern library: \`~/.claude/meta/PATTERNS.md\` (human-readable)
+- Pattern storage: \`~/.claude/meta/patterns.json\` (machine-readable)
+- Session summary: \`~/.claude/meta/sessions/{sessionId}.json\`
+- Full analysis: \`~/.claude/meta/session-YYYY-MM-DD-HH-mm.md\`
 
 **Use meta-analysis for**:
-- Improving future agent prompts
-- Identifying bottlenecks
-- Capturing reusable patterns
-- Measuring efficiency (4x target)
+- Improving future agent prompts (via pattern library)
+- Identifying bottlenecks (via evolution metrics)
+- Capturing reusable patterns (via clustering)
+- Measuring efficiency (N-way parallel target)
 
 </Meta_Analysis_Loop>
 
 <Critical_Rules>
 1. **NO SHORTCUTS**: Every task goes through all 4 phases
-2. **PARALLEL WHEN POSSIBLE**: Independent tasks run concurrently (4x minimum)
+2. **PARALLEL WHEN POSSIBLE**: Independent tasks run concurrently (N-way scalability)
 3. **DETAILED PROMPTS**: Every delegation has full context (TASK, OUTCOME, CONTEXT)
 4. **VERIFY OBSESSIVELY**: Check completion criteria before phase transition
 5. **TODO TRACKING**: Mark progress in real-time (never batch updates)

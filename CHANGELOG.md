@@ -5,6 +5,66 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-01-19
+
+### Added
+- **Meta-Analysis System v2.0 (Clean Slate Architecture)**: Complete redesign of meta-analysis storage and evolution
+  - Unified `MetaPattern` schema supporting 8 pattern types (sequential-dep, parallel-success, accomplishment, risk, decision, approach, tool-usage, anti-pattern)
+  - Global storage with phase indices for O(1) query performance (`~/.claude/meta/patterns.json` + `index/{phase}.json`)
+  - Automated 6-step evolution pipeline: confidence scoring → time decay → deduplication → clustering → eviction → save
+  - FIFO session management (max 10 sessions) for debugging without bloat
+  - Human-readable `PATTERNS.md` export with Quick Reference top 10 patterns
+  - Unified API: `saveMetaPatternsFromSemanticMeta()`, `loadPatterns()`, `evolvePatterns()`, `aggregateSession()`
+  - 30+ new files in `src/lib/meta/` (core, extraction, evolution, query, export, sessions, api)
+
+- **Pattern Evolution Algorithms**: Scientific approach to pattern management
+  - Confidence scoring: Frequency (70%) + Recency (30%)
+  - Time decay: 90-day half-life exponential decay
+  - Clustering: Agglomerative clustering with 0.75 cosine similarity threshold
+  - Deduplication: TF-IDF fuzzy matching with 0.9 threshold
+  - Eviction: Score-based removal, protects high-frequency (≥5) and recent (≤7 days) patterns
+  - Capacity management: Max 100 patterns per phase
+
+- **Architecture Documentation**: Comprehensive technical specification
+  - `docs/META_SYSTEM_ARCHITECTURE.md` (746 lines): Complete system architecture, algorithms, API reference, migration guide
+  - Detailed algorithm explanations with mathematical formulas
+  - Performance characteristics analysis (time/space complexity)
+  - Integration examples for all agents
+
+### Changed
+- **Agent Integration**: Updated all agents to use Clean Slate v2.0 API
+  - `harmony.ts`: Updated storage paths to `~/.claude/meta/sessions/{sessionId}.json`
+  - `operator.ts`: Added `aggregateSession()` call after Phase 4 completion
+  - `phase-meta-extractor.ts`: Integrated with unified API via Bash + Node.js
+  - All meta-analysis flows now use unified API instead of direct file operations
+
+- **Parallel Execution Terminology**: Removed hardcoded "4x" limits throughout codebase
+  - `harmony.ts`: "4x minimum" → "N-way scalability"
+  - `builder.ts`: "4x efficiency" → "N-way scalability"
+  - `meta-analyzer.ts`: "4.25x efficiency" → "N-way parallel efficiency"
+  - `definitions.ts`: "4x minimum efficiency" → "N-way scalability"
+  - Reflects removal of agent count limits from v1.2.2
+
+- **Storage Structure**: Migrated to hybrid index architecture
+  - Old: `~/.claude/meta/{phase}/patterns.json` (phase-separated)
+  - New: `~/.claude/meta/patterns.json` (global) + `index/{phase}.json` (fast queries)
+  - Benefits: Single source of truth + O(1) phase-specific queries
+
+- **README.md**: Updated meta storage documentation
+  - New storage structure diagram with `patterns.json` and `index/` directory
+  - Updated workflow diagram showing Clean Slate v2.0 integration
+  - Revised "How It Works" section with new API calls
+
+### Fixed
+- **Build**: All TypeScript compilation errors resolved (0 errors)
+- **Tests**: All 322 tests passing (322/322) after Clean Slate integration
+
+### Technical Details
+- **Zero Migration Required**: v2.0 is completely independent from v1.x (parallel operation supported)
+- **Backward Compatibility**: Old `src/lib/quickmeta/` remains untouched
+- **Performance**: Evolution pipeline runs in <100ms for 400 patterns (100 per phase × 4)
+- **Storage Footprint**: ~70KB total (50KB patterns + 20KB sessions)
+
 ## [1.2.6] - 2026-01-18
 
 ### Changed

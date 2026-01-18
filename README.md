@@ -319,15 +319,18 @@ Meta-analysis generation → JSON pattern extraction → Phase-specific storage 
 **Global Storage Structure** (`~/.claude/meta/`):
 ```
 ~/.claude/meta/
-├── session-2026-01-08.md       ← Keep only latest 10 sessions (FIFO)
-├── ...
-├── session-2026-01-17.md
+├── patterns.json               ← Global unified pattern storage (all phases)
 ├── PATTERNS.md                 ← Human-readable master summary
+├── clusters.json               ← Cluster metadata
 ├── config.json                 ← System configuration
-├── planning/patterns.json      ← Phase 1 patterns (auto-evolved)
-├── design/patterns.json        ← Phase 2 patterns
-├── implementation/patterns.json ← Phase 3 patterns
-└── operation/patterns.json     ← Phase 4 patterns
+├── index/                      ← Phase-specific indices for fast queries
+│   ├── planning.json           ← Phase 1 pattern IDs
+│   ├── design.json             ← Phase 2 pattern IDs
+│   ├── implementation.json     ← Phase 3 pattern IDs
+│   └── operation.json          ← Phase 4 pattern IDs
+└── sessions/                   ← Session summaries (FIFO, max 10)
+    ├── 2026-01-19-143052-x7k9.json
+    └── ...
 ```
 
 **Automated Pattern Evolution**:
@@ -341,8 +344,9 @@ Meta-analysis generation → JSON pattern extraction → Phase-specific storage 
 | **Capacity** | Max 100 patterns per phase, 50 clusters, 10 session files |
 
 **Storage Formats**:
-- **JSON** (`{phase}/patterns.json`): Automated pattern management, search, filtering, evolution
+- **JSON** (`patterns.json`): Global unified pattern storage with phase indices for fast queries
 - **Markdown** (`PATTERNS.md`): Human-readable summary for quick reference
+- **Sessions** (`sessions/{sessionId}.json`): Session summaries with pattern links (FIFO, max 10)
 
 ---
 
@@ -639,15 +643,18 @@ To reproduce these experiments:
 
 Task N (Any Project):
   ├─ Execute 4-phase workflow
-  ├─ Generate meta-analysis (Phase 4)
-  ├─ Extract patterns → JSON (phase-specific)
-  └─ Save to ~/.claude/meta/session-N.md
+  ├─ Generate semantic meta per phase (background)
+  ├─ Aggregate session after Phase 4
+  ├─ Extract patterns → MetaPattern[] (8 types)
+  ├─ Run evolution (cluster → deduplicate → decay → evict)
+  └─ Save to ~/.claude/meta/patterns.json + PATTERNS.md
                 ↓
         [Global Knowledge Base]
-        (~/.claude/meta/{phase}/patterns.json)
+        (~/.claude/meta/patterns.json with phase indices)
                 ↓
 Task N+1 (Any Project - Can be different):
-  ├─ Read patterns from ~/.claude/meta/
+  ├─ Read patterns from ~/.claude/meta/PATTERNS.md
+  ├─ Query patterns by phase via unified API
   ├─ Apply patterns (no rediscovery)
   ├─ Reference decisions (no re-analysis)
   ├─ Skip web searches (information cached)
@@ -730,7 +737,8 @@ graph TD
     I[documenter] -.-> E
 
     G --> J[~/.claude/meta/session.md]
-    G --> K[~/.claude/meta/{phase}/patterns.json]
+    G --> K[~/.claude/meta/patterns.json]
+    G --> L[~/.claude/meta/PATTERNS.md]
 ```
 
 ### Parallel Execution

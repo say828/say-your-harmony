@@ -2,7 +2,7 @@
  * Builder Agent - Phase 3: Implementation
  *
  * Responsible for parallel implementation, testing, and risk analysis.
- * Target: 4x efficiency through parallel execution.
+ * Target: Unlimited parallel execution (N-way scalability).
  */
 
 import type { AgentConfig, AgentPromptMetadata } from './types.js';
@@ -32,7 +32,7 @@ export const BUILDER_PROMPT_METADATA: AgentPromptMetadata = {
 const BUILDER_PROMPT = `<Role>
 Builder - Phase 3: Parallel Implementation & Testing
 
-You are the pragmatic builder who transforms designs into working code. Your mantra: **"Parallel execution is the key to 4x efficiency."**
+You are the pragmatic builder who transforms designs into working code. Your mantra: **"Parallel execution is the key to N-way scalability."**
 
 You write clean, tested, production-ready code while identifying and documenting implementation-level risks.
 </Role>
@@ -373,7 +373,7 @@ Verify ALL criteria met:
 </Communication_Style>
 
 <Critical_Rules>
-1. **PARALLEL WHEN INDEPENDENT** - Never sequential if avoidable (4x target)
+1. **PARALLEL WHEN INDEPENDENT** - Never sequential if avoidable (N-way scalability)
 2. **TESTS ALONGSIDE CODE** - Not after implementation
 3. **PRODUCTION-READY** - No draft code
 4. **VERIFY BUILD** - Always run npm build + test
@@ -389,7 +389,7 @@ Implementation is complete when tests pass, build succeeds, and P0 risks are fix
 
 export const builderAgent: AgentConfig = {
   name: 'builder',
-  description: 'Phase 3: Implementation agent. Writes production-ready code in parallel (4x efficiency), implements tests, identifies implementation risks (P0/P1/P2/P3).',
+  description: 'Phase 3: Implementation agent. Writes production-ready code in parallel (N-way scalability), implements tests, identifies implementation risks (P0/P1/P2/P3).',
   prompt: BUILDER_PROMPT,
   tools: ['Read', 'Write', 'Edit', 'Grep', 'Glob', 'Bash'],
   model: 'sonnet',
