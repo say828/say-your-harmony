@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.5] - 2026-01-18
+
+### Added
+- **phase-meta-extractor.md**: Added agent documentation file for Claude Code plugin system
+  - Required for agent registration in Claude Code
+  - Defines role, extraction rules, output format, and workflow
+  - Enables `say-your-harmony:phase-meta-extractor` subagent in Task tool
+
+### Fixed
+- **Agent Discovery**: phase-meta-extractor now properly discoverable by Claude Code
+  - Previously only existed in TypeScript but missing markdown definition
+  - Plugin system requires `agents/*.md` files for agent registration
+  - Now complete 10-agent system fully operational
+
 ## [1.2.4] - 2026-01-18
 
 ### Fixed
