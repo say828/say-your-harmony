@@ -1,22 +1,19 @@
 ---
-description: View and brief stored meta-analysis and patterns library
-argument-hint: [--recent | --patterns | --session <id> | --top <N>]
+description: View pattern library dashboard with phase-by-phase statistics
+argument-hint: [--top <N> | --phase <name>]
 model: sonnet
 ---
 
-# /metaview - View Meta-Analysis & Patterns Library
+# /metaview - Pattern Library Dashboard
 
-View, brief, and summarize stored meta-analyses and pattern library.
+View pattern library dashboard with comprehensive statistics and insights.
 
 ---
 
 ## Usage
 
 ```bash
-/metaview                    # Full briefing (patterns + recent sessions)
-/metaview --recent           # Only recent session meta-analysis
-/metaview --patterns         # Only patterns library summary
-/metaview --session <id>     # Specific session (e.g., 2026-01-18)
+/metaview                    # Full pattern library dashboard
 /metaview --top 10           # Top 10 patterns by frequency
 /metaview --phase planning   # Patterns from specific phase
 ```
@@ -25,160 +22,173 @@ View, brief, and summarize stored meta-analyses and pattern library.
 
 ## What It Shows
 
-### Default Briefing (no args)
+### Default Dashboard (no args)
 
-1. **Pattern Library Summary**
+Comprehensive pattern library overview presented as a dashboard:
+
+1. **Overview Statistics**
    - Total patterns across all phases
-   - Top 5 most frequent patterns
-   - Recent pattern additions
+   - Pattern distribution by phase
+   - Average frequency and success rates
+   - Last updated timestamp
 
-2. **Recent Sessions**
-   - Latest 3 session meta-analyses
-   - Key insights from each
-   - Efficiency trends
+2. **Phase-by-Phase Breakdown**
+   - Planning phase: pattern count, top patterns
+   - Design phase: pattern count, top patterns
+   - Implementation phase: pattern count, top patterns
+   - Operation phase: pattern count, top patterns
 
-3. **Quick Stats**
-   - Total sessions analyzed
-   - Average efficiency gain
-   - Common problem-solving patterns
+3. **Top Patterns by Frequency**
+   - Top 5-10 most used patterns
+   - Each pattern's problem, solution, learning, success rate
+   - Usage frequency and decay score
 
-### With `--patterns`
-
-Detailed view of the patterns library:
-
-```markdown
-## Master Patterns Library
-
-**Total Patterns**: 15
-**By Phase**:
-- Planning: 4 patterns
-- Design: 3 patterns
-- Implementation: 5 patterns
-- Operation: 3 patterns
-
-### Top Patterns by Frequency
-
-1. [Implementation] Parallel Task Execution [8x]
-   - Problem: Sequential tasks waste time
-   - Solution: Fire all independent tasks in parallel
-   - Learning: Always check for parallelizable work
-   - Success Rate: 95%
-
-2. [Planning] Verify Primary Source First [5x]
-   - Problem: Wrong document leads to wasted work
-   - Solution: Ask user to confirm primary source
-   - Learning: Clarification upfront saves time
-   - Success Rate: 100%
-
-...
-```
-
-### With `--recent`
-
-Shows the most recent session meta-analysis:
+### Dashboard Format
 
 ```markdown
-## Latest Session: 2026-01-18-14-30
+# 📊 Pattern Library Dashboard
 
-### Summary
-- Task: Add authentication feature
-- Duration: 2.5 hours
-- Outcome: SUCCESS
+## Overview
+**Total Patterns**: 15 patterns
+**Last Updated**: 2026-01-18 14:30
+**Average Frequency**: 4.2x per pattern
+**Average Success Rate**: 92%
 
-### Tool Usage
-- Read: 16x
-- Task: 12x (100% success)
-- Edit: 8x
-- Write: 4x
+---
 
-### Efficiency
-- Parallel execution: 4.2x speedup
-- Total turns: 43
+## By Phase
 
-### Key Patterns Applied
-1. Parallel document creation
-2. Risk classification (P0/P1)
-3. Decision documentation
+| Phase | Patterns | Top Pattern | Frequency |
+|-------|----------|-------------|-----------|
+| **Planning** | 4 | Verify Primary Source First | 5x |
+| **Design** | 3 | Decision Documentation | 4x |
+| **Implementation** | 5 | Parallel Task Execution | 8x |
+| **Operation** | 3 | P0 Risk Classification | 4x |
 
-### Improvements Suggested
-- Add performance baseline
-- Increase test coverage to 90%
-```
+---
 
-### With `--session <id>`
+## Top 5 Patterns
 
-View specific session by date/ID:
+### 1. [Implementation] Parallel Task Execution [8x] 🔥
+- **Problem**: Sequential tasks waste time
+- **Solution**: Fire all independent tasks in parallel
+- **Learning**: Always check for parallelizable work
+- **Success Rate**: 95%
+- **Decay Score**: 8.7
 
-```bash
-/metaview --session 2026-01-17
+### 2. [Planning] Verify Primary Source First [5x]
+- **Problem**: Wrong document leads to wasted work
+- **Solution**: Ask user to confirm primary source
+- **Learning**: Clarification upfront saves time
+- **Success Rate**: 100%
+- **Decay Score**: 5.2
+
+### 3. [Design] Decision Documentation [4x]
+- **Problem**: Decisions lost to memory
+- **Solution**: Document rationale with alternatives
+- **Learning**: Why matters more than what
+- **Success Rate**: 90%
+- **Decay Score**: 4.1
+
+[... more patterns ...]
 ```
 
 ### With `--top N`
 
-Top N most frequent patterns:
+Shows top N patterns by frequency:
 
 ```bash
 /metaview --top 5      # Top 5 patterns
 /metaview --top 10     # Top 10 patterns
 ```
 
+**Output**: Focused list of most-used patterns with full details (problem, solution, learning, success rate, decay score)
+
 ### With `--phase <name>`
 
-Patterns from specific phase:
+Shows patterns from specific phase:
 
 ```bash
 /metaview --phase planning
+/metaview --phase design
 /metaview --phase implementation
+/metaview --phase operation
 ```
+
+**Output**: All patterns from the selected phase with phase-specific statistics
 
 ---
 
-## Output Format
+## Dashboard Sections
 
-### Briefing Structure
-
+### 1. Overview Statistics
 ```markdown
-# 📊 Meta-Analysis Briefing
-
-## Pattern Library Overview
-- Total patterns: X
-- Most recent: YYYY-MM-DD
-- Avg pattern frequency: X.X
-
-## Top Patterns (by frequency)
-[Top 5 patterns with quick summary]
-
-## Recent Sessions (last 3)
-[Session summaries with key metrics]
-
-## Efficiency Trends
-- Average parallel speedup: X.Xx
-- Average tool usage per session: X
-- Success rate: XX%
-
-## Recommendations
-[Actionable insights based on patterns]
+**Total Patterns**: 15 patterns
+**Last Updated**: 2026-01-18 14:30
+**Average Frequency**: 4.2x per pattern
+**Average Success Rate**: 92%
 ```
+
+### 2. Phase Distribution Table
+| Phase | Patterns | Top Pattern | Frequency |
+|-------|----------|-------------|-----------|
+| Planning | 4 | Pattern name | 5x |
+| Design | 3 | Pattern name | 4x |
+| Implementation | 5 | Pattern name | 8x |
+| Operation | 3 | Pattern name | 4x |
+
+### 3. Efficiency Metrics (Time Savings)
+```markdown
+## ⚡ Efficiency Impact
+
+**Total Time Saved**: 142 minutes (2.4 hours)
+**Average Efficiency Gain**: 49% faster per task
+**Tasks with Meta-Analysis**: 5 tasks
+**Tasks without Meta-Analysis**: 1 task (baseline)
+
+### Breakdown
+| Metric | Baseline | With Meta | Improvement |
+|--------|----------|-----------|-------------|
+| Avg Task Duration | 45 min | 23 min | **-49%** |
+| Avg Turns | 9 turns | 5 turns | **-44%** |
+| Web Searches | 5 searches | 0 searches | **-100%** |
+| Decisions Required | 6 decisions | 2 decisions | **-67%** |
+
+### ROI
+- **Investment**: 5 min per meta-analysis
+- **Return**: ~22 min saved per task
+- **ROI**: **4.4x return** on time invested
+```
+
+### 4. Top Patterns List
+Each pattern includes:
+- **Phase tag** (Planning/Design/Implementation/Operation)
+- **Frequency** (usage count with visual indicator 🔥)
+- **Problem**: What challenge this addresses
+- **Solution**: How to solve it
+- **Learning**: Key insight or principle
+- **Success Rate**: Percentage of successful applications
+- **Decay Score**: Current relevance score
 
 ---
 
 ## When to Use
 
 ### ✅ Use /metaview:
-- Before starting new work (learn from past)
-- To review accumulated patterns
-- To check efficiency trends
-- To find reusable solutions
-- To see recent session insights
+- **Before starting new work**: Learn from past patterns
+- **To review pattern library**: See what solutions exist
+- **To check efficiency metrics**: Track time savings over time
+- **To find reusable solutions**: Apply proven approaches
+- **To understand phase patterns**: See what works in each phase
 
 ### 💡 Workflow:
 ```
-/metaview --patterns     # See what patterns exist
+/metaview                # See pattern library dashboard
 → Start work with patterns in mind
 → Complete work
 → /meta                  # Generate meta-analysis
-→ /aggregate             # Consolidate patterns
-→ /metaview --recent     # Review what was learned
+→ /aggregate             # Consolidate patterns into library
+→ /metaview              # Review updated patterns and metrics
 ```
 
 ---
@@ -191,11 +201,6 @@ Patterns from specific phase:
 ~/.claude/meta/{phase}/patterns.json    # Machine-readable data
 ```
 
-### Session Meta-Analyses
-```
-~/.claude/meta/session-*.md             # Individual session analyses
-```
-
 ### Configuration
 ```
 ~/.claude/meta/config.json              # Aggregation settings
@@ -205,75 +210,127 @@ Patterns from specific phase:
 
 ## Examples
 
-### Example 1: Quick Check Before Starting Work
+### Example 1: Full Dashboard View
+```bash
+User: /metaview
+```
+```markdown
+# 📊 Pattern Library Dashboard
+
+## Overview
+**Total Patterns**: 15 patterns
+**Last Updated**: 2026-01-18 14:30
+**Average Frequency**: 4.2x per pattern
+**Average Success Rate**: 92%
+
+## By Phase
+| Phase | Patterns | Top Pattern | Frequency |
+|-------|----------|-------------|-----------|
+| Planning | 4 | Verify Primary Source First | 5x |
+| Design | 3 | Decision Documentation | 4x |
+| Implementation | 5 | Parallel Task Execution | 8x |
+| Operation | 3 | P0 Risk Classification | 4x |
+
+## ⚡ Efficiency Impact
+**Total Time Saved**: 142 minutes (2.4 hours)
+**Average Efficiency Gain**: 49% faster per task
+**ROI**: 4.4x return on time invested
+
+## Top 5 Patterns
+1. [Implementation] Parallel Task Execution [8x] 🔥
+2. [Planning] Verify Primary Source First [5x]
+3. [Design] Decision Documentation [4x]
+[...]
+```
+
+### Example 2: Quick Pattern Check
 ```bash
 User: /metaview --top 5
 ```
 ```
-Top 5 Patterns:
-1. [8x] Parallel Task Execution - Always fire independent tasks together
-2. [5x] Verify Primary Source - Clarify main document upfront
-3. [4x] P0 Risk Classification - Block on critical issues immediately
-4. [3x] Decision Documentation - Record why choices were made
-5. [3x] Test-First Implementation - Write tests before code
+Top 5 Patterns by Frequency:
+
+1. [Implementation] Parallel Task Execution [8x] 🔥
+   - Always fire independent tasks together
+   - Success Rate: 95%
+
+2. [Planning] Verify Primary Source First [5x]
+   - Clarify main document upfront
+   - Success Rate: 100%
+
+3. [Design] Decision Documentation [4x]
+   - Record why choices were made
+   - Success Rate: 90%
+
+4. [Operation] P0 Risk Classification [4x]
+   - Block on critical issues immediately
+   - Success Rate: 88%
+
+5. [Implementation] Test-First Implementation [3x]
+   - Write tests before code
+   - Success Rate: 92%
 ```
 
-### Example 2: Review Last Session
+### Example 3: Phase-Specific Patterns
 ```bash
-User: /metaview --recent
+User: /metaview --phase implementation
 ```
 ```
-Latest Session: 2026-01-18-14-30
-Task: Refactor authentication system
-Efficiency: 4.2x parallel speedup
-Key Learning: Always check for circular dependencies early
-```
+# Implementation Phase Patterns
 
-### Example 3: Full Briefing
-```bash
-User: /metaview
-```
-```
-📊 Meta-Analysis Briefing
+**Total**: 5 patterns
+**Average Frequency**: 4.8x
+**Average Success Rate**: 91%
 
-Pattern Library: 15 total patterns
-Recent Sessions: 7 analyzed (max 10 stored)
-Avg Efficiency: 3.8x speedup
+## All Patterns
 
-Top Patterns:
-1. Parallel execution (8x)
-2. Primary source verification (5x)
-3. Risk classification (4x)
+1. Parallel Task Execution [8x]
+   - Problem: Sequential tasks waste time
+   - Solution: Fire all independent tasks in parallel
+   - Learning: Always check for parallelizable work
+   - Success Rate: 95%
 
-Recent Insights:
-- Last 3 sessions all used parallel execution
-- Test coverage trending up (75% → 85% → 90%)
-- Decision documentation becoming standard
+2. Test-First Implementation [3x]
+   - Problem: Tests added as afterthought
+   - Solution: Write tests before implementation
+   - Learning: Tests guide better design
+   - Success Rate: 92%
 
-Recommendation: Continue parallel-first mindset
+[... 3 more patterns ...]
 ```
 
 ---
 
 ## Benefits
 
-1. **Learning from Past**: See what worked before
-2. **Pattern Reuse**: Apply proven solutions
-3. **Efficiency Tracking**: Monitor improvement over time
-4. **Quick Reference**: Fast access to insights
-5. **Trend Analysis**: Spot patterns in patterns
+1. **Learning from Past**: See what patterns worked before
+2. **Pattern Reuse**: Apply proven solutions immediately
+3. **Efficiency Tracking**: Monitor time savings and ROI over time
+4. **Quick Reference**: Fast access to pattern library
+5. **Data-Driven Decisions**: Choose approaches based on success rates
+6. **Phase-Specific Guidance**: See what works in each phase
+7. **Visual Dashboard**: Tables and metrics for easy scanning
 
 ---
 
 ## Integration with Other Commands
 
 ```
-/meta        → Generate new meta-analysis
-/aggregate   → Consolidate patterns
-/metaview    → View and brief patterns  ← YOU ARE HERE
+/meta        → Generate session meta-analysis
+/aggregate   → Consolidate patterns into library
+/metaview    → View pattern library dashboard  ← YOU ARE HERE
 ```
 
 **Continuous Improvement Loop**:
 ```
-Work → /meta → /aggregate → /metaview → Apply Learnings → Work
+/metaview              # Check pattern library
+→ Work with patterns in mind
+→ /meta                # Generate meta-analysis
+→ /aggregate           # Update pattern library
+→ /metaview            # Review updated dashboard
 ```
+
+**Key Difference**:
+- `/meta`: Generates meta-analysis for current session
+- `/aggregate`: Consolidates meta-analyses into pattern library
+- `/metaview`: Views the pattern library dashboard

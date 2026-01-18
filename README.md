@@ -13,14 +13,13 @@
 
 [![9 Agents](https://img.shields.io/badge/🤖_Agents-9-blue?style=flat-square)](./src/agents)
 [![4 Skills](https://img.shields.io/badge/⚡_Skills-4-purple?style=flat-square)](./skills)
-[![8 Commands](https://img.shields.io/badge/📝_Commands-8-orange?style=flat-square)](./commands)
+[![9 Commands](https://img.shields.io/badge/📝_Commands-9-orange?style=flat-square)](./commands)
 [![4x Efficiency](https://img.shields.io/badge/⚡_Parallel_Speedup-4.25x-brightgreen?style=flat-square)](#)
-[![Meta-Analysis](https://img.shields.io/badge/🧠_Meta--Analysis-∞-ff69b4?style=flat-square)](./docs/meta)
-[![Session Success](https://img.shields.io/badge/✅_Session_Success-100%25-success?style=flat-square)](#)
+[![Meta-Analysis](https://img.shields.io/badge/🧠_Meta--Analysis-Enabled-ff69b4?style=flat-square)](./docs/meta)
 
 [Install](#-quick-install) • [Usage](#-usage) • [Architecture](#-the-9-agent-system) • [Philosophy](#-philosophy) • [Meta-Analysis](#-meta-analysis--continuous-improvement)
 
-https://doi.org/10.17605/OSF.IO/ZWTDX
+https://doi.org/10.17605/OSF.IO/7TJ8A
 
 ---
 
@@ -51,12 +50,13 @@ Unlike traditional agent systems that stop at task completion, **Say-Your-Harmon
 
 ### 🎯 Real-World Proof
 
-**say-your-harmony-youtube**: 25-microservice YouTube architecture built from **2 lines of prompt**
+**say-your-harmony-youtube**: 25-microservice YouTube architecture built from **2 lines of initial prompt**
 - **Input**: "Use harmony with ultrathink" + "Develop YouTube architecture"
-- **Output**: 50,000+ LOC, 80+ docs, 82% test coverage, production-ready
+- **Output**: 50,000+ LOC, 80+ docs, 82% test coverage, production-ready standards applied
 - **Time**: **< 3 hours** (120 agent-hours via parallel execution)
-- **vs Manual**: 3-6 months → **< 3 hours** (**~500-1,000x faster**)
-- **Efficiency**: **40x parallelization** (120 agent-hours in 3 wall-clock hours)
+- **vs Manual**: Estimated **~500-1,000x faster** (based on typical 3-6 month development timeline)
+- **Efficiency**: **Up to 40x parallelization** (120 agent-hours in 3 wall-clock hours)
+- **Repository**: [say-your-harmony-youtube](https://github.com/say828/say-your-harmony-youtube)
 
 </div>
 
@@ -173,7 +173,7 @@ claude  # Start Claude Code
 
 The configuration enables:
 - **9-Agent System**: planner, architect, builder, operator, explorer, documenter, meta-analyzer, meta-aggregator, harmony
-- **8 Slash Commands**: /harmony, /plan, /design, /build, /operate, /meta, /ultrathink, /aggregate
+- **9 Slash Commands**: /harmony, /plan, /design, /build, /operate, /meta, /ultrathink, /aggregate, /metaview
 - **4 Skills**: ultrathink, parallel, meta, phase
 - **Keyword Detection**: Automatic activation for "harmony", "4-phase", "ultrathink"
 
@@ -207,7 +207,12 @@ Task({ subagent_type: "builder", prompt: "Implement auth handlers" })
 # Invoke operator for deployment
 Task({ subagent_type: "operator", prompt: "Deploy and verify build" })
 
-# Invoke meta-aggregator to consolidate patterns
+# View pattern library dashboard
+/metaview            # Display pattern library with efficiency metrics
+/metaview --top 10   # Show top 10 patterns by frequency
+/metaview --phase planning  # Show patterns from specific phase
+
+# Consolidate meta-analyses into pattern library
 /aggregate  # Consolidates insights across multiple meta-analysis sessions
 ```
 
@@ -351,7 +356,7 @@ Meta-analysis generation → JSON pattern extraction → Phase-specific storage 
 
 ### 📊 Comprehensive 6-Task, 3-Domain Experiment (2026-01-17)
 
-**Published Research**: [arXiv Preprint - Meta-Analysis Learning Loop](docs/paper-meta-analysis-learning-loop-arxiv.tex)
+**Research Preprint**: [Meta-Analysis Learning Loop](https://doi.org/10.17605/OSF.IO/7TJ8A) • [LaTeX Source](docs/me/en/paper-meta-analysis-learning-loop-arxiv.tex)
 
 **Experimental Design**: Controlled multi-domain study testing within-domain and cross-domain pattern transfer
 
@@ -508,11 +513,13 @@ Task 20+: ~22 min (51% faster) - asymptotic ceiling
 
 #### Experimental Design
 
-After completing 6 tasks in say-your-harmony project, we created **3 completely independent projects** to validate cross-project pattern transfer:
+After completing 6 tasks in say-your-harmony project, we created **3 independent validation projects** to test cross-project pattern transfer:
 
-1. **cross-project-cli-parser**: CLI argument parser library
-2. **cross-project-file-utils**: File I/O utilities library
-3. **cross-project-string-utils**: String manipulation utilities
+1. **CLI Parser**: CLI argument parser library (validation example)
+2. **File Utils**: File I/O utilities library (validation example)
+3. **String Utils**: String manipulation utilities (validation example)
+
+**Note**: These projects were created for experimental validation. Full repositories are available in the research paper's supplementary materials.
 
 **Pattern Transfer Mechanism**: Agents read previous project meta-analyses and source code from global storage (`~/.claude/meta/`) to identify and apply reusable patterns.
 
@@ -553,17 +560,19 @@ After completing 6 tasks in say-your-harmony project, we created **3 completely 
 
 ---
 
-### 🎓 Academic Publication
+### 🎓 Research Publication
 
-**Full Research Paper**:
+**Research Preprint**:
 - **Title**: "Meta-Analysis Learning Loop: Experimental Validation of Self-Improving Agent Orchestration Systems"
-- **Format**: LaTeX (arXiv-ready)
-- **Location**: [docs/paper-meta-analysis-learning-loop-arxiv.tex](docs/paper-meta-analysis-learning-loop-arxiv.tex)
-- **Submission Guide**: [docs/ARXIV_SUBMISSION_GUIDE.md](docs/ARXIV_SUBMISSION_GUIDE.md)
-- **Status**: Ready for arXiv submission
+- **Authors**: Hyunwoo Kim, Seunghyeok Hong
+- **DOI**: [10.17605/OSF.IO/7TJ8A](https://doi.org/10.17605/OSF.IO/7TJ8A)
+- **Publisher**: OSF Preprints
+- **Date**: January 2026
+- **LaTeX Source**: [docs/me/en/paper-meta-analysis-learning-loop-arxiv.tex](docs/me/en/paper-meta-analysis-learning-loop-arxiv.tex)
 
 **Paper Highlights**:
 - 11 sections + 3 appendices
+- Comprehensive experimental validation (9 tasks across 6 projects)
 - 11 peer-reviewed references with DOIs
 - Reproducibility checklist included
 - All experimental artifacts publicly available
@@ -830,7 +839,7 @@ operator:
 
 | Aspect | say-your-harmony | oh-my-claude-sisyphus |
 |--------|----------------------|------------------|
-| **Agent Count** | 12 agents (specialized roles) | 9 agents (4-phase workflow) |
+| **Agent Count** | 9 agents (4-phase workflow) | Variable (task-based) |
 | **Philosophy** | Task-based agent delegation | 4-phase structured workflow |
 | **Orchestration** | Harmony orchestrator | Harmony orchestrator |
 | **Workflow** | Flexible agent routing | Mandatory 4-phase progression |
@@ -865,13 +874,13 @@ If you use Say-Your-Harmony, the Meta-Analysis Learning Loop, or findings from t
   month = {January},
   publisher = {OSF},
   journal = {OSF Preprints},
-  howpublished = {\url{https://osf.io/zwtdx}},
-  doi = {10.17605/OSF.IO/ZWTDX},
+  howpublished = {\url{https://doi.org/10.17605/OSF.IO/7TJ8A}},
+  doi = {10.17605/OSF.IO/7TJ8A},
   note = {Version 1.0}
 }
 ```
 
-**Paper**: [OSF Preprint](https://osf.io/zwtdx) • **DOI**: 10.17605/OSF.IO/ZWTDX
+**Paper**: [OSF Preprint](https://doi.org/10.17605/OSF.IO/7TJ8A) • **DOI**: 10.17605/OSF.IO/7TJ8A
 
 ---
 
@@ -913,478 +922,19 @@ We stand on the shoulders of giants. Thank you, **oh-my-claude-sisyphus**, for s
 
 ---
 
-## 🚀 Real-World Proof: Autonomous System Generation
-
-### 🎥 say-your-harmony-youtube: Built from 2 Lines of Prompt
-
-**Repository**: [say-your-harmony-youtube](https://github.com/say828/say-your-harmony-youtube)
-
-**The Proof**: Enterprise-scale 25-microservice YouTube architecture **autonomously generated by Say-Your-Harmony from just 2 lines of natural language**
-
-**Human Input** (< 5 minutes):
-```bash
-Use harmony with ultrathink
-Develop YouTube architecture
-```
-
-**Harmony Output** (~3 hours wall-clock time):
-- 🏗️ 25+ production-ready microservices
-- 💻 50,000+ lines of code
-- 📚 80+ comprehensive documents
-- ✅ 82% test coverage
-- 🐳 Full Kubernetes deployment
-- ⚡ **120 agent-hours completed in < 3 hours via parallel execution**
-
----
-
-#### ⚡ The Power of Autonomous Parallel Execution
-
-**This entire 25+ microservice architecture was generated with just 2 lines of input:**
-
-```bash
-Use harmony with ultrathink
-Develop YouTube architecture
-```
-
-**Result** (in < 3 hours):
-- 25+ microservices automatically generated
-- 100+ APIs designed and implemented
-- 50,000+ lines of production-ready code
-- 80+ comprehensive documentation files
-- All within the 4-phase workflow
-- **120 agent-hours of work compressed into < 3 wall-clock hours**
-
-**How?** **40x parallel execution** - multiple microservices, documents, and tests generated simultaneously
-
-**This is NOT a manually coded project. This is what Say-Your-Harmony can build autonomously in the time it takes to watch a movie.**
-
----
-
-#### 🎬 Project Overview
-
-A production-ready video streaming platform demonstrating the autonomous capabilities of Say-Your-Harmony's orchestration system.
-
-**Architecture**: Spring Cloud-based microservice architecture
-**Scale**: 25+ microservices, 100+ APIs
-**Tech Stack**: Spring Boot 3.x, Spring Cloud, Kafka, Elasticsearch, Redis, PostgreSQL
-**Infrastructure**: Docker, Kubernetes, Netflix OSS
-
----
-
-#### 🏗️ System Architecture
-
-**Core Services**:
-1. **API Gateway Service** (Spring Cloud Gateway)
-   - Routing, load balancing, rate limiting
-   - JWT authentication
-   - Request/response transformation
-
-2. **Video Processing Service**
-   - Video transcoding (FFmpeg)
-   - Thumbnail generation
-   - HLS/DASH streaming support
-   - Multi-resolution encoding (360p, 480p, 720p, 1080p, 4K)
-
-3. **Content Delivery Service**
-   - CDN integration
-   - Video streaming (HLS/DASH)
-   - Adaptive bitrate streaming
-   - Caching strategies
-
-4. **User Service**
-   - User registration, authentication
-   - Profile management
-   - Subscription management
-
-5. **Recommendation Service**
-   - Collaborative filtering
-   - Content-based recommendations
-   - Elasticsearch-powered search
-   - Real-time personalization
-
-6. **Analytics Service**
-   - View count tracking
-   - Watch time analytics
-   - User engagement metrics
-   - Real-time dashboards
-
-7. **Comment Service**
-   - Nested comments support
-   - Real-time updates (WebSocket)
-   - Moderation tools
-
-8. **Notification Service**
-   - Push notifications
-   - Email notifications
-   - In-app notifications
-   - Kafka event-driven
-
-**Infrastructure Services**:
-- **Config Server** (Spring Cloud Config)
-- **Service Discovery** (Spring Cloud Eureka)
-- **Circuit Breaker** (Resilience4j)
-- **Distributed Tracing** (Spring Cloud Sleuth + Zipkin)
-- **Monitoring** (Prometheus + Grafana)
-
----
-
-#### 📊 Autonomous Development Process
-
-**How Say-Your-Harmony Generated This Project**:
-
-**Input** (2 lines):
-```
-Use harmony with ultrathink
-Develop YouTube architecture
-```
-
-**What Harmony Did Automatically**:
-
-**Phase 1: Planning** (Autonomous)
-- ✅ Analyzed YouTube architecture requirements
-- ✅ Researched best practices for video streaming platforms
-- ✅ Designed API contracts (OpenAPI 3.0)
-- ✅ Planned database schemas
-- ✅ Mapped service dependencies
-- **Output**: 25+ planning documents
-
-**Phase 2: Design** (Autonomous)
-- ✅ Generated architectural decision records (30+ ADRs)
-- ✅ Evaluated technology alternatives (Spring Cloud, Kafka, Elasticsearch)
-- ✅ Documented rationale for each decision
-- ✅ Classified risks (P0/P1/P2/P3)
-- ✅ Designed scalability strategies
-- **Output**: 30+ design documents with full decision trees
-
-**Phase 3: Implementation** (Autonomous + Parallel)
-- ✅ Implemented 25+ microservices **in parallel** (4-6 simultaneously)
-- ✅ Generated 50,000+ lines of production-ready code
-- ✅ Wrote comprehensive tests (82% coverage)
-- ✅ Created 100+ API endpoints
-- ✅ Built integration tests
-- **Output**: Complete codebase with tests
-
-**Phase 4: Operation** (Autonomous)
-- ✅ Generated Docker configurations for each service
-- ✅ Created Kubernetes manifests
-- ✅ Set up monitoring (Prometheus + Grafana)
-- ✅ Generated meta-analysis for each service
-- **Output**: Production-ready deployment + 25 meta-analyses
-
-**Performance Metrics**:
-- ⏱️ **Wall-Clock Time**: **< 3 hours** (from prompt to production-ready)
-- 🤖 **Agent-Hours**: 120 hours of work (compressed via parallel execution)
-- ⚡ **Parallelization**: **40x efficiency** (120 hours → 3 hours)
-- 👨‍💻 **Human Input**: 2 lines of prompt (< 5 minutes)
-- 🎯 **Human Intervention**: **0%** (fully autonomous)
-- 🚀 **Speedup vs Manual**: **500-1,000x** (3-6 months → < 3 hours)
-
----
-
-#### 🎯 Key Features
-
-**Video Management**:
-- ✅ Video upload (multipart, resumable)
-- ✅ Automatic transcoding (multiple resolutions)
-- ✅ Thumbnail generation (AI-powered)
-- ✅ Video metadata management
-- ✅ Privacy settings (public, unlisted, private)
-
-**Streaming**:
-- ✅ HLS/DASH adaptive bitrate streaming
-- ✅ CDN integration
-- ✅ Quality selection (360p-4K)
-- ✅ Offline download support
-- ✅ Live streaming (planned)
-
-**User Experience**:
-- ✅ Personalized recommendations
-- ✅ Search (Elasticsearch)
-- ✅ Playlists
-- ✅ Watch history
-- ✅ Likes/dislikes
-- ✅ Comments with threading
-- ✅ Subscriptions
-
-**Analytics & Monitoring**:
-- ✅ View count tracking
-- ✅ Watch time analytics
-- ✅ Real-time metrics
-- ✅ User engagement analysis
-- ✅ Content performance insights
-
----
-
-#### 📈 Autonomous Generation Statistics
-
-**What Harmony Generated from 2 Lines of Input**:
-
-**Documentation** (Automatic):
-- 📄 25+ Planning documents (one per microservice)
-- 📐 30+ Design documents (including ADRs with full rationale)
-- 📝 25+ Implementation reports
-- 🧠 25+ Meta-analyses (comprehensive session analysis)
-- 📚 80+ total documents
-
-**Code** (Automatic):
-- 💻 ~50,000 lines of production-ready code
-- ✅ 82% average test coverage across all services
-- 🔌 100+ RESTful API endpoints
-- 🏗️ 25+ microservices with complete implementations
-- 🐳 Docker + Kubernetes configurations
-
-**Time Analysis**:
-- ⏱️ **Wall-clock time**: **< 3 hours** (from prompt to production-ready)
-- 🤖 **Agent-hours**: 120 hours (compressed via 40x parallel execution)
-- 👨‍💻 **Human time investment**: < 5 minutes (typing 2 prompts)
-- 📊 **Speedup vs Manual**: **~500-1,000x** (3-6 months → < 3 hours)
-- ⚡ **Parallelization efficiency**: **40x** (120 agent-hours in 3 wall-clock hours)
-- 💡 **Estimated manual development time**: ~800-1,200 hours (3-6 months)
-- 🚀 **Time saved**: **99.6%** (< 3 hours vs 800-1,200 hours)
-
-**What Made This Possible**:
-- ⚡ **40x Parallel execution**: 120 agent-hours compressed into < 3 hours
-  - 4-6 microservices developed simultaneously at any given time
-  - Documents, code, and tests generated in parallel
-  - Multiple agents working concurrently (planner, architect, builder, operator)
-- 🧠 **Meta-analysis pattern reuse**: Harmony applied patterns from previous tasks
-- 📋 **Decision caching**: Architectural decisions reused across services
-- 📚 **Knowledge base**: Zero redundant research (all info from meta-analyses)
-- 🔬 **Ultrathink mode**: Deep analysis for complex architectural decisions
-- 🔄 **Compounding efficiency**: Later services built faster using patterns from earlier ones
-
-**Human vs Harmony**:
-
-| Aspect | Human Developer | Say-Your-Harmony |
-|--------|----------------|------------------|
-| **Wall-Clock Time** | 3-6 months | **< 3 hours** |
-| **Agent-Hours** | N/A | 120 hours (40x parallel) |
-| **Documentation** | Minimal | 80+ comprehensive docs |
-| **Decision tracking** | Undocumented | 30+ ADRs with rationale |
-| **Test coverage** | 30-50% typical | 82% average |
-| **Consistency** | Varies | 100% consistent patterns |
-| **Meta-analysis** | None | 25 session analyses |
-| **Human input** | 100% | 2 lines of prompt (< 5 min) |
-| **Speedup** | 1x baseline | **500-1,000x faster** |
-
----
-
-#### 🛠️ Technology Stack
-
-**Backend**:
-- Spring Boot 3.2+
-- Spring Cloud (Config, Eureka, Gateway, OpenFeign)
-- Spring Data JPA
-- Spring Security (JWT)
-- Resilience4j (Circuit Breaker)
-
-**Messaging & Events**:
-- Apache Kafka (event streaming)
-- Redis (caching, session)
-- WebSocket (real-time notifications)
-
-**Database**:
-- PostgreSQL (primary database)
-- MongoDB (video metadata, comments)
-- Elasticsearch (search)
-
-**Video Processing**:
-- FFmpeg (transcoding)
-- ImageMagick (thumbnails)
-
-**Infrastructure**:
-- Docker & Docker Compose
-- Kubernetes (orchestration)
-- Nginx (reverse proxy)
-- Prometheus + Grafana (monitoring)
-- Zipkin (distributed tracing)
-
----
-
-#### 🔬 Meta-Analysis Highlights
-
-**Architectural Patterns Extracted**:
-1. **Microservice Communication Pattern**
-   - Synchronous: OpenFeign with circuit breaker
-   - Asynchronous: Kafka event streaming
-   - Cached: Redis for frequently accessed data
-
-2. **Error Handling Convention**
-   - Global exception handler
-   - Standardized error responses
-   - Circuit breaker fallbacks
-
-3. **Testing Strategy**
-   - Unit tests (JUnit 5)
-   - Integration tests (TestContainers)
-   - Contract tests (Spring Cloud Contract)
-
-4. **Deployment Pattern**
-   - Blue-green deployment
-   - Canary releases
-   - Automated rollback
-
-**Decision Trees Documented**:
-- Why Spring Cloud Gateway over Zuul?
-- Why Kafka over RabbitMQ?
-- Why Elasticsearch over Solr?
-- Why PostgreSQL over MySQL?
-
-(All decisions documented with rationale, alternatives, and tradeoffs)
-
----
-
-#### 📚 Documentation
-
-**Generated Documentation**:
-- `README.md` (project overview)
-- `ARCHITECTURE.md` (system design)
-- `API.md` (API documentation)
-- `DEPLOYMENT.md` (deployment guide)
-- `docs/planning/` (25+ planning documents)
-- `docs/design/` (30+ design documents)
-- `docs/meta/` (25+ meta-analyses)
-- OpenAPI 3.0 specs for all services
-
----
-
-#### 🎓 Learning Outcomes
-
-**Demonstrated Capabilities**:
-- ✅ Large-scale microservice architecture
-- ✅ Event-driven design patterns
-- ✅ Distributed system challenges (tracing, monitoring)
-- ✅ Video processing pipelines
-- ✅ Horizontal scalability
-- ✅ Production-ready deployment
-- ✅ Comprehensive testing strategies
-- ✅ Meta-analysis driven development
-
-**Pattern Library Built**:
-- 50+ reusable patterns across services
-- Consistent coding conventions
-- Shared testing utilities
-- Common CI/CD pipelines
-- Monitoring templates
-
----
-
-### 📋 Comparison: Autonomous Generation vs Manual Development
-
-| Aspect | Say-Your-Harmony (Autonomous) | Human Developer (Manual) |
-|--------|-------------------------------|-------------------------|
-| **Input Required** | 2 lines of prompt | Months of coding |
-| **Wall-Clock Time** | **< 3 hours** | 800-1,200 hours (3-6 months) |
-| **Agent-Hours** | 120 hours (40x parallel) | N/A (sequential work) |
-| **Human Effort** | < 5 minutes | 100% hands-on |
-| **Speedup** | **500-1,000x faster** | 1x baseline |
-| **Architecture** | 25+ microservices | Typically monolith or 3-5 services |
-| **Documentation** | 80+ auto-generated docs | Minimal README if lucky |
-| **Decision Tracking** | 30+ ADRs with full rationale | Usually undocumented |
-| **Test Coverage** | 82% average (automatic) | 30-50% typical (manual) |
-| **Code Quality** | Production-ready from start | Often requires refactoring |
-| **Consistency** | 100% (pattern library) | Varies significantly |
-| **Scalability** | Kubernetes-ready | Often needs redesign |
-| **Monitoring** | Prometheus + Grafana (built-in) | Added later if at all |
-| **Meta-Analysis** | 25 comprehensive analyses | None |
-| **Pattern Library** | 50+ extracted patterns | None |
-| **Parallelization** | 40x (120 hours → 3 hours) | 1x (sequential only) |
-
-**Key Insight**: What takes a human team **3-6 months** of focused work, Say-Your-Harmony generates in **< 3 hours** (the time it takes to watch a movie) with **< 5 minutes** of human input.
-
----
-
-### 🌟 Why This Proves Say-Your-Harmony's Power
-
-**1. Autonomous Architecture Generation**
-- ⚡ **Input**: 2 lines ("Use harmony with ultrathink" + "Develop YouTube architecture")
-- 🏗️ **Output**: Complete 25-microservice architecture
-- 🤖 **Human intervention**: 0%
-- 💡 **This is not assisted development. This is autonomous creation.**
-
-**2. 4-Phase Workflow Execution (Fully Automatic)**
-- Every microservice automatically went through Planning → Design → Implementation → Operation
-- Zero phase skipping
-- Complete audit trail generated automatically
-- 80+ documents created without human writing
-
-**3. Massive Parallel Execution (40x)**
-- 4-6 microservices developed simultaneously at any given time
-- **120 agent-hours compressed into < 3 wall-clock hours**
-- **40x parallelization efficiency** (vs sequential execution)
-- **500-1,000x faster** than manual development (3-6 months → < 3 hours)
-- **99.6% time savings**
-
-**4. Self-Documenting Systems**
-- 30+ architectural decision records auto-generated
-- Every decision has documented rationale, alternatives, and tradeoffs
-- No human documentation effort required
-- Complete knowledge base created automatically
-
-**5. Meta-Analysis Driven Improvement**
-- 25 session meta-analyses auto-generated
-- Patterns extracted and reused across services
-- Compounding efficiency (later services built faster)
-- Continuous improvement without human intervention
-
-**6. Production-Ready from Start**
-- 82% test coverage (automatic)
-- Kubernetes deployment configs (automatic)
-- Monitoring setup (automatic)
-- Disaster recovery plans (automatic)
-- **No "we'll add tests later" - it's production-ready on day 1**
-
----
-
-### 💡 The Real Achievement
-
-**This is not a showcase of human skill using Harmony as a tool.**
-
-**This is Harmony building an entire enterprise system autonomously from 2 lines of natural language in the time it takes to watch a movie.**
-
-**The implications**:
-- 🚀 **500-1,000x development speed** for complex systems (3-6 months → < 3 hours)
-- ⚡ **40x parallelization** (120 agent-hours compressed into 3 wall-clock hours)
-- 📚 **Self-documenting architectures** (80+ docs auto-generated)
-- 🧠 **Institutional knowledge captured** (25 meta-analyses)
-- ✅ **Production-ready from hour 1** (82% test coverage, Kubernetes deployment)
-- 🔄 **Continuous improvement** (pattern library grows automatically)
-- 🎯 **99.6% time savings** (< 3 hours vs 800-1,200 hours)
-
-**What would take a team of 5-10 developers 3-6 months, Say-Your-Harmony does alone in < 3 hours with < 5 minutes of human input.**
-
-**You can literally start the process, go watch a movie, and come back to a production-ready 25-microservice architecture.**
-
----
-
-### 🔗 Repository Links
-
-**Main Repository**: [say-your-harmony-youtube](https://github.com/say828/say-your-harmony-youtube)
-
-**Key Directories**:
-- `/services/` - 25 microservices
-- `/infrastructure/` - Kubernetes manifests, Docker configs
-- `/docs/planning/` - Planning documents
-- `/docs/design/` - Architecture and ADRs
-- `/docs/meta/` - Meta-analysis documents
-
----
-
-### 💡 Additional Projects
-
-*Have a project using Say-Your-Harmony? Open a PR to add it!*
-
-**Contribution Guidelines**:
-- Must demonstrate 4-phase workflow usage
-- Should include meta-analysis documents
-- Provide metrics (LOC, test coverage, development time)
-- Document efficiency gains
-
----
-
 ## 📚 Further Reading
 
 - [Development Philosophy](docs/CLAUDE.md) - Core principles and 4-phase workflow guide
+- [Research Paper](https://doi.org/10.17605/OSF.IO/7TJ8A) - Meta-Analysis Learning Loop validation
+
+### 🔗 Example Projects
+
+**say-your-harmony-youtube**: 25-microservice YouTube architecture generated from 2 lines of initial prompt
+- **Repository**: [say-your-harmony-youtube](https://github.com/say828/say-your-harmony-youtube)
+- **Scale**: 50,000+ LOC, 82% test coverage, production-ready standards applied
+- **Key directories**: `/services/`, `/infrastructure/`, `/docs/planning/`, `/docs/design/`, `/docs/meta/`
+
+*Have a project using Say-Your-Harmony? Open a PR to add it!*
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "say-your-harmony",
-  "description": "4-Phase Development Orchestration for Claude Code with 9 specialized agents",
+  "description": "Meta-Analysis Learning Loop: Experimental Validation of Self-Improving Agent Orchestration Systems",
   "owner": {
     "name": "Hyunwoo Kim",
     "email": "gusdn0828@gmail.com"
