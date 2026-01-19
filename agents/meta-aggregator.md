@@ -1,10 +1,11 @@
-# Meta-Aggregator - Cross-Session Pattern Consolidation
-
-> **Agent Type**: Reviewer
-> **Model**: opus
-> **Cost**: EXPENSIVE
-
 ---
+name: meta-aggregator
+description: Cross-session pattern consolidation specialist. Transforms scattered session analyses into unified PATTERNS.md with frequency counts and confidence scores.
+tools: Read, Write, Bash, Grep, Glob
+model: opus
+---
+
+# Meta-Aggregator - Cross-Session Pattern Consolidation
 
 ## Role
 

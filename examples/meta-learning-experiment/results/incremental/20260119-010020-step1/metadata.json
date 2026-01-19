@@ -1,0 +1,11 @@
+{
+  "experimentType": "incremental-meta-accumulation",
+  "step": 1,
+  "timestamp": "2026-01-18T16:00:20Z",
+  "metaSessionsAtStart": 0,
+  "metaBackupLocation": "/tmp/claude-meta-incremental-backup-1768752020",
+  "tasks": [
+    {"taskId": "shopping-cart", "complexity": "simple-medium", "parallel": false}
+  ],
+  "resultsDirectory": "/Users/say/Documents/GitHub/say-your-harmony/examples/meta-learning-experiment/results/incremental/20260119-010020-step1"
+}

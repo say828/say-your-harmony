@@ -1,23 +1,46 @@
 /**
- * Pattern Management Library - Central Export
+ * Meta Pattern Management Library - v2.0
+ *
+ * Unified API for meta-analysis pattern storage and evolution.
+ * All exports from src/lib/meta/api/index.ts
  */
 
-export { SemanticHasher, semanticHasher } from './semantic-hasher.js';
-export { computeDecayScore, recomputeScores } from './decay-scorer.js';
-export { PatternClusterer, patternClusterer } from './pattern-clusterer.js';
-export { PatternEvictor, patternEvictor } from './pattern-evictor.js';
-export { ConfigManager, configManager } from './config-manager.js';
-export { PatternAggregator, patternAggregator } from './pattern-aggregator.js';
+// Re-export everything from v2.0 unified API
+export * from './meta/api/index.js';
 
+// Additional exports from evolution module
+export { recalculateConfidence } from './meta/evolution/confidence.js';
+export { applyDecay, applyDecayToAll } from './meta/evolution/decay.js';
+export { deduplicatePatterns } from './meta/evolution/deduplication.js';
+export { clusterPatterns } from './meta/evolution/clustering.js';
+export { evictLowScorePatterns } from './meta/evolution/eviction.js';
+
+// Storage utilities
 export {
-  loadPatterns,
-  savePatterns,
-  loadClusters,
-  saveClusters,
-  loadIndex,
-  saveIndex,
+  loadPatternStore,
+  savePatternStore,
   loadAllPatterns,
-  listSessionFiles,
-  deleteFile,
-  getFileModTime
-} from './storage.js';
+  loadPatternsByPhase,
+  loadPatternsByType,
+  loadPatternById,
+  savePattern,
+  savePatterns,
+  deletePattern,
+  loadPhaseIndex,
+  updatePhaseIndex,
+} from './meta/core/storage.js';
+
+// Schema types and utilities
+export {
+  createEmptyPatternStore,
+} from './meta/core/schema.js';
+
+// Session management
+export {
+  saveSession,
+  loadSession,
+  listSessions,
+} from './meta/sessions/session-store.js';
+
+// Export utilities
+export { exportPatternsJson, exportStoreJson, exportPatternsToFile } from './meta/export/json.js';

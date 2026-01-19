@@ -1,16 +1,28 @@
 /**
- * Pattern Management Types - Central Export
+ * Pattern Management Types - v2.0 Central Export
  */
 
+// v2.0 Core Schema Types
 export type {
   Phase,
-  Pattern,
+  PatternType,
+  SequentialDepData,
+  ParallelSuccessData,
+  RiskData,
+  DecisionData,
+  ApproachData,
+  ToolUsageData,
+  PatternData,
+  MetaPattern,
   Cluster,
-  PatternStorage,
-  AggregationStats,
-  EvictionResult
-} from './pattern.js';
+  PatternStore,
+  PhaseIndex,
+  SessionSummary,
+} from '../lib/meta/core/schema.js';
 
+export { createEmptyPatternStore } from '../lib/meta/core/schema.js';
+
+// Config Types
 export type {
   DecayAlgorithm,
   EvictionStrategy,
@@ -27,6 +39,7 @@ export type {
 
 export { getDefaultConfig } from './config.js';
 
+// Semantic Meta Types (for agent extraction)
 export type {
   DecisionImpact,
   RiskSeverity,

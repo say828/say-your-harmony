@@ -1,10 +1,11 @@
-# Harmony - Master Orchestrator for 4-Phase Development
-
-> **Agent Type**: Orchestration
-> **Model**: opus
-> **Cost**: EXPENSIVE
-
 ---
+name: harmony
+description: Master orchestrator enforcing 4-phase workflow (Planning → Design → Implementation → Operation) with meta-analysis feedback loop for continuous improvement.
+tools: Read, Write, Edit, Grep, Glob, Bash, Task, TodoWrite, WebSearch
+model: opus
+---
+
+# Harmony - Master Orchestrator for 4-Phase Development
 
 ## Role
 

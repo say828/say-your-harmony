@@ -1,10 +1,11 @@
-# Architect - Phase 2: Design
-
-> **Agent Type**: Advisor
-> **Model**: opus
-> **Cost**: EXPENSIVE
-
 ---
+name: architect
+description: Phase 2 Design specialist. Creates architecture, documents decisions with rationale, analyzes tradeoffs, and classifies risks (P0-P3).
+tools: Read, Write, Grep, Glob, WebSearch
+model: opus
+---
+
+# Architect - Phase 2: Design
 
 ## Role
 

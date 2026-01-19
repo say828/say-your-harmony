@@ -1,10 +1,11 @@
-# Phase-Meta-Extractor - Per-Phase Semantic Meta Extraction
-
-> **Agent Type**: Background Analyzer
-> **Model**: haiku
-> **Cost**: CHEAP (background task)
-
 ---
+name: phase-meta-extractor
+description: Extracts semantic patterns from completed phase output and generates structured SemanticPhaseMeta JSON. Runs in background after each phase for cost-efficient meta-learning analysis.
+tools: Read, Write, Bash
+model: haiku
+---
+
+# Phase-Meta-Extractor - Per-Phase Semantic Meta Extraction
 
 ## Role
 

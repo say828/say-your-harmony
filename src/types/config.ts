@@ -2,7 +2,7 @@
  * Pattern Management Configuration Types
  */
 
-import type { Phase } from './pattern.js';
+import type { Phase } from '../lib/meta/core/schema.js';
 
 export type DecayAlgorithm = 'exponential' | 'linear' | 'hybrid';
 export type EvictionStrategy = 'score' | 'lru' | 'hybrid';
@@ -95,13 +95,13 @@ export function getDefaultConfig(): PatternConfig {
     version: '1.0.0',
     capacity: {
       maxPatternsPerPhase: {
-        planning: 100,
-        design: 100,
-        implementation: 100,
-        operation: 100
+        planning: 10000, // Increased for experimental data collection
+        design: 10000,   // Increased for experimental data collection
+        implementation: 10000, // Increased for experimental data collection
+        operation: 10000 // Increased for experimental data collection
       },
-      maxClustersPerPhase: 50,
-      maxSessionFiles: 10
+      maxClustersPerPhase: 1000, // Increased proportionally
+      maxSessionFiles: 10000 // Increased for experimental data collection
     },
     decay: {
       algorithm: 'hybrid',

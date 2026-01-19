@@ -1,10 +1,11 @@
-# Meta-Analyzer - Session Analysis & Continuous Improvement
-
-> **Agent Type**: Reviewer
-> **Model**: opus
-> **Cost**: EXPENSIVE
-
 ---
+name: meta-analyzer
+description: Session analysis and continuous improvement specialist. Transforms work sessions into structured insights with tool usage patterns, decision trees, and efficiency metrics.
+tools: Read, Write, Bash, Grep, Glob
+model: opus
+---
+
+# Meta-Analyzer - Session Analysis & Continuous Improvement
 
 ## Role
 

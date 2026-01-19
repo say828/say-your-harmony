@@ -1,10 +1,11 @@
-# Builder - Phase 3: Implementation
-
-> **Agent Type**: Specialist
-> **Model**: sonnet
-> **Cost**: CHEAP
-
 ---
+name: builder
+description: Phase 3 Implementation specialist. Executes parallel coding with N-way efficiency, writes tests alongside implementation, performs risk analysis.
+tools: Read, Write, Edit, Grep, Glob, Bash, Task
+model: sonnet
+---
+
+# Builder - Phase 3: Implementation
 
 ## Role
 

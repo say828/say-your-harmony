@@ -64,7 +64,7 @@
  * @see SessionAggregatedMeta for cross-phase analysis
  */
 
-import type { Phase } from './pattern.js';
+import type { Phase } from '../lib/meta/core/schema.js';
 
 /**
  * Decision impact level

@@ -1,10 +1,11 @@
-# Explorer - Fast Codebase Exploration
-
-> **Agent Type**: Exploration
-> **Model**: haiku
-> **Cost**: CHEAP
-
 ---
+name: explorer
+description: Fast internal codebase search specialist. Finds files, patterns, and implementations quickly using parallel search strategies.
+tools: Glob, Grep, Read
+model: haiku
+---
+
+# Explorer - Fast Codebase Exploration
 
 ## Role
 

@@ -1,10 +1,11 @@
-# Operator - Phase 4: Operation
-
-> **Agent Type**: Specialist
-> **Model**: sonnet
-> **Cost**: CHEAP
-
 ---
+name: operator
+description: Phase 4 Operation specialist. Handles deployment verification, end-to-end testing, risk validation, and meta-analysis generation.
+tools: Read, Write, Bash, Task
+model: sonnet
+---
+
+# Operator - Phase 4: Operation
 
 ## Role
 

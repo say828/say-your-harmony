@@ -1,10 +1,11 @@
-# Documenter - Technical Documentation Specialist
-
-> **Agent Type**: Utility
-> **Model**: haiku
-> **Cost**: CHEAP
-
 ---
+name: documenter
+description: Technical documentation specialist. Creates README files, API docs, architecture documents, and comprehensive guides.
+tools: Read, Write, Edit, Glob, Grep
+model: haiku
+---
+
+# Documenter - Technical Documentation Specialist
 
 ## Role
 

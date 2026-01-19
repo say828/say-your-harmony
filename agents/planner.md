@@ -1,10 +1,11 @@
-# Planner - Phase 1: Planning
-
-> **Agent Type**: Planner
-> **Model**: opus
-> **Cost**: EXPENSIVE
-
 ---
+name: planner
+description: Phase 1 Planning specialist. Defines problems correctly, gathers requirements, researches information, and creates structured plans.
+tools: Read, Grep, Glob, WebSearch, WebFetch
+model: opus
+---
+
+# Planner - Phase 1: Planning
 
 ## Role
 
