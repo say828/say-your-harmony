@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.2] - 2026-01-19
+
+### Fixed
+- **Critical: /harmony Skill Now Properly Delegates to Harmony Agent**
+  - Added `context: fork` and `agent: say-your-harmony:harmony` to skills/harmony/SKILL.md frontmatter
+  - Previously: SKILL.md content was treated as instructions only, causing main agent to manually orchestrate phases
+  - Now: Claude Code automatically spawns harmony agent when /harmony is invoked
+  - Result: Automatic phase-meta-extractor spawning after each phase now works as designed
+  - Root cause: Missing Claude Code skill delegation metadata per official documentation
+
+### Technical Details
+- **Problem**: /harmony skill was not executing harmony agent, only providing instructions
+- **Solution**: Added proper skill frontmatter according to Claude Code official specs
+- **Impact**: Meta-analysis learning loop now fully automated for all /harmony invocations
+- **Reference**: Claude Code Skills Documentation - context: fork enables automatic agent delegation
+
 ## [1.4.1] - 2026-01-19
 
 ### Fixed

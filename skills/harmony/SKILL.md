@@ -1,6 +1,8 @@
 ---
 name: harmony
 description: Execute complete 4-phase development workflow (Planning → Design → Implementation → Operation) with automatic meta-analysis
+context: fork
+agent: say-your-harmony:harmony
 ---
 
 # /harmony - Complete 4-Phase Workflow
