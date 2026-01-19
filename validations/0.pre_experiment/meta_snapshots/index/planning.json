@@ -1,0 +1,31 @@
+{
+  "phase": "planning",
+  "patternIds": [
+    "planning:sequential-dep:cfa4cff2ef5d",
+    "planning:sequential-dep:44c99b8ef5a5",
+    "planning:sequential-dep:b16db5511928",
+    "planning:parallel-success:fb010991ffb5",
+    "planning:accomplishment:f9a24c4ef644",
+    "planning:decision:cd07b823ae24",
+    "planning:decision:89c9a9d7f032",
+    "planning:decision:42bf6d6b2556",
+    "planning:decision:785eb5bdb08e",
+    "planning:risk:e98d733c554a",
+    "planning:risk:9c8f4eaa9034",
+    "planning:risk:99f2d2430514",
+    "planning:risk:0490c5b74729",
+    "planning:risk:05866f82065f",
+    "planning:approach:4c884724ee28",
+    "planning:approach:d03808af8f53",
+    "planning:approach:ae55180b4a97",
+    "planning:approach:9c97b28947d2",
+    "planning:approach:716204df76e9",
+    "planning:tool-usage:c2d1aa297507",
+    "planning:tool-usage:54d58d79c591",
+    "planning:tool-usage:80a4eb1eefff",
+    "planning:anti-pattern:bd2b47cab146",
+    "planning:anti-pattern:2d6a77ae4744",
+    "planning:anti-pattern:ff977cb5d6b3"
+  ],
+  "lastUpdated": "2026-01-19T12:31:55.839Z"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "phase1-todo-cli",
+  "version": "1.0.0",
+  "description": "Simple Todo CLI App - Phase 1 Implementation",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": ["todo", "cli"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

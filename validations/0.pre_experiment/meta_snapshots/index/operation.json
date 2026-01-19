@@ -1,0 +1,31 @@
+{
+  "phase": "operation",
+  "patternIds": [
+    "operation:sequential-dep:7eca02f13d79",
+    "operation:sequential-dep:8f65cdd48a4e",
+    "operation:sequential-dep:f8c4eda6e77f",
+    "operation:sequential-dep:8a910e16c2fa",
+    "operation:accomplishment:a06ed3730794",
+    "operation:decision:c1292d8eec2a",
+    "operation:decision:adccd2f779c9",
+    "operation:decision:0acb98bb1f89",
+    "operation:decision:9df6bde9a3db",
+    "operation:decision:ca9212f92c56",
+    "operation:risk:eb1c6ccf5ea7",
+    "operation:risk:9a2b241e41b3",
+    "operation:risk:f11f6440ad25",
+    "operation:risk:b5060c5ef8b0",
+    "operation:risk:8bfea08494ec",
+    "operation:approach:896087c08052",
+    "operation:approach:337fdb7b095c",
+    "operation:approach:77b3f666ec15",
+    "operation:approach:4dfeae97f8d3",
+    "operation:tool-usage:e67bfd40399d",
+    "operation:tool-usage:a1efb69a5cd1",
+    "operation:tool-usage:2006154c4745",
+    "operation:anti-pattern:bc4785ebf37e",
+    "operation:anti-pattern:bd346446562a",
+    "operation:anti-pattern:fd898b36f430"
+  ],
+  "lastUpdated": "2026-01-19T12:31:55.836Z"
+}

@@ -1,0 +1,30 @@
+{
+  "phase": "design",
+  "patternIds": [
+    "design:sequential-dep:03043785508b",
+    "design:sequential-dep:911608f93f24",
+    "design:parallel-success:6878592de0c7",
+    "design:accomplishment:5f35c5bde2a6",
+    "design:decision:5954aa46c7bb",
+    "design:decision:380818e02321",
+    "design:decision:6fcff0a8d2d3",
+    "design:decision:732b2c7f3015",
+    "design:decision:7aecd756af74",
+    "design:risk:d6220071e8bf",
+    "design:risk:dd780d3399a5",
+    "design:risk:d881baa8c151",
+    "design:risk:cd3e47dd15b8",
+    "design:risk:6d20084ebdbc",
+    "design:approach:1d2654995cc5",
+    "design:approach:446f7b099db9",
+    "design:approach:8a8cacbe64e4",
+    "design:approach:cc0d30b449fb",
+    "design:tool-usage:df5fd36bf7cc",
+    "design:tool-usage:d8de94e23e5f",
+    "design:tool-usage:10b329fa04a5",
+    "design:anti-pattern:0e6a7adaab98",
+    "design:anti-pattern:a90cbbac1592",
+    "design:anti-pattern:4aab49fb5482"
+  ],
+  "lastUpdated": "2026-01-19T12:31:55.837Z"
+}

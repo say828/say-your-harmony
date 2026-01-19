@@ -1,0 +1,30 @@
+{
+  "phase": "implementation",
+  "patternIds": [
+    "implementation:sequential-dep:7eca02f13d79",
+    "implementation:sequential-dep:6337cf95fb51",
+    "implementation:sequential-dep:fab342fcd53c",
+    "implementation:parallel-success:9d5dfed01aab",
+    "implementation:accomplishment:8ccdf9d7c9d4",
+    "implementation:decision:dac3aaa8c2b3",
+    "implementation:decision:eb915406999f",
+    "implementation:decision:6da13e7b4bd5",
+    "implementation:decision:cc8c5674e1f5",
+    "implementation:decision:d98f91dc840a",
+    "implementation:risk:3a6e6c7beb8d",
+    "implementation:risk:1d3ce938c42d",
+    "implementation:risk:828ca7ab8512",
+    "implementation:risk:045741424610",
+    "implementation:approach:a7316406a457",
+    "implementation:approach:36270921c1c9",
+    "implementation:approach:c34d16683570",
+    "implementation:approach:dd0f0af55c69",
+    "implementation:tool-usage:2bfab146e873",
+    "implementation:tool-usage:a503a74675c0",
+    "implementation:tool-usage:728a3a5b284b",
+    "implementation:anti-pattern:ec67e07a1394",
+    "implementation:anti-pattern:dbc134e1745b",
+    "implementation:anti-pattern:efce45b8f0f7"
+  ],
+  "lastUpdated": "2026-01-19T12:31:55.838Z"
+}

@@ -1,0 +1,126 @@
+{
+  "version": 2,
+  "sessionId": "rate-limiter-harmony-2026-01-19",
+  "phase": "design",
+  "completedAt": "2026-01-19T12:34:56.789Z",
+  "semantics": {
+    "accomplishment": "Resolved all 4 open questions into 6 comprehensive ADRs. Designed complete TypeScript interfaces (450+ lines), algorithm state diagrams with atomic patterns, storage layers (Memory + Redis with Lua scripts), Express middleware for multi-limiter support, and P0 risk mitigations for race conditions and memory leaks.",
+    "keyInsight": "Lua scripts provide true atomicity in Redis without application-level synchronization, enabling safe concurrent rate limiting. Fail-open default balances production availability with security, delegating policy to application layer.",
+    "decisions": [
+      {
+        "what": "Factory functions over classes (ADR-001)",
+        "why": "Better tree-shaking for bundle optimization, simpler testing without this binding, easier composition with closures",
+        "impact": "HIGH"
+      },
+      {
+        "what": "Redis client injection with minimal interface (ADR-002)",
+        "why": "Works with any Redis client (ioredis, node-redis, upstash), zero dependencies, user controls connection lifecycle",
+        "impact": "HIGH"
+      },
+      {
+        "what": "Composite limiter pattern for middleware (ADR-003)",
+        "why": "Enables rate limiting by multiple dimensions simultaneously (IP + User), single middleware cleaner than chaining",
+        "impact": "MEDIUM"
+      },
+      {
+        "what": "Configurable fail-open default (ADR-004)",
+        "why": "Production safety: availability over strict limiting. Storage failures now emit events for monitoring instead of blocking.",
+        "impact": "HIGH"
+      },
+      {
+        "what": "Hybrid TTL cleanup for memory store (ADR-006)",
+        "why": "Periodic sweep + LRU eviction prevents unbounded memory growth without background thread overhead",
+        "impact": "MEDIUM"
+      }
+    ],
+    "challenges": [
+      {
+        "what": "Ensuring atomicity across memory and Redis stores with different concurrency models",
+        "impact": "P0 - Memory store needs synchronous ops, Redis needs Lua scripts",
+        "resolution": "Memory store uses JS single-threaded model. Redis store uses 6 Lua scripts for consume, check, and state recovery"
+      },
+      {
+        "what": "Determining appropriate TTL and cleanup strategies for 3 algorithms with different state structures",
+        "impact": "P1 - Wrong cleanup causes memory leaks or premature expiry",
+        "resolution": "Algorithm-specific cleanup: Fixed Window uses Redis native TTL, Token Bucket uses JSON with explicit TTL, Sliding Window uses sorted set with PEXPIRE"
+      },
+      {
+        "what": "Designing Express middleware to handle skip logic, custom handlers, and multiple limiters gracefully",
+        "impact": "P1 - Missed edge cases cause 429 responses in wrong situations",
+        "resolution": "Explicit skip function, strategy evaluation (all/any), per-limiter key extractors with null handling"
+      }
+    ],
+    "risks": [
+      {
+        "priority": "P0",
+        "description": "Race conditions in concurrent requests reading stale state and allowing excess requests",
+        "mitigation": "Memory store: JS single-threaded synchronous ops. Redis store: 6 Lua scripts for atomic operations"
+      },
+      {
+        "priority": "P0",
+        "description": "Memory store unbounded growth from stale entries causing OOM crashes",
+        "mitigation": "Hybrid cleanup: periodic sweep every 60s + LRU eviction when maxEntries exceeded + cleanup on process exit"
+      },
+      {
+        "priority": "P1",
+        "description": "Express middleware blocking event loop with heavy computations",
+        "mitigation": "All operations use Promise API, no synchronous work, O(1) map lookups only"
+      },
+      {
+        "priority": "P1",
+        "description": "Redis connection failure causes all rate limiting to fail or block",
+        "mitigation": "Configurable fail-open/fail-closed with error callbacks for monitoring and alerting"
+      },
+      {
+        "priority": "P2",
+        "description": "Clock skew in distributed systems causing incorrect reset calculations",
+        "mitigation": "Document limitation: requires NTP or similar. Single-datacenter deployments unaffected"
+      }
+    ],
+    "approaches": [
+      {
+        "what": "Atomic operation pattern with opaque parameters",
+        "rationale": "Store layer doesn't need to know algorithm details. Each algorithm defines operation type and params, store executes atomically"
+      },
+      {
+        "what": "Readonly interfaces for immutability",
+        "rationale": "TypeScript readonly ensures configuration can't be mutated after creation, enabling safe sharing across contexts"
+      },
+      {
+        "what": "Key extractor utilities for common patterns",
+        "rationale": "Pre-built extractors (IP, API key, header, user ID) reduce boilerplate for typical middleware use cases"
+      },
+      {
+        "what": "State serialization using JSON for complex, primitives for simple",
+        "rationale": "Token Bucket (complex state) uses JSON for debuggability. Fixed Window (counter) uses single integer for performance"
+      }
+    ],
+    "toolsUsed": ["Read", "Write"],
+    "sequentialDeps": [
+      "requirements-gathered",
+      "problem-scoped",
+      "api-surface-defined"
+    ],
+    "parallelSuccesses": [
+      "adr-001-resolution",
+      "adr-002-resolution",
+      "adr-003-resolution",
+      "adr-004-resolution",
+      "adr-005-resolution",
+      "adr-006-resolution",
+      "typescript-interfaces",
+      "lua-scripts"
+    ],
+    "handoff": {
+      "readyFor": "Phase 3 Implementation can now proceed with parallel file creation across 4 modules (algorithms, stores, middleware, utils). All interfaces, atomic patterns, and Lua scripts are designed. Ready for algorithm implementations with atomic operation handlers.",
+      "blockers": [],
+      "context": "Phase 2 design is production-ready with comprehensive ADR documentation. 6 Lua scripts designed for Redis atomicity. Memory store cleanup strategy finalized. Express middleware supports multi-limiter patterns. All P0 risks have designed mitigations. TypeScript interfaces provide complete implementation contract."
+    }
+  },
+  "metrics": {
+    "durationMs": 3600000,
+    "toolCalls": 2,
+    "delegations": 0,
+    "parallelTasks": 8
+  }
+}

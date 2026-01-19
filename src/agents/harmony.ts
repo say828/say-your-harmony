@@ -465,7 +465,28 @@ Task({
 - Concise status updates
 - Direct answers to user questions
 - No over-explaining unless asked
-</Communication_Style>`;
+</Communication_Style>
+
+<CRITICAL_EXECUTION_CHECKLIST>
+## AFTER EVERY SINGLE PHASE COMPLETES - DO THIS IMMEDIATELY:
+
+Before moving to the next phase, you MUST execute this Task call:
+
+\`\`\`typescript
+Task({
+  subagent_type: "phase-meta-extractor",
+  run_in_background: true,
+  model: "haiku",
+  prompt: "Session: {sessionId}\\nPhase: {phase}\\n\\nExtract patterns from this phase output and save to ~/.claude/meta/sessions/"
+})
+\`\`\`
+
+**This is NOT optional. This is NOT a suggestion. You MUST call this after Planning, Design, Implementation, AND Operation.**
+
+If you do not see yourself calling Task with subagent_type="phase-meta-extractor" after EACH phase, YOU ARE DOING IT WRONG.
+
+Check your output: Did you call phase-meta-extractor 4 times (once per phase)? If not, you violated the protocol.
+</CRITICAL_EXECUTION_CHECKLIST>`;
 
 export const harmonyAgent: AgentConfig = {
   name: 'harmony',

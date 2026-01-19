@@ -1,0 +1,34 @@
+{
+  "sessionId": "2026-01-19-011400-59b4",
+  "startTime": "2026-01-19T01:14:00.000Z",
+  "endTime": "2026-01-19T01:18:00.000Z",
+  "phases": [
+    "planning",
+    "design",
+    "implementation",
+    "operation"
+  ],
+  "patternIds": [
+    "operation:sequential-dep:03043785508b",
+    "operation:sequential-dep:db56453f1b19",
+    "operation:sequential-dep:f8c4eda6e77f",
+    "operation:parallel-success:053cdade9b51",
+    "operation:accomplishment:567b3aeee92f",
+    "operation:decision:5f586c5b426b",
+    "operation:decision:cce8ae675146",
+    "operation:decision:1e25ad650d46",
+    "operation:risk:3a16b6998f39",
+    "operation:risk:520152f65508",
+    "operation:approach:a21a380c63af",
+    "operation:approach:fb212bb85132",
+    "operation:approach:83dd73c6062d",
+    "operation:approach:232c9e746cf1",
+    "operation:tool-usage:e67bfd40399d",
+    "operation:tool-usage:a1efb69a5cd1",
+    "operation:tool-usage:4e292fb389f9",
+    "operation:tool-usage:2006154c4745",
+    "operation:tool-usage:e8920f013916",
+    "operation:anti-pattern:033d2d322a8f"
+  ],
+  "totalPatterns": 20
+}

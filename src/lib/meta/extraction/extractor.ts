@@ -108,17 +108,22 @@ export function extractPatterns(
     );
   }
 
-  // Extract approaches
+  // Extract approaches (handle both string and object formats for schema migration tolerance)
   for (const approach of meta.semantics.approaches) {
+    const approachContent =
+      typeof approach === 'string'
+        ? approach
+        : (approach as { what?: string }).what || JSON.stringify(approach);
+
     patterns.push(
       createPattern({
         phase,
         type: 'approach',
-        content: approach,
+        content: approachContent,
         sessionId,
         timestamp,
         data: {
-          methodology: approach,
+          methodology: approachContent,
           context: `Used in ${phase} phase`,
           benefits: [],
         },
@@ -144,16 +149,21 @@ export function extractPatterns(
     );
   }
 
-  // Extract challenges as anti-patterns
+  // Extract challenges as anti-patterns (handle both 'problem' and 'what' field names)
   for (const challenge of meta.semantics.challenges) {
+    const problemContent =
+      challenge.problem ||
+      (challenge as { what?: string }).what ||
+      'Unknown challenge';
+
     patterns.push(
       createPattern({
         phase,
         type: 'anti-pattern',
-        content: challenge.problem,
+        content: problemContent,
         sessionId,
         timestamp,
-        description: `Resolution: ${challenge.resolution}`,
+        description: `Resolution: ${challenge.resolution || 'N/A'}`,
       })
     );
   }

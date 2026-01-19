@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2026-01-19
+
+### Fixed
+- **Critical: Automatic Meta Extraction Now Works** - Fixed Bug #1 (P0)
+  - harmony.ts: Added `<CRITICAL_EXECUTION_CHECKLIST>` section to enforce phase-meta-extractor calls
+  - Each phase completion now automatically spawns background meta extraction
+  - Verified with test project: 4/4 session files created automatically
+  - Meta system now fully automated with zero manual intervention required
+
+### Changed
+- **extractor.ts: Schema Tolerance Improvements** - Fixed Bug #2 & #3 (P1)
+  - Bug #2: Added type coercion for `approaches` field (handles both `string[]` and object array)
+  - Bug #3: Added field name compatibility for `challenges` (supports both `problem` and `what` fields)
+  - Extractor now gracefully handles schema variations from LLM output
+
+### Added
+- **New /harmony Skill Documentation** - `skills/harmony/SKILL.md`
+  - Comprehensive guide for complete 4-phase workflow execution
+  - Documents automatic background meta-analysis after each phase
+  - Explains success criteria and expected timeline
+
+### Validation
+- **Meta Mechanism Fully Verified** - `validations/0.pre_experiment/`
+  - 3 projects built (Todo CLI, REST API, multiply function)
+  - 12 phases executed (4 phases × 3 projects)
+  - 9 session meta files auto-generated
+  - 159 patterns collected (up from 0)
+  - All bugs fixed and documented
+
 ## [1.4.0] - 2026-01-19
 
 ### Changed
