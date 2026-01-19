@@ -107,6 +107,62 @@ You'll see updates like:
 
 ---
 
+## CRITICAL: Background Meta Extraction
+
+**MANDATORY**: After EVERY phase completion, you MUST immediately spawn a background meta extraction task:
+
+```typescript
+Task({
+  subagent_type: "say-your-harmony:phase-meta-extractor",
+  run_in_background: true,
+  model: "haiku",
+  prompt: "Session: {sessionId}\nPhase: {phase}\n\nExtract patterns from phase output..."
+})
+```
+
+### Correct Workflow
+
+```
+Phase 1 (Planning) completes
+  ↓
+spawn phase-meta-extractor (background) ← DO NOT SKIP
+  ↓
+Phase 2 (Design) starts
+  ↓
+Phase 2 completes
+  ↓
+spawn phase-meta-extractor (background) ← DO NOT SKIP
+  ↓
+Phase 3 (Implementation) starts
+  ↓
+Phase 3 completes
+  ↓
+spawn phase-meta-extractor (background) ← DO NOT SKIP
+  ↓
+Phase 4 (Operation) starts
+  ↓
+Phase 4 completes
+  ↓
+spawn phase-meta-extractor (background) ← DO NOT SKIP
+  ↓
+Complete
+```
+
+### Why This Matters
+
+- **Meta-learning**: Each phase extraction feeds the pattern library
+- **Continuous improvement**: Future harmony runs get smarter
+- **Non-blocking**: Background execution (doesn't slow you down)
+- **Automatic**: No manual intervention needed
+
+### Violation = Protocol Breach
+
+**If you skip phase-meta-extractor after ANY phase, you have violated the harmony protocol.**
+
+This is NOT optional. This is NOT a suggestion. This is a REQUIREMENT.
+
+---
+
 ## Success Criteria
 
 The workflow completes successfully when:
