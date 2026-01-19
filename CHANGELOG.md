@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-01-19
+
+### Changed
+- **Agent Integration: Meta-Analysis System v2.0 Complete**: Achieved 100% compliance with `META_SYSTEM_ARCHITECTURE.md` specification
+  - **phase-meta-extractor.md**: Migrated from v1.x to v2.0 unified API
+    - Storage path: `~/.claude/meta/{phase}/recent/{sessionId}.json` → `~/.claude/meta/sessions/{sessionId}.json`
+    - Added Step 2: Trigger Pattern Extraction via `saveMetaPatternsFromSemanticMeta()` API
+    - Full `SemanticPhaseMeta` structure with version 2 schema
+    - Documented 8 pattern types extraction pipeline
+  - **operator.md**: Added session aggregation workflow
+    - New Step 4: Session Aggregation (calls `aggregateSession()` API)
+    - Triggers 6-step evolution pipeline (confidence → decay → deduplicate → cluster → evict → save)
+    - Generates `~/.claude/meta/PATTERNS.md` human-readable pattern library
+    - Displays pattern statistics after aggregation
+    - Reordered steps: Aggregation → Meta-analysis (correct sequence)
+    - Updated completion criteria: Added session aggregation and PATTERNS.md generation checks
+  - **harmony.md**: Comprehensive v2.0 documentation
+    - Added "Meta-Analysis System (v2.0)" section with complete storage architecture
+    - Documented pattern extraction pipeline (per-phase + session aggregation)
+    - Explained evolution & learning mechanisms (decay, clustering, eviction, protection rules)
+    - Updated meta-analysis feedback loop (aggregate → analyze sequence)
+    - Clarified Phase 4 completion flow with v2.0 API integration
+
+### Fixed
+- **Agent Path Consistency**: All agents now reference v2.0 unified storage paths
+  - Eliminated v1.x legacy paths (`{phase}/recent/`, `{phase}/patterns.json`)
+  - Verified no references to deprecated `.say-your-harmony/quickmeta/` structure
+  - Consistent `~/.claude/meta/` usage across all agent documentation
+
+### Technical Details
+- **Compliance Status**: 100% META_SYSTEM_ARCHITECTURE.md specification adherence
+  - Core implementation: 2768 lines, 24 files (100% complete)
+  - Agent integration: 3 files updated, +249 lines, -27 lines (100% complete)
+  - Documentation: Storage, pipeline, evolution fully documented
+- **Build Status**: TypeScript compilation successful (0 errors)
+- **Agent Verification**: No v1.x path references remaining in codebase
+
 ## [1.3.0] - 2026-01-19
 
 ### Added

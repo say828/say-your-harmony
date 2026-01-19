@@ -174,32 +174,97 @@ interface SemanticExtractions {
 
 ---
 
-## File Saving
+## File Saving & Pattern Extraction (v2.0)
 
-**CRITICAL**: Save extracted JSON to the specified path in the prompt.
+**CRITICAL**: Save extracted JSON and trigger pattern extraction via unified API.
 
-**Typical paths**:
-- `~/.claude/meta/planning/recent/{sessionId}.json`
-- `~/.claude/meta/design/recent/{sessionId}.json`
-- `~/.claude/meta/implementation/recent/{sessionId}.json`
-- `~/.claude/meta/operation/recent/{sessionId}.json`
+### Step 1: Save SemanticPhaseMeta JSON
 
-**Storage structure**:
+**Storage path (v2.0)**:
+```
+~/.claude/meta/sessions/{sessionId}.json
+```
+
+**Full SemanticPhaseMeta structure**:
+```json
+{
+  "version": 2,
+  "sessionId": "{sessionId}",
+  "phase": "planning|design|implementation|operation",
+  "completedAt": "2026-01-19T12:34:56.789Z",
+  "semantics": {
+    "accomplishment": "...",
+    "keyInsight": "...",
+    "decisions": [...],
+    "challenges": [...],
+    "risks": [...],
+    "approaches": [...],
+    "toolsUsed": [...],
+    "sequentialDeps": [...],
+    "parallelSuccesses": [...]
+  },
+  "handoff": {
+    "readyFor": "...",
+    "blockers": [...],
+    "context": "..."
+  },
+  "metrics": {
+    "durationMs": 12345,
+    "toolCalls": 10,
+    "delegations": 2,
+    "parallelTasks": 3
+  }
+}
+```
+
+### Step 2: Trigger Pattern Extraction
+
+**After saving JSON, call v2.0 unified API**:
+
+```bash
+# Extract patterns from semantic meta and save to global store
+node -e "
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
+
+const sessionId = '${SESSION_ID}';
+const phase = '${PHASE}';
+const metaPath = path.join(os.homedir(), '.claude', 'meta', 'sessions', \`\${sessionId}.json\`);
+
+// Read semantic meta
+const semanticMeta = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
+
+// Import and call API
+import('file://${PROJECT_ROOT}/dist/lib/meta/api/index.js').then(async (api) => {
+  await api.saveMetaPatternsFromSemanticMeta(sessionId, phase, semanticMeta);
+  console.log(\`✓ Patterns extracted for \${phase} phase\`);
+}).catch(err => {
+  console.error('Pattern extraction failed:', err);
+});
+"
+```
+
+**What this does**:
+1. Reads `~/.claude/meta/sessions/{sessionId}.json`
+2. Extracts 8 pattern types (sequential-dep, parallel-success, accomplishment, risk, decision, approach, tool-usage, anti-pattern)
+3. Saves to `~/.claude/meta/patterns.json` (global unified storage)
+4. Updates phase indices for fast lookup
+5. Ready for evolution pipeline and aggregation
+
+**Storage structure (v2.0)**:
 ```
 ~/.claude/meta/
-├── planning/
-│   ├── recent/
-│   │   └── {sessionId}.json  (max 10, FIFO cleanup)
-│   └── patterns.json         (cumulative patterns)
-├── design/
-│   ├── recent/
-│   └── patterns.json
-├── implementation/
-│   ├── recent/
-│   └── patterns.json
-└── operation/
-    ├── recent/
-    └── patterns.json
+├── patterns.json               # Global unified storage (all patterns)
+├── PATTERNS.md                 # Human-readable summary
+├── clusters.json               # Cluster metadata
+├── sessions/                   # Session summaries (FIFO, max 10)
+│   └── {sessionId}.json        # SemanticPhaseMeta per session
+└── index/                      # Phase-specific indices
+    ├── planning.json           # Pattern IDs for planning phase
+    ├── design.json             # Pattern IDs for design phase
+    ├── implementation.json     # Pattern IDs for implementation phase
+    └── operation.json          # Pattern IDs for operation phase
 ```
 
 ---

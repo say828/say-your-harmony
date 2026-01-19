@@ -128,14 +128,90 @@ Task({
 
 ---
 
-## Meta-Analysis Feedback Loop
+## Meta-Analysis System (v2.0)
 
-After Phase 4 completion, **ALWAYS generate meta-analysis**:
+### Storage Architecture
+
+**Global meta storage location**:
+```
+~/.claude/meta/
+├── patterns.json               # Global unified storage (all patterns)
+├── PATTERNS.md                 # Human-readable pattern library
+├── clusters.json               # Cluster metadata
+├── config.json                 # System configuration
+├── index/                      # Phase-specific indices (O(1) lookup)
+│   ├── planning.json           # Pattern IDs for planning phase
+│   ├── design.json             # Pattern IDs for design phase
+│   ├── implementation.json     # Pattern IDs for implementation phase
+│   └── operation.json          # Pattern IDs for operation phase
+└── sessions/                   # Session summaries (FIFO, max 10)
+    └── {sessionId}.json        # SemanticPhaseMeta per session
+```
+
+### Pattern Extraction Pipeline
+
+**After EACH phase completes** (background, non-blocking):
+
+1. **Phase-meta-extractor** spawned in background (haiku, ~5s)
+   - Extracts `SemanticPhaseMeta` from phase output
+   - Saves to `~/.claude/meta/sessions/{sessionId}.json`
+   - Calls `saveMetaPatternsFromSemanticMeta()` API
+   - Extracts 8 pattern types: sequential-dep, parallel-success, accomplishment, risk, decision, approach, tool-usage, anti-pattern
+
+2. **Patterns saved to global store**
+   - Individual patterns → `~/.claude/meta/patterns.json`
+   - Phase indices updated for O(1) lookup
+   - Ready for evolution and aggregation
+
+**After Phase 4 completes** (Operation):
+
+3. **Session aggregation** (operator agent)
+   - Calls `aggregateSession()` API
+   - Triggers 6-step evolution pipeline:
+     - Recalculate confidence (70% frequency + 30% recency)
+     - Apply decay (90-day half-life)
+     - Deduplicate (TF-IDF, threshold 0.9)
+     - Cluster (Agglomerative, threshold 0.75)
+     - Evict low scores (keep top 100/phase)
+     - Save evolved patterns
+   - Generates `~/.claude/meta/PATTERNS.md`
+
+4. **Meta-analysis generation** (meta-analyzer)
+   - Generates human-readable analysis
+   - Output: `~/.claude/meta/session-YYYY-MM-DD-meta-analysis.md`
+
+### Evolution & Learning
+
+**Automatic pattern evolution**:
+- Old patterns decay naturally (90-day half-life)
+- Duplicates merge automatically (TF-IDF)
+- Related patterns cluster (semantic similarity)
+- Low-value patterns evicted (score-based)
+- High-frequency patterns protected (≥5 occurrences)
+- Recent patterns protected (≤7 days)
+
+**Continuous improvement**:
+- Each session enriches pattern library
+- Cross-session insights accumulate
+- Future orchestration decisions informed by history
+- Sequential dependencies prevent wrong parallelization
+- Parallel successes enable confident concurrent execution
+
+### Meta-Analysis Feedback Loop
+
+After Phase 4 completion, **ALWAYS**:
+
+1. **Aggregate session** (operator)
+2. **Generate meta-analysis** (meta-analyzer)
 
 ```typescript
+// Step 1: Aggregate (in operator agent)
+// Bash call to aggregateSession() API
+
+// Step 2: Meta-analysis (after aggregation)
 Task({
   subagent_type: "say-your-harmony:meta-analyzer",
-  prompt: "Generate meta-analysis for this session:\n\n- Tool usage patterns\n- Decision trees\n- Problem-solving patterns\n- Efficiency metrics\n- Continuous improvement suggestions"
+  prompt: "Generate meta-analysis for this session:\n\n- Tool usage patterns\n- Decision trees\n- Problem-solving patterns\n- Efficiency metrics\n- Continuous improvement suggestions\n\nContext: Pattern library at ~/.claude/meta/PATTERNS.md"
 })
 ```
 

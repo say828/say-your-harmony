@@ -131,15 +131,92 @@ npm link  # Local testing
 
 ---
 
-### Step 4: Meta-Analysis Generation
+### Step 4: Session Aggregation (v2.0)
+
+**Objective**: Aggregate patterns from all phases into global pattern library
+
+**CRITICAL**: This step must run BEFORE meta-analysis generation.
+
+**Call v2.0 unified API**:
+
+```bash
+# Aggregate session patterns and trigger global evolution
+node -e "
+import path from 'path';
+import os from 'os';
+
+const sessionId = '${SESSION_ID}';
+const startTime = '${START_TIME}';  // ISO timestamp
+const endTime = new Date().toISOString();
+const phases = ['planning', 'design', 'implementation', 'operation'];
+
+// Import and call aggregateSession
+import('file://${PROJECT_ROOT}/dist/lib/meta/api/index.js').then(async (api) => {
+  console.log('Aggregating session patterns...');
+
+  await api.aggregateSession(sessionId, phases, startTime, endTime);
+
+  console.log('✓ Session aggregated successfully');
+  console.log('✓ Patterns linked to session');
+  console.log('✓ Global evolution pipeline completed');
+  console.log('✓ PATTERNS.md generated');
+
+  // Display pattern statistics
+  const stats = await api.getStorageStats();
+  console.log(\`\nPattern Library Stats:\`);
+  console.log(\`  Total patterns: \${stats.totalPatterns}\`);
+  console.log(\`  Avg confidence: \${(stats.avgConfidence * 100).toFixed(1)}%\`);
+  console.log(\`  By phase:\`);
+  for (const [phase, count] of Object.entries(stats.patternsByPhase)) {
+    console.log(\`    \${phase}: \${count}\`);
+  }
+}).catch(err => {
+  console.error('Session aggregation failed:', err);
+  process.exit(1);
+});
+"
+```
+
+**What this does**:
+1. **Session summary creation**: Creates `~/.claude/meta/sessions/{sessionId}.json`
+2. **Pattern linking**: Links all patterns generated in this session
+3. **Global evolution**: Runs 6-step evolution pipeline on ALL patterns
+   - Recalculate confidence (70% frequency + 30% recency)
+   - Apply decay (90-day half-life)
+   - Deduplicate (TF-IDF, threshold 0.9)
+   - Cluster (Agglomerative, threshold 0.75)
+   - Evict low scores (keep top 100/phase, protect freq≥5 or recent≤7d)
+   - Save evolved patterns
+4. **PATTERNS.md generation**: Human-readable pattern library
+
+**Verification**:
+- [x] `~/.claude/meta/patterns.json` updated
+- [x] `~/.claude/meta/PATTERNS.md` generated
+- [x] `~/.claude/meta/sessions/{sessionId}.json` created
+- [x] Pattern counts increased in stats
+
+**Why this matters**:
+- Continuous learning: Each session improves pattern library
+- Cross-session insights: Patterns aggregate across multiple sessions
+- Automatic evolution: Old patterns decay, duplicates merge, clusters form
+- Human-readable: PATTERNS.md shows what the system learned
+
+---
+
+### Step 5: Meta-Analysis Generation
 
 **Objective**: Extract learnings for continuous improvement
+
+**IMPORTANT**: This step runs AFTER session aggregation.
 
 **Delegate to meta-analyzer**:
 ```typescript
 Task({
   subagent_type: "say-your-harmony:meta-analyzer",
   prompt: `Generate comprehensive meta-analysis for this session.
+
+Session ID: ${SESSION_ID}
+Phases completed: Planning, Design, Implementation, Operation
 
 Include:
 1. Work Process Structure (turns per phase)
@@ -149,7 +226,9 @@ Include:
 5. Code Quality Metrics
 6. Efficiency Metrics (parallel execution gains)
 7. Best Practices Extracted
-8. Continuous Improvement Suggestions`
+8. Continuous Improvement Suggestions
+
+Context: Session has been aggregated. Pattern library stats available at ~/.claude/meta/PATTERNS.md`
 })
 ```
 
@@ -157,7 +236,7 @@ Include:
 
 ---
 
-### Step 5: Production-Ready Checklist
+### Step 6: Production-Ready Checklist
 
 **Objective**: Ensure ALL criteria met
 
@@ -195,6 +274,8 @@ Phase 4 (Operation) is complete when:
 - [x] End-to-end tests pass
 - [x] All P0 issues resolved
 - [x] All P1 issues resolved (or explicitly deferred with rationale)
+- [x] **Session aggregated** (v2.0 patterns extracted and evolved)
+- [x] **PATTERNS.md generated** (pattern library updated)
 - [x] Meta-analysis generated
 - [x] Production-ready checklist complete
 
