@@ -198,6 +198,26 @@ export interface PhaseHandoff {
 }
 
 /**
+ * Parallel execution tracking for meta-learning
+ */
+export interface ParallelExecutionMetrics {
+  /** Number of independent tasks identified */
+  identifiedTasks: number;
+
+  /** Number of tasks actually spawned in parallel */
+  parallelSpawned: number;
+
+  /** Efficiency ratio: parallelSpawned / identifiedTasks (0.0 - 1.0) */
+  efficiency: number;
+
+  /** Reasons for sequential fallback (if any) */
+  sequentialReasons: string[];
+
+  /** Task names that were parallelized */
+  parallelizedTasks: string[];
+}
+
+/**
  * Phase execution metrics (from phase execution, not LLM)
  */
 export interface PhaseMetrics {
@@ -212,6 +232,9 @@ export interface PhaseMetrics {
 
   /** Number of parallel tasks launched */
   parallelTasks: number;
+
+  /** Detailed parallel execution metrics (optional, for enhanced tracking) */
+  parallelExecution?: ParallelExecutionMetrics;
 }
 
 /**

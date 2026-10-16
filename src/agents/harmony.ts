@@ -184,23 +184,99 @@ Task({
 })
 \`\`\`
 
-## Parallel Execution Rules
+## MANDATORY Parallel Execution Protocol (ALL PHASES)
 
-**When to parallelize**:
-- ✅ Independent tasks (no dependencies)
-- ✅ Each task >30 seconds
+**CORE PRINCIPLE**: 병렬 실행은 선택이 아닌 기본 원칙.
+독립적인 작업이 2개 이상이면 **반드시** 단일 메시지에서 다중 Task 호출.
+
+**When to parallelize (EVERY PHASE)**:
+- ✅ Independent tasks (no dependencies between them)
 - ✅ 2+ tasks available
+- ✅ Each task >10 seconds
+- ❌ **NEVER**: 단일 에이전트에게 모든 작업 위임
 
-**Example - Phase 3 with multiple components**:
+**NO LIMIT on parallel tasks** - Scale to N-way concurrency.
+
+---
+
+### Phase 1: PLANNING - Parallel Information Gathering
+\`\`\`typescript
+// PARALLEL: Multiple reads and searches in SINGLE message
+Read("doc1.md")
+Read("doc2.md")
+Read("doc3.md")
+WebSearch("query1 2026")
+WebSearch("query2 2026")
+// ALL tool calls in one message = automatic parallel execution
+
+// PARALLEL: Multiple explorer delegations
+Task({ subagent_type: "explorer", prompt: "Find auth-related files..." })
+Task({ subagent_type: "explorer", prompt: "Find config patterns..." })
 \`\`\`
-// Fire N builder agents in PARALLEL (single message, multiple Task calls)
-// No limit on number of parallel tasks - scale as needed
-Task({ subagent_type: "builder", prompt: "Component A..." })
-Task({ subagent_type: "builder", prompt: "Component B..." })
-Task({ subagent_type: "builder", prompt: "Component C..." })
-Task({ subagent_type: "builder", prompt: "Component D..." })
-// ... add more tasks as needed
+
+---
+
+### Phase 2: DESIGN - Parallel Analysis Tasks
+\`\`\`typescript
+// PARALLEL: Multiple analysis tasks
+Task({ subagent_type: "explorer", prompt: "Analyze existing auth architecture..." })
+Task({ subagent_type: "explorer", prompt: "Analyze storage patterns..." })
+Task({ subagent_type: "explorer", prompt: "Analyze error handling patterns..." })
+
+// PARALLEL: Multiple design document sections (if writing separately)
+Write("docs/design/architecture.md", ...)
+Write("docs/design/decisions.md", ...)
+Write("docs/design/risks.md", ...)
 \`\`\`
+
+---
+
+### Phase 3: IMPLEMENTATION - Parallel Builders (CRITICAL)
+\`\`\`typescript
+// MANDATORY: Fire N builder agents in PARALLEL
+// NO LIMIT - scale to any number of independent components
+Task({ subagent_type: "builder", prompt: "Implement Component A: [spec]" })
+Task({ subagent_type: "builder", prompt: "Implement Component B: [spec]" })
+Task({ subagent_type: "builder", prompt: "Implement Component C: [spec]" })
+Task({ subagent_type: "builder", prompt: "Implement Component D: [spec]" })
+Task({ subagent_type: "builder", prompt: "Implement Component E: [spec]" })
+// ... add more as needed - NO LIMIT
+
+// WRONG - PROTOCOL VIOLATION:
+// Task({ subagent_type: "builder", prompt: "Implement ALL components A, B, C, D, E" })
+// ↑ This defeats parallelization and VIOLATES the protocol
+\`\`\`
+
+---
+
+### Phase 4: OPERATION - Parallel Verification
+\`\`\`typescript
+// PARALLEL: Multiple verification tasks
+Task({ subagent_type: "builder", prompt: "Run unit tests and report..." })
+Task({ subagent_type: "builder", prompt: "Run integration tests..." })
+Task({ subagent_type: "builder", prompt: "Run lint and type checks..." })
+Task({ subagent_type: "builder", prompt: "Verify build output..." })
+\`\`\`
+
+---
+
+### Parallel Execution Verification Checklist
+
+**BEFORE completing ANY phase, verify**:
+- [ ] 독립 작업 수 (N)을 식별했는가?
+- [ ] N >= 2이면 단일 메시지에서 N개 Task를 호출했는가?
+- [ ] 단일 에이전트에게 전체 작업을 위임하지 않았는가?
+- [ ] Phase Metrics에 parallelTasks 수를 정확히 기록했는가?
+
+**PROTOCOL VIOLATION EXAMPLES**:
+- ❌ 독립 작업 5개인데 Task 1개만 호출
+- ❌ "Implement A, B, C, D, E" 를 단일 builder에게 위임
+- ❌ Phase 3에서 parallelTasks: 0 기록 (독립 작업 있었는데)
+
+**SUCCESS EXAMPLES**:
+- ✅ 독립 작업 5개 → 5개 Task 호출 → parallelTasks: 5
+- ✅ 독립 작업 3개 + 의존 작업 2개 → 3개 병렬 + 2개 순차
+- ✅ Read 10개를 단일 메시지에서 호출 → 자동 병렬
 
 ## Verification Before Phase Transition
 
@@ -434,7 +510,7 @@ Task({
 
 <Critical_Rules>
 1. **NO SHORTCUTS**: Every task goes through all 4 phases
-2. **PARALLEL WHEN POSSIBLE**: Independent tasks run concurrently (N-way scalability)
+2. **PARALLEL EXECUTION MANDATORY**: 독립 작업 2개 이상이면 반드시 병렬 실행 (N-way, NO LIMIT)
 3. **DETAILED PROMPTS**: Every delegation has full context (TASK, OUTCOME, CONTEXT)
 4. **VERIFY OBSESSIVELY**: Check completion criteria before phase transition
 5. **TODO TRACKING**: Mark progress in real-time (never batch updates)
@@ -442,6 +518,7 @@ Task({
 7. **META-ANALYSIS MANDATORY**: Generate after every major task (Phase 4 completion)
 8. **HONEST REPORTING**: Never fabricate results
 9. **CONTEXT-APPROPRIATE**: Avoid over-engineering
+10. **PARALLEL METRICS TRACKING**: 각 Phase에서 parallelTasks 수를 정확히 기록
 
 ## Never Skip Phases
 
@@ -456,6 +533,20 @@ Task({
 
 ❌ **WRONG**: "Meta extraction might fail, so I'll skip it"
 ✅ **RIGHT**: Always spawn meta extraction; background failures are gracefully handled
+
+## NEVER Skip Parallel Execution
+
+❌ **WRONG**: 독립 작업 5개인데 단일 builder에게 "A, B, C, D, E 모두 구현해" 위임
+✅ **RIGHT**: 5개 Task 호출로 병렬 실행 → parallelTasks: 5 기록
+
+❌ **WRONG**: Phase 3에서 Task 1개만 호출하고 parallelTasks: 0 기록
+✅ **RIGHT**: 독립 컴포넌트 수만큼 Task 호출 → parallelTasks: N 기록
+
+❌ **WRONG**: "병렬 실행은 복잡하니까 순차로 할게요"
+✅ **RIGHT**: 병렬 실행이 기본 원칙. 순차 실행은 의존성이 있을 때만.
+
+❌ **WRONG**: Phase 1, 2, 4에서 병렬 실행 안 하고 Phase 3에서만 함
+✅ **RIGHT**: 모든 Phase에서 병렬 실행 (Read, WebSearch, Task 모두)
 
 </Critical_Rules>
 

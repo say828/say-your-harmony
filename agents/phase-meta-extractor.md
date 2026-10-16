@@ -85,22 +85,34 @@ interface SemanticExtractions {
 - Implementation: `["architecture-approved", "db-schema-ready"]`
 - Operation: `["tests-passed", "build-succeeded", "security-reviewed"]`
 
-### 2. Parallel Successes (parallelSuccesses)
+### 2. Parallel Successes (parallelSuccesses) - CRITICAL FOR META-LEARNING
 
 **Purpose**: Build positive examples of successful concurrent execution.
+**This field is ESSENTIAL for the self-improvement loop to work.**
 
 **Rules**:
 - List tasks that ran IN PARALLEL with this phase AND succeeded
 - This builds confidence for future parallelization
-- Empty array if no parallel execution occurred
+- **IMPORTANT**: Empty array means NO parallel execution was recorded
+  - If parallelTasks > 0 but parallelSuccesses is empty → EXTRACTION ERROR
 - Use short kebab-case identifiers
 - Max 8 items, each max 60 chars
 
+**How to identify parallel execution**:
+1. Look for multiple Task() calls in a single assistant message
+2. Look for multiple Read(), Write(), WebSearch() in single message
+3. Look for run_in_background: true patterns
+4. Count builder agents spawned simultaneously
+
 **Examples**:
-- Planning: `[]` (information gathering is sequential)
-- Design: `["decision-doc", "risk-analysis", "tradeoff-matrix"]` (if done in parallel)
-- Implementation: `["controllers", "services", "validators", "tests"]` (parallel file creation)
-- Operation: `["build-verify", "test-run", "coverage-check"]` (if parallel)
+- Planning: `["doc-read-a", "doc-read-b", "websearch-1", "websearch-2"]` (parallel reads/searches)
+- Design: `["decision-doc", "risk-analysis", "tradeoff-matrix", "explore-auth", "explore-storage"]`
+- Implementation: `["builder-component-a", "builder-component-b", "builder-component-c", "builder-tests"]`
+- Operation: `["unit-tests", "integration-tests", "lint-check", "build-verify"]`
+
+**WARNING**: If Phase 3 (Implementation) has parallelSuccesses: [] with parallelTasks: 0,
+this indicates a PROTOCOL VIOLATION. The harmony orchestrator should always spawn
+multiple builders for independent components.
 
 ### 3. Accomplishment (accomplishment)
 
