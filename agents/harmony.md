@@ -76,10 +76,10 @@ Task({
 
 ### Phase 3: IMPLEMENTATION
 **Agent**: `builder`
-**Goal**: Parallel implementation with testing (N-way efficiency)
+**Goal**: Parallel implementation with testing (N-way efficiency, NO LIMIT)
 
 **Activities**:
-- **Parallel execution** (Independent tasks run concurrently)
+- **MANDATORY Parallel execution** (독립 작업은 반드시 병렬)
 - Implementation alongside testing
 - Risk analysis during coding
 - Code quality verification
@@ -89,14 +89,22 @@ Task({
 - [ ] Tests pass
 - [ ] Risks identified and mitigated
 - [ ] Build successful
+- [ ] **parallelTasks 메트릭 정확히 기록**
 
-**Delegate to** (PARALLEL):
+**Delegate to** (PARALLEL - NO LIMIT):
 ```typescript
-// Example: 4 independent files in parallel
-Task({ subagent: "builder", prompt: "Implement file A" })
-Task({ subagent: "builder", prompt: "Implement file B" })
-Task({ subagent: "builder", prompt: "Implement file C" })
-Task({ subagent: "builder", prompt: "Implement file D" })
+// MANDATORY: Fire N builder agents in PARALLEL
+// NO LIMIT on number of parallel tasks
+Task({ subagent_type: "builder", prompt: "Implement Component A: [spec]" })
+Task({ subagent_type: "builder", prompt: "Implement Component B: [spec]" })
+Task({ subagent_type: "builder", prompt: "Implement Component C: [spec]" })
+Task({ subagent_type: "builder", prompt: "Implement Component D: [spec]" })
+Task({ subagent_type: "builder", prompt: "Implement Component E: [spec]" })
+// ... scale to ANY number of independent components
+
+// ❌ PROTOCOL VIOLATION:
+// Task({ subagent_type: "builder", prompt: "Implement ALL components A-E" })
+// ↑ This defeats parallelization
 ```
 
 ---
@@ -228,9 +236,21 @@ Task({
 ### 2. PHASE COMPLETION VERIFICATION
 Before transitioning to next phase, verify ALL completion criteria are met.
 
-### 3. PARALLEL EXECUTION IN IMPLEMENTATION
-- If 2+ independent tasks exist → Run in parallel
-- Target: N-way efficiency minimum
+### 3. PARALLEL EXECUTION IN ALL PHASES (MANDATORY)
+- **ALL PHASES**: If 2+ independent tasks exist → Run in parallel
+- **NO LIMIT**: Scale to N-way concurrency
+- **NOT JUST PHASE 3**: Planning, Design, Operation도 병렬 실행
+
+**Phase별 병렬 패턴**:
+- Phase 1: Multiple Read(), WebSearch(), explorer Task() 병렬
+- Phase 2: Multiple explorer Task(), Write() 병렬
+- Phase 3: Multiple builder Task() 병렬 (핵심)
+- Phase 4: Multiple verification Task() 병렬
+
+**PROTOCOL VIOLATION**:
+- 독립 작업 N개인데 Task 1개만 호출
+- 단일 에이전트에게 모든 작업 위임
+- parallelTasks: 0 기록 (독립 작업 있었는데)
 
 ### 4. META-ANALYSIS MANDATORY
 Every completed workflow MUST generate meta-analysis document.
